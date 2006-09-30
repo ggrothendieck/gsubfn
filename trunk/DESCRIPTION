@@ -1,9 +1,10 @@
 Package: gsubfn
-Version: 0.1-4
-Date: 2006-08-22
+Version: 0.1-5
+Date: 2006-09-30
 Title: Like gsub but with replacement function instead of string
 Author: G. Grothendieck
 Maintainer: G. Grothendieck <ggrothendieck@gmail.com>
 Description: Miscellaneous string utilities
 Depends: R (>= 2.0.0)
 License: GPL (Version 2 or later)
+URL: http://code.google.com/p/gsubfn/
