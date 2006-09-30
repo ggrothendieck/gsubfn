@@ -1,0 +1,46 @@
+Changes in 0.1-5
+
+	o reference to cat0 missing from gsubfn-package.Rd
+
+	o added digit separation example to strapply.Rd
+
+	o added config file example to strapply.Rd
+
+Changes in 0.1-4
+
+	o added cati, cati0, cat0 and paste0
+
+	o added USE.NAMES argument to gsubfn
+
+	o added gsubfn-cut demo
+
+	o added repx example to gsubfn.Rd
+
+	o added SI scale example to gsubfn.Rd
+
+	o perl=, etc. args were not being passed to gsub
+
+	o added moving window example to strapply.Rd
+
+Changes in 0.1-3
+
+	o enhanced gsubfn backref= argument
+
+	o fixed bug in strapply
+
+Changes in 0.1-2
+
+	o cati added
+
+	o updated DESCRIPTION and gsubfn-package.Rd
+
+Changes in 0.1-1 
+
+	o strapply added
+
+	o gsubfn-package.Rd added
+
+Changes in 0.1-0
+
+	o initial release
+
