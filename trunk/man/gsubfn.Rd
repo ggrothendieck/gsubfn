@@ -13,7 +13,7 @@ gsubfn(pattern, replacement, x, backref, USE.NAMES = FALSE, env = parent.frame()
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{pattern}{ Same as \code{pattern} in \code{\link{gsub}} }
-  \item{replacement}{ A function.  See Details. }
+  \item{replacement}{ A function or a formula.  See Details. }
   \item{x}{ Same as \code{x} in \code{\link{gsub}} }
   \item{backref}{ Number of backreferences to be passed to function.
 If omitted it will be determined automatically in which case the function
@@ -31,6 +31,9 @@ Normally this is left at its default value.}
  function replaces the matched string in the result.  The first
  argument to the replacement function is the matched string
  and subsequent arguments are the backreferences, if any.
+ If \code{replacement} is a formula instead of a function then
+ a one line function is created whose body is the formula and
+ whose formal arguments are the free variables in the formula.
 }
 \value{
   As in \code{\link{gsub}}.
@@ -38,15 +41,20 @@ Normally this is left at its default value.}
 \seealso{ \code{\link{gsub}}, \code{\link{strapply}} }
 \examples{
 # adds 1 to each number in third arg
-gsubfn("[[:digit:]]+", function(x) as.numeric(x)+1, "(10 20)(100 30)") 
+gsubfn("[[:digit:]]+", ~ as.numeric(x)+1, "(10 20)(100 30)") 
 
 # replaces pairs m:n with their sum
 g <- function(z,x,y) as.numeric(x)+as.numeric(y)
 gsubfn("([0-9]+):([0-9]+)", g, "abc 10:20 def 30:40 50")
 
-# same - can reduce args in function to two using backref=
+
+# same - can reduce args in function to two using backref = -2
 f <- function(x,y) as.numeric(x)+as.numeric(y)
 gsubfn("([0-9]+):([0-9]+)", f, "abc 10:20 def 30:40 50", backref = -2)
+
+# same but uses formula in place of function
+gsubfn("([0-9]+):([0-9]+)", ~ as.numeric(x) + as.numeric(y), backref = -2,
+	"abc 10:20 def 30:40 50")
 
 gsubfn( , , "pi = $pi, 2pi = `2*pi`") 
 

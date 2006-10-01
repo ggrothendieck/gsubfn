@@ -25,7 +25,8 @@ News\tab file.show(system.file("NEWS", package = "gsubfn"))\cr
 Wish List\tab file.show(system.file("WISHLIST", package = "gsubfn"))\cr
 Demo\tab demo("gsubfn-cut")\cr
 This File\tab package?gsubfn\cr
-Help files\tab ?gsubfn, ?strapply, ?cati, ?cati0, cat0, ?paste0\cr
+Help files\tab ?gsubfn, ?strapply, ?cati, ?cati0, ?cat0, ?paste0\cr
+Home page\tab http://code.google.com/p/gsubfn/\cr
 }
 
 Index:
@@ -40,6 +41,9 @@ strapply                Apply a function over a string or strings.
 
 # replace each number with that number plus 1
 gsubfn("[[:digit:]]+", function(x) as.numeric(x)+1, "(10 20)(100 30)") 
+
+# same
+gsubfn("[[:digit:]]+", ~ as.numeric(x)+1, "(10 20)(100 30)") 
 
 # perl-style string interpolation
 cati("pi = $pi, e = `exp(1)`\\n")
