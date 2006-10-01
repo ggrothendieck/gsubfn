@@ -6,6 +6,14 @@ Changes in 0.1-5
 
 	o added config file example to strapply.Rd
 
+	o in strapply simplify= can be a function
+
+	o replacement= in gsubfn and strapply can be a formula
+
+	o new internal function as.function.formula
+
+	o new home page and svn repository (URL in DESCRIPTION file)
+
 Changes in 0.1-4
 
 	o added cati, cati0, cat0 and paste0
