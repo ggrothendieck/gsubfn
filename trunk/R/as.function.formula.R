@@ -1,5 +1,5 @@
 as.function.formula <- function(x, ...) {
-	vars <- all.vars(x)
+	vars <- all.vars(x[[2]])
 	if (length(vars) == 0) { 
 		f <- function() {}
 	} else {
@@ -7,7 +7,7 @@ as.function.formula <- function(x, ...) {
 		formals(f) <- rep(formals(f), length(vars))
 		names(formals(f)) <- vars
 	}
-	body(f) <- x[[2]]
+	body(f) <- x[[length(x)]]
 	environment(f) <- environment(x)
 	f
 }

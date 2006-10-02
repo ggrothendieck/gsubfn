@@ -28,7 +28,8 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
 	eval(parse(text = paste(b1,b2,sep="")), env) 
    if (is.character(replacement)) 
 	return(base::gsub(pattern, replacement, x, ...))
-   if (inherits(replacement, "formula")) replacement <- as.function(replacement)
+   # if (inherits(replacement, "formula")) replacement <- as.function(replacement)
+   replacement <- match.funfn(replacement)
    if (missing(pattern)) pattern <- "[$]([[:alpha:]][[:alnum:].]*)|`([^`]+)`"
    if (missing(backref)) {
         i <- 1
