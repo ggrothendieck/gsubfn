@@ -1,3 +1,10 @@
+Changes in 0.1-6
+
+	o applyfn, lapplyfn, mapplyfn, sapplyfn, Vectorizefn
+
+	o as.function.formula no longer generates default values for args
+
+
 Changes in 0.1-5
 
 	o reference to cat0 missing from gsubfn-package.Rd
