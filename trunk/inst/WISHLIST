@@ -3,7 +3,6 @@ WISHLIST
 
 o add more examples
 
-
 o d <- "X" 
   gsubfn(x = "\\$d$d$")
 Error in parse(file, n, text, prompt) : syntax error in "c("\",replacement("$d",
