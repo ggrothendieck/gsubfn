@@ -11,7 +11,8 @@
 strapply <- 
 function (X, pattern, FUN = function(x, ...) x, ..., simplify = FALSE, 
     USE.NAMES = FALSE) {
-	if (inherits(FUN, "formula")) FUN <- as.function(FUN)
+	# if (inherits(FUN, "formula")) FUN <- as.function(FUN)
+	FUN <- match.funfn(FUN)
 	result <- sapply(X, function(x) {
 	    first <- TRUE
 	    v <- NULL
