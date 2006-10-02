@@ -1,6 +1,6 @@
 Package: gsubfn
-Version: 0.1-5
-Date: 2006-09-30
+Version: 0.1-6
+Date: 2006-10-01
 Title: Like gsub but with replacement function instead of string
 Author: G. Grothendieck
 Maintainer: G. Grothendieck <ggrothendieck@gmail.com>
