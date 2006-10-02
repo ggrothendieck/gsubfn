@@ -1,5 +1,5 @@
 Package: gsubfn
-Version: 0.1-6
+Version: 0.2-0
 Date: 2006-10-01
 Title: Like gsub but with replacement function instead of string
 Author: G. Grothendieck
