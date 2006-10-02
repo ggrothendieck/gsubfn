@@ -12,10 +12,16 @@ as.function.formula <- function(x, ...) {
 	f
 }
 
-
-match.funfn <- function(x, ...) UseMethod("match.fun")
+match.funfn <- function(x, ...) UseMethod("match.funfn")
 match.funfn.default <- base::match.fun
 match.funfn.formula <- as.function.formula
+
+aggregatefn <- function(x, by, FUN, ..., simplify = FALSE) {
+	FUN <- match.funfn(FUN)
+	if (!is.logical(simplify)) 
+	   do.call(simplify, aggregate(x, by, FUN, ...))
+	else by(x, by, FUN, ...)
+}
 
 applyfn <- function(..., simplify = FALSE) {
 	match.fun <- match.funfn
@@ -23,11 +29,30 @@ applyfn <- function(..., simplify = FALSE) {
 	apply(...)
 }
 
-lapplyfn <- function(...) {
+byfn <- function(data, indices, FUN, ..., simplify = FALSE) {
+	FUN <- match.funfn(FUN)
+	if (is.logical(simplify) && simplify) simplify <- rbind
+	if (!is.logical(simplify)) 
+  	   do.call(simplify, by(data, indices, FUN, ...))
+	else by(data, indices, FUN, ...)
+}
+
+eapplyfn <- function(..., simplify = FALSE) {
+	match.fun <- match.funfn
+	environment(eapply) <- environment()
+	if (is.logical(simplify) && simplify) simplify <- rbind
+	if (is.logical(simplify)) eapply(...)
+	else do.call(simplify, eapply(...))
+}
+
+lapplyfn <- function(..., simplify = FALSE) {
 	match.fun <- match.funfn
 	environment(lapply) <- environment()
-	lapply(...)
+	if (is.logical(simplify) && simplify) simplify <- rbind
+	if (is.logical(simplify)) lapply(...)
+	else do.call(simplify, lapply(...))
 }
+
 
 mapplyfn <- function(..., SIMPLIFY = TRUE) {
 	match.fun <- match.funfn
@@ -36,16 +61,6 @@ mapplyfn <- function(..., SIMPLIFY = TRUE) {
 		do.call(SIMPLIFY, mapply(..., SIMPLIFY = FALSE))
 	else mapply(..., SIMPLIFY = SIMPLIFY)
 }
-
-
-Vectorizefn <- function(..., SIMPLIFY = TRUE) {
-	match.fun <- match.funfn
-	environment(Vectorize) <- environment()
-	if (!is.logical(SIMPLIFY)) 
-		do.call(SIMPLIFY, Vectorize(..., SIMPLIFY = FALSE))
-	else Vectorize(..., SIMPLIFY = SIMPLIFY)
-}
-
 
 sapplyfn <- function(..., simplify = TRUE) {
 	match.fun <- match.funfn
@@ -63,17 +78,10 @@ tapplyfn <- function(..., simplify = TRUE) {
 	else tapply(..., simplify = simplify)
 }
 
-byfn <- function(data, indices, FUN, ..., simplify = FALSE) {
-	FUN <- match.funfn(FUN)
-	if (is.logical(simplify) && simplify) simplify <- rbind
-	if (!is.logical(simplify)) 
-  	   do.call(simplify, by(data, indices, FUN, ...))
-	else by(data, indices, FUN, ...)
-}
-
-aggregatefn <- function(x, by, FUN, ..., simplify = FALSE) {
-	FUN <- match.funfn(FUN)
-	if (!is.logical(simplify)) 
-	   do.call(simplify, aggregate(x, by, FUN, ...))
-	else by(x, by, FUN, ...)
+Vectorizefn <- function(..., SIMPLIFY = TRUE) {
+	match.fun <- match.funfn
+	environment(Vectorize) <- environment()
+	if (!is.logical(SIMPLIFY)) 
+		do.call(SIMPLIFY, Vectorize(..., SIMPLIFY = FALSE))
+	else Vectorize(..., SIMPLIFY = SIMPLIFY)
 }

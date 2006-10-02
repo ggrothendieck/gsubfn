@@ -1,6 +1,9 @@
-Changes in 0.1-6
+Changes in 0.2-0
 
-	o applyfn, lapplyfn, mapplyfn, sapplyfn, Vectorizefn
+	o match.funfn
+
+	o aggregatefn, applyfn, byfn, eapplyfn, lapplyfn, mapplyfn, sapplyfn, 
+          Vectorizefn
 
 	o as.function.formula no longer generates default values for args
 
