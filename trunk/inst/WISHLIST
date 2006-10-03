@@ -1,10 +1,13 @@
 
 WISHLIST
 
-o add more examples
-
 o d <- "X" 
   gsubfn(x = "\\$d$d$")
 Error in parse(file, n, text, prompt) : syntax error in "c("\",replacement("$d",
 
+o assign("mywarn", NULL, .GlobalEnv)
+  fn$tryCatch( warning("a warning"), 
+    warning = w ~ mywarn <<- conditionMessage(w))
+  print(mywarn)
+does not work.
 

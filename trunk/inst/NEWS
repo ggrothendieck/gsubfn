@@ -3,10 +3,17 @@ Changes in 0.2-0
 	o match.funfn
 
 	o aggregatefn, applyfn, byfn, eapplyfn, lapplyfn, mapplyfn, sapplyfn, 
-          Vectorizefn
+          Vectorizefn (these were a temporary kludge -- they will all be 
+	  eliminated shortly)
 
 	o as.function.formula no longer generates default values for args.
  	  It now allows args to be specified on LHS.
+
+	o $.fn
+
+	o added numerous examples of $.fn to home page
+
+	o as.function.formula is no longer internal
 
 
 Changes in 0.1-5

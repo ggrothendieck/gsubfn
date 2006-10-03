@@ -44,6 +44,7 @@ fn <- structure(NA, class = "fn")
 		is.funfo <- is.fo & (num.fo == 1 | seq(along = args) > 1 | 
 			nm == "FUN")
 		mcList <- as.list(mc)[-1]
+		if (idx > 0) mcList <- mcList[-idx]
 	
 		for(i in seq(along = args)) {
 		   if (is.fo[i] && (num.fo == 1 || i > 1 || nm[[i]] == "FUN"))
