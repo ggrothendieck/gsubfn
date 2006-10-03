@@ -19,13 +19,15 @@ match.funfn.formula <- as.function.formula
 
 fn <- structure(NA, class = "fn")
 "$.fn" <- function(x, FUN) {
-	FUN <- match.fun(FUN)
+	env <- parent.frame()
+	mf <- match.fun(FUN)
 
 	function(...) {
 		args <- list(...)
-		mc <- if (is.primitive(FUN)) match.call()[-1]
-		else match.call(FUN)[-1]
-		nm <- names(mc)
+		mc <- if (is.primitive(mf)) match.call()
+		else match.call(mf)
+		mc1 <- mc[-1]
+		nm <- names(mc1)
 		if (is.null(nm)) nm <- rep("", length(args))
 		idx <- match("simplify", tolower(nm), nomatch = 0)
 		simplify <- NULL
@@ -38,12 +40,17 @@ fn <- structure(NA, class = "fn")
 		}
 		is.fo <- sapply(args, function(x) is(x, "formula"))
 		num.fo <- sum(is.fo)
+
+		is.funfo <- is.fo & (num.fo == 1 | seq(along = args) > 1 | 
+			nm == "FUN")
+		mcList <- as.list(mc)[-1]
 	
 		for(i in seq(along = args)) {
 		   if (is.fo[i] && (num.fo == 1 || i > 1 || nm[[i]] == "FUN"))
-		         args[[i]] <- as.function(args[[i]])
+		         mcList[[i]] <- as.function(args[[i]])
 		}
-		out <- do.call(FUN, args)
+		# out <- do.call(FUN, args)
+		out <- do.call(FUN, mcList)
 		if (!is.null(simplify)) {
 			if(!is.list(out)) out <- list(out) 
 			out <- do.call(simplify, out)
