@@ -5,7 +5,8 @@ Changes in 0.2-0
 	o aggregatefn, applyfn, byfn, eapplyfn, lapplyfn, mapplyfn, sapplyfn, 
           Vectorizefn
 
-	o as.function.formula no longer generates default values for args
+	o as.function.formula no longer generates default values for args.
+ 	  It now allows args to be specified on LHS.
 
 
 Changes in 0.1-5
