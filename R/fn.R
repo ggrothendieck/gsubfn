@@ -51,7 +51,7 @@ fn <- structure(NA, class = "fn")
 		         mcList[[i]] <- as.function(args[[i]])
 		}
 		# out <- do.call(FUN, args)
-		out <- do.call(FUN, mcList)
+		out <- do.call(FUN, mcList, env = parent.frame())
 		if (!is.null(simplify)) {
 			if(!is.list(out)) out <- list(out) 
 			out <- do.call(simplify, out)
