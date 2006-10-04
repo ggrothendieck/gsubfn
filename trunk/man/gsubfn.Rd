@@ -1,6 +1,6 @@
 \name{gsubfn}
 \alias{gsubfn}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{ Pattern Matching and Replacement }
 \description{
   Like \code{\link{gsub}} except instead of a replacement string one

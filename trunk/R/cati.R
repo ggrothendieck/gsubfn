@@ -6,12 +6,13 @@
 # e.g. cati("letters = $letters, pi = $pi\n")
 cati <- 
 function (..., file = "", sep = " ", fill = FALSE, labels = NULL, 
-    append = FALSE, env = parent.frame(), 
-    pattern = "[$]([[:alpha:]][[:alnum:].]*)|`([^`]+)`", 
-    backref = nchar(base::gsub("[^(]","",pattern)), 
-    end = "") 
+    append = FALSE, env = parent.frame(), pattern, backref, end = "") 
 {
 	# added end= argument to cat
+	if (missing(pattern)) 
+		pattern <- "[$]([[:alpha:]][[:alnum:].]*)|`([^`]+)`"
+	if (missing(backref)) 
+		backref <- nchar(base::gsub("[^(]","",pattern))
 	cat.end <-
 	function (..., file = "", sep = " ", fill = FALSE, labels = NULL, 
 	    append = FALSE, end = "") 

@@ -14,7 +14,7 @@ as.function.formula <- function(x, ...) {
 }
 
 match.funfn <- function(x, ...) UseMethod("match.funfn")
-match.funfn.default <- base::match.fun
+match.funfn.default <- function(x, ...) base::match.fun(x, ...)
 match.funfn.formula <- as.function.formula
 
 fn <- structure(NA, class = "fn")
