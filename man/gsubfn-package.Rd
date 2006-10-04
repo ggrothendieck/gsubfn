@@ -26,6 +26,7 @@ Wish List\tab file.show(system.file("WISHLIST", package = "gsubfn"))\cr
 Demo\tab demo("gsubfn-cut")\cr
 This File\tab package?gsubfn\cr
 Help files\tab ?gsubfn, ?strapply, ?cati, ?cati0, ?cat0, ?paste0\cr
+More Help files\tab ?as.function.format, ?match.funfn, ?"\$.fn"\cr
 Home page\tab http://code.google.com/p/gsubfn/\cr
 }
 
@@ -36,7 +37,6 @@ cati                    cat but with gsubfn-style interpolation.
 strapply                Apply a function over a string or strings.
 }
 }
-\keyword{ package }
 \examples{
 
 # replace each number with that number plus 1
@@ -52,3 +52,4 @@ cati("pi = $pi, e = `exp(1)`\\n")
 strapply("12abc34 55", "[0-9]+")
 
 }
+\keyword{ package }

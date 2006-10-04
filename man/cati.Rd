@@ -9,13 +9,12 @@
   \code{"gsubfn"}-like string interpolation.
 }
 \usage{
-cati(..., file = "", sep = " ", fill = FALSE, labels = NULL, append = FALSE, env = parent.frame(), pattern = "[$]([[:alpha:]][[:alnum:].]*)|`([^`]+)`", backref = nchar(base::gsub("[^(]", "", pattern)), end = "")
+cati(..., file = "", sep = " ", fill = FALSE, labels = NULL, append = FALSE, env = parent.frame(), pattern, backref, end = "")
 cati0(..., sep = "")
 
 cat0(..., sep = "")
 paste0(..., sep = "")
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{\dots}{ R objects which are coerced to character strings,
           concatenated, and printed, with the remaining arguments
@@ -34,7 +33,7 @@ paste0(..., sep = "")
           'fill' is 'FALSE'.}
   \item{append}{logical. Only used if the argument \code{"file"} is the 
           name of file
-          (and not a connection or \code{'"|cmd"'}). If \code{"TRUE"} output 
+          (and not a connection or \code{'"\|cmd"'}). If \code{"TRUE"} output 
           will be
           appended to \code{"file"}; otherwise, it will overwrite the contents
           of \code{"file"}.}
@@ -58,7 +57,7 @@ None (invisible 'NULL').
 }
 \seealso{ Also see \code{\link{gsubfn}}. }
 \examples{
-cati("pi = $pi, pi rounded = `round(pi,2)`\\n")
+cati("pi = \$pi, pi rounded = `round(pi,2)`\\n")
 
 # no comma after 3 as newline specified via end=
 cati(1, 2, 3, sep = ",", end = "\\n")
