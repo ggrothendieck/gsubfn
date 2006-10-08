@@ -1,6 +1,6 @@
 
 as.function.formula <- function(x, ...) {
-	vars <- all.vars(x[[2]])
+	vars <- setdiff(all.vars(x[[2]]), c("letters", "LETTERS", "pi"))
 	if (length(vars) == 0) { 
 		f <- function() {}
 	} else {
