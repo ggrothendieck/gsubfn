@@ -1,20 +1,21 @@
-Changes in 0.2-0
+
+Changes in 0.2-1 (development version)
+
+	o added "note difference" example in strapply
+
+	o letters, LETTERS and pi excluded from args so ~sin(x*pi/180) works
+
+	o improved as.function.formula.Rd
+
+Changes in 0.2-0 (latest CRAN release)
 
 	o match.funfn
 
-	o aggregatefn, applyfn, byfn, eapplyfn, lapplyfn, mapplyfn, sapplyfn, 
-          Vectorizefn (these were a temporary kludge -- they will all be 
-	  eliminated shortly)
-
-	o as.function.formula no longer generates default values for args.
- 	  It now allows args to be specified on LHS.
+	o as.function.formula improvements
 
 	o $.fn
 
 	o added numerous examples of $.fn to home page
-
-	o as.function.formula is no longer internal
-
 
 Changes in 0.1-5
 
@@ -69,4 +70,5 @@ Changes in 0.1-1
 Changes in 0.1-0
 
 	o initial release
+
 

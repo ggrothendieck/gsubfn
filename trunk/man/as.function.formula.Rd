@@ -12,13 +12,18 @@
   \item{\dots}{ Currently not used. }
 }
 \value{
-  A function is returned whose formal arguments are the free
-  variables in the formula in the order encountered, whose body 
+  A function is returned whose formal arguments are the
+  variables in the left hand side, whose body
   is the expression on the right side of the formula and whose 
-  environment is the environment of the formula.
+  environment is the environment of the formula.  If there is
+  no left hand side the free variables on the right, in the 
+  order encountered are used as the arguments.  \code{letters},
+  \code{LETTERS} and \code{pi} are ignored and not used as arguments.
+  If the left hand side is \code{0} then the function is created as
+  a zero argument function.
 }
 \examples{
-as.formula(~ as.numeric(x) + as.numeric(y))
-
+as.function(~ as.numeric(x) + as.numeric(y))
+as.function(x + y ~ as.numeric(x) + as.numeric(y)) # same
 }
 \keyword{ character }

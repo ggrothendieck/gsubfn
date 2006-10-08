@@ -38,7 +38,7 @@ backreferences, if any, are passed to
 the function \code{"FUN"} and the output is returned as a list.
 }
 \value{
-A list of character strings.
+A list of character strings.  
 }
 \seealso{ See Also as \code{\link{gsubfn}}, \code{\link{sapply}}}
 \examples{
@@ -57,6 +57,15 @@ strapply(s, "^([[:digit:]]+)(.*)", ~ data.frame(string, digits, rest),
 # running window of 5 characters using 0-lookahead perl regexp
 x <- "abcdefghijkl"
 strapply(x, "(.)(?=(....))",  paste0, backref = -2, perl = TRUE)[[1]]
+
+# Note difference.  First gives character vector.  Second is the same.
+# Third has same elements but is a list.
+# Fourth gives list of two character vectors. Fifth is the same.
+strapply("a:b c:d", "(.):(.)", c)[[1]]
+strapply("a:b c:d", "(.):(.)", list, simplify = unlist) # same
+strapply("a:b c:d", "(.):(.)", list)[[1]]
+strapply("a:b c:d", "(.):(.)", ~ list(c(...)))[[1]]
+strapply("a:b c:d", "(.):(.)", ~ list(c(...)), simplify = c)
 
 # find second CPU_SPEED value given lines of config file
 Lines <- c("DEVICE = 'PC'", "CPU_SPEED = '1999', '233'")

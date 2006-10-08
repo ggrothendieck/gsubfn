@@ -1,10 +1,18 @@
 Package: gsubfn
-Version: 0.2-0
-Date: 2006-10-01
-Title: Like gsub but with replacement function instead of string
+Version: 0.2-1
+Date: 2006-10-05
+Title: Miscellaneous utilities for strings and function arguments.
 Author: G. Grothendieck
 Maintainer: G. Grothendieck <ggrothendieck@gmail.com>
-Description: Miscellaneous string utilities
+Description: gsubfn is like gsub but can take a replacement function
+   rather than a replacement string.  Matches and backreferences
+   are input to the function and replaced by the function output.
+   gsubfn can be used to split strings based on content rather than
+   delimiters and for quasi-perl-style string interpolation. The 
+   package also has facilities for translating formulas to functions 
+   and allowing such formulas in function calls instead of functions.  
+   This can reduce code size when using apply, lapply, optim, integrate, 
+   xyplot and any other function that expects another function as input.
 Depends: R (>= 2.0.0)
 License: GPL (Version 2 or later)
 URL: http://code.google.com/p/gsubfn/

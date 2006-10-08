@@ -4,7 +4,7 @@
 \title{ Transform formula arguments to functions. }
 \description{
   When used in the form \code{fn\$somefunction(...arguments...)}
-  it converts formulas among the arguments to somefunction to
+  it converts formulas among the arguments of somefunction to
   functions using \code{as.function.formula}.  It uses a heuristic
   to decide which formulas to convert.  If any of the following
   are true then that argument is converted from a formula to a
@@ -25,9 +25,10 @@
 }
 \examples{
 
- # use of formula to specify a function.
-   # LHS of formula is needed since we don't want LETTERS in arg list.
-   fn$lapply(list(1:4, 1:3), x ~ LETTERS[x])
+   # use of formula to specify a function.
+   # Note that LETTERS, letters and pi are automatically excluded from args
+   fn$lapply(list(1:4, 1:3), ~ LETTERS[x])
+   fn$sapply(1:3, ~ sin((n-1):n * pi/180))
 
    # use of simplify = rbind instead of do.call(rbind, by(...)).
    # args to anonymous function are automatically determined.
@@ -94,9 +95,8 @@
    fn$boot(rivers, ~ median(x, d), R = 2000)
 }
 
-   # must specify args so that pi is not included in arg list
    x <- 0:50/50
-   matplot(x, fn$outer(x, 1:8, x + k ~ sin(x * k*pi)), type = 'blobcsSh')
+   matplot(x, fn$outer(x, 1:8, ~ sin(x * k*pi)), type = 'blobcsSh')
 
 
 }
