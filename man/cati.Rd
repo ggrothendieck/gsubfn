@@ -57,7 +57,7 @@ None (invisible 'NULL').
 }
 \seealso{ Also see \code{\link{gsubfn}}. }
 \examples{
-cati("pi = \$pi, pi rounded = `round(pi,2)`\\n")
+cati("pi = $pi, pi rounded = `round(pi,2)`\\n")
 
 # no comma after 3 as newline specified via end=
 cati(1, 2, 3, sep = ",", end = "\\n")

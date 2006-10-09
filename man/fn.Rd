@@ -14,7 +14,7 @@
   argument list.
 }
 \usage{
-"\$.fn"(x, FUN) 
+"$.fn"(x, FUN) 
 }
 \arguments{
   \item{x}{ \code{fn}.}
