@@ -13,8 +13,13 @@ Changes in 0.2-1 (development version)
 	o improved as.function.formula.Rd
 
 	o fixes to eliminate R CMD CHECK warnings under R 2.5.0
+ 
+	o bug fix in $.fn.  If args and match.call order was different
+	  it could fail previously.
 
-	o linguistics demo in demo/gries.R
+	o new demos: gries.R, read.zoo.R
+
+	o THANKS file
 
 Changes in 0.2-0 (latest CRAN release)
 

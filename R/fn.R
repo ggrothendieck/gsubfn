@@ -29,26 +29,38 @@ fn <- structure(NA, class = "fn")
 		mc1 <- mc[-1]
 		nm <- names(mc1)
 		if (is.null(nm)) nm <- rep("", length(args))
+
 		idx <- match("simplify", tolower(nm), nomatch = 0)
+		if (idx > 0) mcList <- mcList[-idx]
+		mcList <- as.list(mc)[-1]
+		mcListE <- lapply(mcList, eval.parent)
+
 		simplify <- NULL
 		if (idx > 0) {
-			if (!is.logical(args[[idx]])) {
-				simplify <- args[[idx]]
-				args <- args[-idx]
+			if (!is.logical(mcListE[[idx]])) {
+				simplify <- mcListE[[idx]]
+				mcListE <- mcListE[-idx]
+				mcList <- mcList[-idx]
 				nm <- nm[-idx]
 			}
 		}
-		is.fo <- sapply(args, function(x) is(x, "formula"))
+
+
+
+		is.fo <- sapply(mcListE, function(x) is(x, "formula"))
 		num.fo <- sum(is.fo)
 
-		is.funfo <- is.fo & (num.fo == 1 | seq(along = args) > 1 | 
+		is.funfo <- is.fo & (num.fo == 1 | seq(along = mcList) > 1 | 
 			nm == "FUN")
-		mcList <- as.list(mc)[-1]
-		if (idx > 0) mcList <- mcList[-idx]
 	
-		for(i in seq(along = args)) {
-		   if (is.fo[i] && (num.fo == 1 || i > 1 || nm[[i]] == "FUN"))
-		         mcList[[i]] <- as.function(args[[i]])
+		#for(i in seq(along = args)) {
+		#   if (is.fo[i] && (num.fo == 1 || i > 1 || nm[[i]] == "FUN"))
+		#         mcList[[i]] <- as.function(args[[i]])
+		for(i in seq(along = mcList)) {
+		   if (is.fo[i] && (num.fo == 1 || i > 1 || nm[[i]] == "FUN")) {
+		         # mcList[[i]] <- as.function(args[[i]])
+			 mcList[[i]] <- as.function(mcListE[[i]])
+		   }
 		}
 		# out <- do.call(FUN, args)
 		out <- do.call(FUN, mcList, env = parent.frame())
@@ -63,4 +75,6 @@ fn <- structure(NA, class = "fn")
 # test
 # fn$list(x ~ 2*x)
 # fn$mapply(~ x + y, 1:10, 21:30)
+
+
 
