@@ -31,10 +31,10 @@ News\tab file.show(system.file("NEWS", package = "gsubfn"))\cr
 Wish List\tab file.show(system.file("WISHLIST", package = "gsubfn"))\cr
 Thanks file\tab file.show(system.file("THANKS", package = "gsubfn"))\cr
 License\tab file.show(system.file("COPYING", package = "gsubfn"))\cr
-Demo\tab demo("chron")\cr
+Demo\tab demo("gsubfn-chron")\cr
 Demo\tab demo("gsubfn-cut")\cr
-Demo\tab demo("gries")\cr
-Demo\tab demo("si")\cr
+Demo\tab demo("gsubfn-gries")\cr
+Demo\tab demo("gsubfn-si")\cr
 This File\tab package?gsubfn\cr
 Help files\tab ?gsubfn, ?strapply, ?cati, ?cati0, ?cat0, ?paste0\cr
 More Help files\tab ?as.function.format, ?match.funfn, ?"\$.fn"\cr
