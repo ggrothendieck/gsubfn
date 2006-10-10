@@ -31,6 +31,7 @@ News\tab file.show(system.file("NEWS", package = "gsubfn"))\cr
 Wish List\tab file.show(system.file("WISHLIST", package = "gsubfn"))\cr
 Thanks file\tab file.show(system.file("THANKS", package = "gsubfn"))\cr
 License\tab file.show(system.file("COPYING", package = "gsubfn"))\cr
+Demo\tab demo("chron")\cr
 Demo\tab demo("gsubfn-cut")\cr
 Demo\tab demo("gries")\cr
 This File\tab package?gsubfn\cr
