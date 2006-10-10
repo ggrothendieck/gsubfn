@@ -1,3 +1,4 @@
-chron		read in zoo data with chron datetimes
-gries		Stefan Gries' Linguistics code
-gsubfn-cut	Use strapply to extract endpoints from cut labels
+chron		read in zoo data with chron datetimes.
+gries		Stefan Gries' Linguistics code.
+gsubfn-cut	Use strapply to extract endpoints from cut labels.
+si		Replace SI scale letter with number,

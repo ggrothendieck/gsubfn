@@ -30,12 +30,13 @@ fn <- structure(NA, class = "fn")
 		nm <- names(mc1)
 		if (is.null(nm)) nm <- rep("", length(args))
 
-		idx <- match("simplify", tolower(nm), nomatch = 0)
-		if (idx > 0) mcList <- mcList[-idx]
-		mcList <- as.list(mc)[-1]
-		mcListE <- lapply(mcList, eval.parent)
+		mcList <- as.list(mc1)
+		p <- parent.frame()
+		mcListE <- lapply(mcList, eval, p)
 
+		# if simplify found set it and remove it from lists
 		simplify <- NULL
+		idx <- match("simplify", tolower(nm), nomatch = 0)
 		if (idx > 0) {
 			if (!is.logical(mcListE[[idx]])) {
 				simplify <- mcListE[[idx]]
@@ -45,19 +46,28 @@ fn <- structure(NA, class = "fn")
 			}
 		}
 
+		# arg1.idx is the location of argument 1 in mcList
+		# is.fo is a logical vector indicating whether
+		# each list element is or is not a formula
+		# is.funfo is true for formulas to be translated
 
 
 		is.fo <- sapply(mcListE, function(x) is(x, "formula"))
+		arg1.idx <- 0
+		if (is(args[[1]], "formula"))
+		   for(i in seq(along = mcListE))
+		      if (is.fo[i] && format(mcList[[i]]) == format(args[[1]]))
+		         arg1.idx <- i
 		num.fo <- sum(is.fo)
-
-		is.funfo <- is.fo & (num.fo == 1 | seq(along = mcList) > 1 | 
+		is.funfo <- is.fo & (num.fo == 1 | 
+			seq(along = mcList) != arg1.idx | 
 			nm == "FUN")
 	
 		#for(i in seq(along = args)) {
 		#   if (is.fo[i] && (num.fo == 1 || i > 1 || nm[[i]] == "FUN"))
 		#         mcList[[i]] <- as.function(args[[i]])
 		for(i in seq(along = mcList)) {
-		   if (is.fo[i] && (num.fo == 1 || i > 1 || nm[[i]] == "FUN")) {
+		   if (is.funfo[i]) {
 		         # mcList[[i]] <- as.function(args[[i]])
 			 mcList[[i]] <- as.function(mcListE[[i]])
 		   }

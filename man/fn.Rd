@@ -52,13 +52,12 @@
    # fn$summaryBy(.~Plant,CO2[-(2:3)],FUN=~mean(range(x)), pref='midrange')
 }
 
-   # generalized inner product
-   # can replace sum(x*y) with any other expression of interest
+   # generalized matrix product
+   # can replace sum(x*y) with any other inner product of interest
+   # this example just performs matrix multiplication of a times b
    a <- matrix(4:1, 2)
    b <- matrix(1:4, 2)
    fn$apply(b, 2, x ~ fn$apply(a, 1, y ~ sum(x*y)))
-
-   a %*% b # same
 
    # integration
    fn$integrate(~1/((x+1)*sqrt(x)), lower = 0, upper = Inf)

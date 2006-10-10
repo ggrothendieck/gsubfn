@@ -10,7 +10,6 @@
 \usage{
 gsubfn(pattern, replacement, x, backref, USE.NAMES = FALSE, env = parent.frame(), ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{pattern}{ Same as \code{pattern} in \code{\link{gsub}} }
   \item{replacement}{ A function or a formula.  See Details. }
@@ -39,6 +38,7 @@ Normally this is left at its default value.}
   As in \code{\link{gsub}}.
 }
 \seealso{ \code{\link{gsub}}, \code{\link{strapply}} }
+
 \examples{
 
 # adds 1 to each number in third arg
@@ -55,7 +55,7 @@ gsubfn("([0-9]+):([0-9]+)", z + x + y ~ as.numeric(x) + as.numeric(y), s)
 gsubfn("([0-9]+):([0-9]+)", ~ as.numeric(x) + as.numeric(y), s, backref = -2)
 
 # default pattern for gsubfn does quasi-perl-style string interpolation
-gsubfn( , , "pi = $pi, 2pi = `2*pi`") 
+gsubfn( , , "pi = \\$pi, 2pi = `2*pi`") 
 
 # Extracts numbers from string and places them into numeric vector v.
 # Normally this would be done in strapply instead.
@@ -72,13 +72,6 @@ gsubfn("\\\\B.", tolower, "I LIKE A BANANA SPLIT", perl = TRUE)
 # replaces numbers with that many Xs
 gsubfn("[[:digit:]]+", ~ paste(rep("X", n)), "5.2")
 
-# given number possibly followed by SI letter (e.g. 32.5k where k means 1000)
-# replace letter with e followed by appropriate digits.
-# (see formatEng2R by Hans-Joerg Bibiko in the R Wiki)
-conv <- c(y = "e-24", z = "e-21", a = "e-18", f = "e-15", p = "e-12", 
-    n = "e-9", µ = "e-6", m = "e-3", d = "e-1", c = "e-2", k = "e3", 
-    M = "e6", G = "e9", T = "e12", P = "e15", E = "e18", Z = "e21", Y = "e24") 
-gsubfn(".$", x ~ if (x %in% names(conv)) conv[x] else x, c("19", "32.5M"))
 }
 
 \keyword{character}
