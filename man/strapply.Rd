@@ -8,7 +8,7 @@ Similar to \code{"'gsubfn'"} except instead of performing substitutions
 it returns the output of \code{"'FUN'"}.}
 \usage{
 strapply(X, pattern, FUN = function(x, ...) x, ..., 
-   simplify = FALSE, USE.NAMES = FALSE)
+   simplify = FALSE, USE.NAMES = FALSE, combine = c)
 }
 \arguments{
   \item{X}{ list or (atomic) vector of character strings to be used. }
@@ -29,6 +29,9 @@ logical; if \code{"'TRUE'"} and if \code{"'X'"} is character, use
 \code{"'X'"} as
           'names' for the result unless it had names already.
 }
+  \item{combine}{multiple results from same string are combined
+     using this function.  The default is \code{"c"} and \code{"list"}
+     is another common choice.}
 }
 \details{
 For each character string in \code{"X"} the pattern is repeatedly
