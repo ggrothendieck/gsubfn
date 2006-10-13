@@ -24,14 +24,13 @@ strapply(X, pattern, FUN = function(x, ...) x, ...,
           If function, that function is applied to the result with each
           component of the result passed as a separate argument.  Typically
           if the form is used it will typically be specified as rbind.}
-  \item{USE.NAMES}{ 
-logical; if \code{"'TRUE'"} and if \code{"'X'"} is character, use 
-\code{"'X'"} as
-          'names' for the result unless it had names already.
-}
+  \item{USE.NAMES}{ logical; if \code{"'TRUE'"} and if \code{"'X'"} is 
+	character, use \code{"'X'"} as
+          'names' for the result unless it had names already.}
   \item{combine}{multiple results from same string are combined
-     using this function.  The default is \code{"c"} and \code{"list"}
-     is another common choice.}
+     using this function.  The default is \code{"c"}. \code{"list"}
+     is another common choice.  The default may change to be \code{"list"}
+     in the future.}
 }
 \details{
 For each character string in \code{"X"} the pattern is repeatedly
@@ -66,9 +65,11 @@ strapply(x, "(.)(?=(....))",  paste0, backref = -2, perl = TRUE)[[1]]
 # Fourth gives list of two character vectors. Fifth is the same.
 strapply("a:b c:d", "(.):(.)", c)[[1]]
 strapply("a:b c:d", "(.):(.)", list, simplify = unlist) # same
+
 strapply("a:b c:d", "(.):(.)", list)[[1]]
-strapply("a:b c:d", "(.):(.)", ~ list(c(...)))[[1]]
-strapply("a:b c:d", "(.):(.)", ~ list(c(...)), simplify = c)
+
+strapply("a:b c:d", "(.):(.)", c, combine = list)[[1]]
+strapply("a:b c:d", "(.):(.)", c, combine = list, simplify = c) # same
 
 # find second CPU_SPEED value given lines of config file
 Lines <- c("DEVICE = 'PC'", "CPU_SPEED = '1999', '233'")
