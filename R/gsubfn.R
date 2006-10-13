@@ -1,4 +1,3 @@
-
 # supports function as replacement argument.  Matched string is passed to
 # function as arg1, with subsequent args being the backreferences.  
 # Backref is number of backrefs that are passed to function and is normally 
@@ -41,7 +40,9 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
    stopifnot(is.character(pattern), is.character(x), is.function(replacement))
    force(env)
    gsub.function <- function(x) {
-      x <- base::gsub('"', '\\\\"', x)
+      # x <- base::gsub('"', '\\\\"', x)
+      x <- chartr('"', '\b', x)
+      pattern <- chartr('"', '\b', pattern)
       pattern <- paste("(", pattern, ")", sep = "")
       repl <- function(i,j) {  
 	      rs <- paste('"\\', seq(i,j), '"', collapse = ",", sep = "") 
@@ -52,7 +53,8 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
       }
       z <- repl(i,j)
       z <- paste('c("', z, '")', sep = "")
-      paste(eval(parse(text = z)), collapse = "")
+      z <- gsub('\b', '\\\\"', z)
+      out <- paste(eval(parse(text = z)), collapse = "")
    }
    sapply(x, gsub.function, USE.NAMES = USE.NAMES)
 }

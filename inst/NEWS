@@ -1,3 +1,9 @@
+Changes in 0.2-2
+
+	o added combine= argument to strapply
+
+	o fixed bug associated with using double quotes in gsub (which
+	  also could affect strapply and cati).
 
 Changes in 0.2-1 
 
