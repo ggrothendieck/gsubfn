@@ -70,7 +70,7 @@ strapply("12;34:56,89,,12", "[0-9]+", simplify = c)
 gsubfn("\\\\B.", tolower, "I LIKE A BANANA SPLIT", perl = TRUE)
 
 # replaces numbers with that many Xs
-gsubfn("[[:digit:]]+", ~ paste(rep("X", n)), "5.2")
+gsubfn("[[:digit:]]+", ~ paste(rep("X", n), collapse = ""), "5.2")
 
 }
 

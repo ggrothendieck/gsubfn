@@ -41,22 +41,27 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
    force(env)
    gsub.function <- function(x) {
       # x <- base::gsub('"', '\\\\"', x)
-      x <- chartr('"', '\b', x)
-      pattern <- chartr('"', '\b', pattern)
+      # x <- chartr('"', '\b', x)
+      # pattern <- chartr('"', '\b', pattern)
       pattern <- paste("(", pattern, ")", sep = "")
       repl <- function(i,j) {  
-	      rs <- paste('"\\', seq(i,j), '"', collapse = ",", sep = "") 
-	      rs <- paste('",replacement(', rs, '),"', sep = "")
+	      rs <- paste('\\', seq(i,j), collapse = "\2", sep = "") 
+	      rs <- paste('\1\2', rs, '\1', sep = "")
               # if backref= is too large, reduce by 1 and try again
 	      tryCatch(base::gsub(pattern, rs, x, ...),
 			error = function(x) if (j > i) repl(i,j-1) else stop(x))
       }
       z <- repl(i,j)
-      z <- paste('c("', z, '")', sep = "")
-      z <- gsub('\b', '\\\\"', z)
-      out <- paste(eval(parse(text = z)), collapse = "")
+      z <- strsplit(z, "\1")[[1]]
+      f <- function(s) {
+	if (nchar(s) > 0 && substring(s,1,1) == "\2") {
+	        s <- sub("\2$", "\2\2", s)
+		do.call(replacement, as.list(strsplit(s, "\2")[[1]][-1]))
+        } else s
+      }
+      z <- paste(sapply(z, f), collapse = "")
+      # gsub('\b', '\\\\"', z)
    }
    sapply(x, gsub.function, USE.NAMES = USE.NAMES)
 }
-
 
