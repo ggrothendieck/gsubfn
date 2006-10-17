@@ -6,6 +6,8 @@ Changes in 0.2-3
 
 	o fixed bug in one of the examples in example(gsubfn)
 
+	o strapply fixes
+
 Changes in 0.2-2
 
 	o added combine= argument to strapply
