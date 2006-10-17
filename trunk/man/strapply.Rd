@@ -53,8 +53,7 @@ s <- c("123abc", "12cd34", "1e23")
 t(strapply(s, "^([[:digit:]]+)(.*)", c, simplify = TRUE)) 
 
 # same but create data.frame
-strapply(s, "^([[:digit:]]+)(.*)", ~ data.frame(string, digits, rest), 
-   simplify = rbind)
+strapply(s, "^([[:digit:]]+)(.*)", c, simplify = rbind)[[1]]
 
 # running window of 5 characters using 0-lookahead perl regexp
 x <- "abcdefghijkl"
@@ -73,9 +72,9 @@ strapply("a:b c:d", "(.):(.)", c, combine = list, simplify = c) # same
 
 # find second CPU_SPEED value given lines of config file
 Lines <- c("DEVICE = 'PC'", "CPU_SPEED = '1999', '233'")
-parms <- strapply(Lines, "[^ ',=]+", c, USE.NAMES = TRUE)
-parms <- lapply(parms, "[", -1)
-parms[["CPU_SPEED"]][2]
+parms <- strapply(Lines, "[^ ',=]+", c, USE.NAMES = TRUE, 
+	simplify = ~ lapply(list(...), "[", -1))
+parms$CPU_SPEED[2]
 
 \dontrun{
 # convert to chron
