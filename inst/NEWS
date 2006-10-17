@@ -1,9 +1,18 @@
+Changes in 0.2-3
+
+	o increased string lengths accepted by gsubfn by eliminating
+	  use of the R parse() command. [Thanks to Stefan Th. Gries
+ 	  for reporting problem.]
+
+	o fixed bug in one of the examples in example(gsubfn)
+
 Changes in 0.2-2
 
 	o added combine= argument to strapply
 
 	o fixed bug associated with using double quotes in gsub (which
-	  also could affect strapply and cati).
+	  also could affect strapply and cati).  [Thanks to Stefan Th.
+	  Gries for reporting problem.]
 
 Changes in 0.2-1 
 
