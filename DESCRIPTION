@@ -17,6 +17,6 @@ Description: gsubfn is like gsub but can take a replacement function
    lapply, optim, integrate, xyplot and any other function that 
    expects another function as an input argument.
 Depends: R (>= 2.4.0), proto
-Suggests: boot, doBy, grid, lattice, quantreg, reshape
+Suggests: boot, chron, doBy, grid, lattice, quantreg, reshape, zoo
 License: GPL (Version 2 or later)
 URL: http://code.google.com/p/gsubfn/
