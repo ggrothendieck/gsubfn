@@ -5,7 +5,7 @@
 \description{
   When used in the form \code{fn\$somefunction(...arguments...)}
   it converts formulas among the arguments of somefunction to
-  functions using \code{as.function.formula}.  It uses a heuristic
+  functions using \code{\link{as.function.formula}}.  It uses a heuristic
   to decide which formulas to convert.  If any of the following
   are true then that argument is converted from a formula to a
   function: (1) there is only one formula among the arguments,
@@ -23,6 +23,7 @@
 \value{
   Returns a function.
 }
+\seealso{\link{as.function.formula}}
 \examples{
 
    # use of formula to specify a function.
