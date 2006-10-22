@@ -257,6 +257,9 @@ For example, \code{"G"} means giga and corresponds to \code{"e9"}.
    gsubfn('[MGP]$', ~ c(M = 'e6', G = 'e9', P = 'e12')[[x]], dat) 
 @
 
+A variation of the last example is available via the command
+\code{demo("gsubfn-si")}.
+
 \section[gsubfn with proto objects]{\code{"gsubfn"} with \pkg{proto} objects}
 \label{sec:gsubfn with proto objects}
 
@@ -324,7 +327,7 @@ has a default \code{sep} of \code{""}.
    p$count
 @
 
-\code{pre} and \code{post}.
+\textit{\code{pre} and \code{post}}.
 \code{gsubfn} knows about three methods: \code{fun} which we
 have already seen as well as \code{pre} and \code{post}.  The
 latter two are optional and are run before each string and after each string
@@ -361,6 +364,9 @@ gsubfn("\\w+", pwords, "the dog and the cat are in the house")
 ls(pwords)
 dput(pwords$words)
 @
+
+Additional examples of the use of \pkg{proto} objects with \code{gsubfn}
+are available via the command \code{demo("gsubfn-proto")}.
 
 \section[strapply]{\code{"strapply"}}
 \label{sec:strapply}
