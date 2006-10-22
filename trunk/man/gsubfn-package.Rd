@@ -36,9 +36,9 @@ Demo\tab demo("gsubfn-cut")\cr
 Demo\tab demo("gsubfn-gries")\cr
 Demo\tab demo("gsubfn-si")\cr
 This File\tab package?gsubfn\cr
-Help files\tab ?gsubfn, ?strapply, ?cati, ?cati0, ?cat0, ?paste0\cr
-More Help files\tab ?as.function.format, ?match.funfn, ?"\$.fn"\cr
-Home page\tab http://code.google.com/p/gsubfn/\cr
+Help files\tab ?\link{gsubfn}, ?\link{strapply}, ?\link{cati}, ?\link{cati0}, ?\link{cat0}, ?\link{paste0}\cr
+More Help files\tab ?\link{as.function.formula}, ?\link{match.funfn}, ?\link{fn}\cr
+Home page\tab \url{http://code.google.com/p/gsubfn/}\cr
 }
 
 }
@@ -58,9 +58,9 @@ strapply("12abc34 55", "[0-9]+")
 
 fn$optim(1, ~ x^2, method = "CG")
 
-fn$integrate(~ sin(x) + sin(x), 0, pi/2)
+fn$integrate(~ sin(x) + cos(x), 0, pi/2)
 
-fn$lapply(list(1:4, 1:5), ~ LETTERS[x])
+fn$lapply(list(1:4, 1:5), ~ LETTERS[x]) # list(LETTERS[1:4], LETTERS[1:5])
 
 fn$mapply(~ seq_len(x) + y * z, 1:3, 4:6, 2) # list(9, 11:12, 13:15)
 

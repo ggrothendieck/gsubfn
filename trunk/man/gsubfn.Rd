@@ -37,7 +37,7 @@ Normally this is left at its default value.}
 \value{
   As in \code{\link{gsub}}.
 }
-\seealso{ \code{\link{gsub}}, \code{\link{strapply}} }
+\seealso{ \code{\link{gsub}}, \code{\link{strapply}}, \code{\link{cati}} }
 
 \examples{
 

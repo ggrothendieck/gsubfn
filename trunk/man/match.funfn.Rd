@@ -25,7 +25,7 @@ match.funfn(x, ...)
 \value{
   Returns a function.
 }
-\seealso{ See Also as \code{\link{match.fun}}, 
+\seealso{ See Also \code{\link{match.fun}}, 
 \code{\link{as.function.formula}}.}
 \examples{
 # return first argument evaluated at second argument squared.
