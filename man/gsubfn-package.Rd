@@ -5,24 +5,39 @@
 gsubfn
 }
 \description{
-Generalized \code{"'gsub'"} and associated function.
+Generalized \code{"'gsub'"} and associated functions.
 }
 \details{
-gsubfn is an R package that has two purposes: (1) it provides a generalization
-of \code{gsub} called \code{gsubfn} which uses a replacement function 
-(rather than a
-replacement string) together with a variety of associated functions, such
-as \code{strapply} and \code{cati}, which build upon it. 
-Applications include string 
-transforms such as parsing strings based
-on content rather than delimiters and perl-style string interpolation. 
-(2) it provides a compact method of passing anonymous
-functions by using formula, rather than function, notation. This facilitates
-writing streamlined expressions to call functions whose arguments pass
-functions. This has application to the use of
-apply, lapply, mapply, sapply, tapply, by,
+gsubfn is an R package used for string matching, substitution and parsing. A
+seemingly small generalization of gsub, namely allow the replacement string to
+be a replacement function, formula or proto object, can result in significantly
+increased power and applicability.  The resulting function, gsubfn is the
+namesake of this package.  Built on top of gsubfn is strapply which is similar
+to gsubfn except that it returns the output of the function rather than
+substituting it back into the source string. A second included application of
+gsubfn, cati, is like cat but provides quasi-perl style string interpolation of
+its arguments. In the case of a replacement formula the formula is interpreted
+as a function with the body of the function begin the right hand side of
+the formula. In the case of a replacement proto
+object the object space is used to store persistant data to be communicated
+from one function invocation to the next as well as to store the replacement
+function/method itself.
+
+The ability to have formula arguments that represent functions can be used not
+only in the functions of the gsubfn package but can also be used with any R
+function that itself passes functions without modifying its source. 
+Such functions might include apply, lapply, mapply, sapply, tapply, by,
 integrate, optim, outer and other functions in the core of R and in addon
-packages. 
+packages.  Just 
+preface any R function with \code{fn\$} and
+subject to certain rules which are intended to distinguish which formulas are
+intended to be functions and which are not, the formula arguments will be
+translated to functions, e.g.  \code{fn$integrate(~ x^2, 0, 1)}
+
+\code{match.funfn}, is provided to allow developers to readily build this
+functionality into their own functions so that even the \code{fn\$} 
+prefix need not be used.
+
 
 The 
 following are sources of information on \code{"gsubfn"}:
@@ -39,6 +54,7 @@ This File\tab package?gsubfn\cr
 Help files\tab ?\link{gsubfn}, ?\link{strapply}, ?\link{cati}, ?\link{cati0}, ?\link{cat0}, ?\link{paste0}\cr
 More Help files\tab ?\link{as.function.formula}, ?\link{match.funfn}, ?\link{fn}\cr
 Home page\tab \url{http://code.google.com/p/gsubfn/}\cr
+Vignette\tab vignette("gsubfn")\cr
 }
 
 }
@@ -49,6 +65,16 @@ gsubfn("[[:digit:]]+", function(x) as.numeric(x)+1, "(10 20)(100 30)")
 
 # same
 gsubfn("[[:digit:]]+", ~ as.numeric(x)+1, "(10 20)(100 30)") 
+
+# place {1} after first word, {2} after second word
+p <- proto(fun = function(this, x) paste0(x, "{", count, "}" ))
+gsubfn("\\w+", p, "hello world")
+
+# replace each number with its cumulative sum
+pcumsum <- proto(pre = function(this) this$sum <- 0,
+   fun = function(this, x) { sum <<- sum + as.numeric(x) }
+)
+gsubfn("[0-9]+", pcumsum, "10 abc 5 1")
 
 # perl-style string interpolation
 cati("pi = $pi, e = `exp(1)`\\n")
@@ -74,3 +100,5 @@ square(function(x) exp(x)/x, pi) # same
 
 }
 \keyword{ package }
+
+
