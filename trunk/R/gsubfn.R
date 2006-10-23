@@ -107,6 +107,7 @@ function (X, pattern, FUN = function(x, ...) x, ...,
 		proto(
 			pre = function(this) { 
 				this$first <- TRUE
+				v <- NULL
 				if (!is.null(FUN[["pre"]])) FUN$pre()
 			},
 			fun = function(this, ...) {
@@ -116,17 +117,26 @@ function (X, pattern, FUN = function(x, ...) x, ...,
 				first <<- FALSE
 			},
 			post = function(this) {
+				# cat("A:", first, "\n")
+				if (first) this$v <- NULL
 				if (!is.null(FUN[["post"]])) FUN$post()
 			},
 		    ) 
 	} else {
 		FUN <- match.funfn(FUN)
 		proto(
-			pre = function(this) { this$first <- TRUE },
+			pre = function(this) { 
+				this$first <- TRUE
+				this$v <- NULL 
+			},
 			fun = function(this, ...) {
 				this$v <- if (first) combine(FUN(...))
 				else c(v, combine(FUN(...)))
 				first <<- FALSE
+			},
+			post = function(this) { 
+				# cat("B:", first, "\n")
+				if (first) this$v <- NULL  
 			}
 		)
         }

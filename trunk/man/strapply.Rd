@@ -16,7 +16,8 @@ strapply(X, pattern, FUN = function(x, ...) x, ...,
           character string for \code{"'fixed = TRUE')"} to be matched in the
           given character vector.
 }
-  \item{FUN}{ the function or formula to be applied to each element of 
+  \item{FUN}{ a function, formula or proto object to be applied to each 
+          element of 
           \code{"'X'"}.  See discussion in \code{\link{gsubfn}}. }
   \item{\dots}{ optional arguments to \code{"'gsubfn'"}. }
   \item{simplify}{  logical or function.  If logical, should the result be 
@@ -33,11 +34,15 @@ strapply(X, pattern, FUN = function(x, ...) x, ...,
      in the future.}
 }
 \details{
-For each character string in \code{"X"} the pattern is repeatedly
+If \code{FUN} is a function then for
+each character string in \code{"X"} the pattern is repeatedly
 matched, 
 each such match along with
-backreferences, if any, are passed to 
-the function \code{"FUN"} and the output is returned as a list.
+back references, if any, are passed to 
+the function \code{"FUN"} and the output of \code{FUN} is returned as a list.
+If \code{FUN} is a formula or proto object then it is interpreted 
+to the way discussed in \code{\link{gsubfn}}.
+
 }
 \value{
 A list of character strings.  
@@ -75,6 +80,10 @@ Lines <- c("DEVICE = 'PC'", "CPU_SPEED = '1999', '233'")
 parms <- strapply(Lines, "[^ ',=]+", c, USE.NAMES = TRUE, 
 	simplify = ~ lapply(list(...), "[", -1))
 parms$CPU_SPEED[2]
+
+# return first two words in each string
+p <- proto(fun = function(this, x) if (count <=2) x)
+strapply(c("the brown fox", "the eager beaver"), "\\\\w+", p)
 
 \dontrun{
 # convert to chron
