@@ -460,22 +460,47 @@ strapply(' a b c d e f ', ' [a-z](?=( [a-z] ))', paste0, perl = TRUE)[[1]]
 Wherever a function can be specified in \code{gsubfn} and \code{strapply}
 one can specify a formula instead as discussed previously.  This facility
 has been extended to work with any \proglang{R} function.
-Just preface the function with \code{fn\$} and formula arguments will be intercepted 
+Just preface the function with \code{fn\$} and 
+
+\begin{enumerate}
+\item{formula arguments will be intercepted 
 and translated to functions allowing a compact representation of the call. 
+Which formulas are actually translated to functions is dependent on rules
+to be discussed.
 The right hand side of the formula 
 represents the body of the function.
 The left hand side of the formula represents the arguments and defaults to the 
 free variables in the order encountered.  The environment of
 the function is set to the environment of the formula.
 \code{letters}, \code{LETTERS} and \code{pi} are not considered free variables
-and will not appear in arguments.
-\code{fn\$} also intercepts the \code{simplify} argument if its value is a function. 
-In that case it passes the result through \code{do.call(simplify, result)}. 
-Lastly, if \code{fn\$} encounters any character arguments whose first
-character is \code{"\\1"} then that argument quasi-perl style string
-interpolation is performed on it such that a dollar sign followed by 
-a variable is evaluated as that variable and backticked \code{R}
-expressions are evaluated.
+and will not appear in arguments. }
+\item{character arguments will be intercepted and quasi-perl style string
+interpolation will be performed.  Which character strings to operate on
+are dependent on rules to be discussed.}
+\item{the \code{simplify} argument if its value is a function
+is intercepted.
+In 
+that case if \code{result} is the result of running the function without 
+the \code{simplify} argument then it returns
+\code{do.call(simplify, result)}.
+\end{enumerate}
+The rules for determining which formulas to translate and which character
+strings to apply quasi-perl style string interpolation are as follows:
+\begin{enumerate}
+\item{any formula argument 
+that has been specified with a double \code{\~{}}, i.e.
+\code{\~{}\~{}}, is converted to a function after removing the double
+\code{\~{}} and replacing it with a single \code{\~{}}.}
+\item{any character string argument that has been specified with a first
+character of \code{\backslash{}1} has string interpolation applied to it
+after the \code{\backslash{}1} is removed.}
+\item{if there are no formulas with double \code{\~{}} and no
+character strings beginning with \code{\backslash{}1} then all formulas
+are converted to functions and if there are no formulas then all
+character strings have string interpolation done.}
+\end{enumerate}
+The last possibility is the actually the most commonly used and 
+almost all our examples will illustrate that case.
 For example,
 
 <<gsubfn-fn>>=
@@ -490,23 +515,18 @@ fn$by(CO2[4:5], CO2[2], x ~ coef(lm(uptake ~ ., x)), simplify = rbind)
 
 @
 
-The first argument is often intended to be formula.
-\code{lm} and lattice \code{xyplot} illustrate this.
-Thus
-formulas in the first argument are only converted to functions
-if they are the only formula among the arguments or if they
-have a formal argument name of \code{FUN}.  Formulas among
-the second and subsequent arguments are always converted.
-That allows the conversion to correctly handle situations like the
-following
-where the first formula is correctly left untranslated. This
+Here is an example where we have two formulas, one of which should
+be translated and another should not.  In this case we 
+place a double \code{\~{}} in the second formula to signify that
+one it represents a function.
+The first formula is then correctly left untranslated. This
 example places a panel number in the body of each panel.
 
 <<gsubfn-fn-lattice,eval=FALSE>>=
 library(lattice)
 library(grid)
 print(fn$xyplot(uptake ~ conc | Plant, CO2,
-      panel = ~ { panel.xyplot(...); grid.text(panel.number(), .1, .85) }))
+      panel = ~~ { panel.xyplot(...); grid.text(panel.number(), .1, .85) }))
 @
 
 \begin{figure}[hpb]
@@ -552,24 +572,27 @@ of each of \code{conc} and \code{uptake} for each \code{Type}.
 The calculation is repeated using \code{cast} from the \pkg{reshape}
 package and again using \code{summaryBy} from the \pkg{doBy}
 package.
+Note that in two of the examples there are two formulas each and
+one is to be regarded as a function and the other not so we must
+use double \code{~{}} to distinguish the cases.
 <<gsubfn-fn-aggregate-0,echo=FALSE,results=hide>>=
 fn$aggregate(CO2[4:5], CO2[3], ~ mean(range(x)))
 
 library(reshape)
-fn$cast(Type ~ variable, data = melt(CO2, id = 1:3), ~ mean(range(x)))
+fn$cast(Type ~ variable, data = melt(CO2, id = 1:3), ~~ mean(range(x)))
 
 library(doBy) # need version 0.9 or later
-fn$summaryBy(. ~ Treatment, CO2[3:5], FUN = ~ c(midrange = mean(range(x))))
+fn$summaryBy(. ~ Treatment, CO2[3:5], FUN = ~~ c(midrange = mean(range(x))))
 @
 
 <<gsubfn-fn-aggregate>>=
 fn$aggregate(CO2[4:5], CO2[3], ~ mean(range(x)))
 
 library(reshape)
-fn$cast(Treatment ~ variable, data = melt(CO2, id = 1:3), ~ mean(range(x)))
+fn$cast(Treatment ~ variable, data = melt(CO2, id = 1:3), ~~ mean(range(x)))
 
 library(doBy) # need version 0.9 or later
-fn$summaryBy(. ~ Treatment, CO2[3:5], FUN = ~ c(midrange = mean(range(x))))
+fn$summaryBy(. ~ Treatment, CO2[3:5], FUN = ~~ c(midrange = mean(range(x))))
 @
 
 
@@ -732,7 +755,10 @@ formulation:
 fn$sapply( 1:10, ~ if (x%%2==0) x^2, simplify = c)
 @
 
-
+Here is an example of string interpolation:
+<<gsubfn-fn-cat>>=
+fn$cat("pi = $pi, exp = `exp(1)`\n"}
+@
 
 \section[match.funfn and as.function.formula]{\code{match.funfn} and 
 \code{as.function.formula}}
