@@ -1,5 +1,7 @@
 \name{gsubfn}
 \alias{gsubfn}
+\alias{cat0}
+\alias{paste0}
 
 \title{ Pattern Matching and Replacement }
 \description{
@@ -54,11 +56,16 @@ Normally this is left at its default value.}
  methods in the proto object which are fired at the beginning and
  end of each string (not each match).  They each take one argument,
  the object.
+
+ Two utility functions \code{cat0} and \code{paste0}, which are like
+ \code{\link{cat}} and \code{\link{paste}} except that their default
+ code{sep} value is \code{""}, are included.
 }
 \value{
   As in \code{\link{gsub}}.
 }
-\seealso{ \code{\link{gsub}}, \code{\link{strapply}}, \code{\link{cati}} }
+\seealso{ \code{\link{gsub}}, \code{\link{strapply}}, \code{\link{cat}},
+\code{\link{paste}} }
 
 \examples{
 

@@ -53,6 +53,8 @@ fn <- structure(NA, class = "fn")
 
 
 		is.fo <- sapply(mcListE, function(x) is(x, "formula"))
+		is.char <- sapply(mcListE, function(x) 
+			is.character(x) && substring(x, 1, 1) == "\1")
 		arg1.idx <- 0
 		if (is(args[[1]], "formula"))
 		   for(i in seq(along = mcListE))
@@ -71,6 +73,9 @@ fn <- structure(NA, class = "fn")
 		         # mcList[[i]] <- as.function(args[[i]])
 			 mcList[[i]] <- as.function(mcListE[[i]])
 		   }
+		   if (is.char[i]) {
+			mcList[[i]] <- gsubfn(x = substring(mcList[[1]], 2))
+		   }
 		}
 		# out <- do.call(FUN, args)
 		out <- do.call(FUN, mcList, env = parent.frame())
@@ -86,5 +91,7 @@ fn <- structure(NA, class = "fn")
 # fn$list(x ~ 2*x)
 # fn$mapply(~ x + y, 1:10, 21:30)
 
+cat0 <- function(..., sep = "") cat(..., sep = sep)
+paste0 <- function(..., sep = "") paste(..., sep = sep)
 
 

@@ -12,6 +12,16 @@
   (2) the name of the formula argument is \code{FUN} or
   (3) the formula argument is not the first argument in the
   argument list.
+
+  It also removes any \code{simplify} argument whose value is
+  not logical and after processing it in the same way just
+  discussed in order to interpret it as a function it passes
+  the output of the command through \code{do.call(simplify, output)}.
+
+  It also performs quasi-perl style string interpolation on any 
+  character string arguments that begin with \code{\\1} removing
+  the \code{\\1} character.  A dollar sign followed by a variable
+  name or \code{R} code within backticks are both evaluated.
 }
 \usage{
 "$.fn"(x, FUN) 

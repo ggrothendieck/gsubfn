@@ -12,16 +12,17 @@ gsubfn is an R package used for string matching, substitution and parsing. A
 seemingly small generalization of gsub, namely allow the replacement string to
 be a replacement function, formula or proto object, can result in significantly
 increased power and applicability.  The resulting function, gsubfn is the
-namesake of this package.  Built on top of gsubfn is strapply which is similar
-to gsubfn except that it returns the output of the function rather than
-substituting it back into the source string. A second included application of
-gsubfn, cati, is like cat but provides quasi-perl style string interpolation of
-its arguments. In the case of a replacement formula the formula is interpreted
-as a function with the body of the function begin the right hand side of
+namesake of this package.  
+In the case of a replacement formula the formula is interpreted
+as a function with the body of the function represented by the right hand side of
 the formula. In the case of a replacement proto
 object the object space is used to store persistant data to be communicated
 from one function invocation to the next as well as to store the replacement
 function/method itself.
+
+Built on top of gsubfn is strapply which is similar
+to gsubfn except that it returns the output of the function rather than
+substituting it back into the source string. 
 
 The ability to have formula arguments that represent functions can be used not
 only in the functions of the gsubfn package but can also be used with any R
@@ -33,6 +34,8 @@ preface any R function with \code{fn\$} and
 subject to certain rules which are intended to distinguish which formulas are
 intended to be functions and which are not, the formula arguments will be
 translated to functions, e.g.  \code{fn$integrate(~ x^2, 0, 1)}
+\code{fn\$} also performs quasi-perl style string interpolation on any
+character arguments beginning with \code{\\1}.
 
 \code{match.funfn}, is provided to allow developers to readily build this
 functionality into their own functions so that even the \code{fn\$} 
@@ -51,7 +54,7 @@ Demo\tab demo("gsubfn-cut")\cr
 Demo\tab demo("gsubfn-gries")\cr
 Demo\tab demo("gsubfn-si")\cr
 This File\tab package?gsubfn\cr
-Help files\tab ?\link{gsubfn}, ?\link{strapply}, ?\link{cati}, ?\link{cati0}, ?\link{cat0}, ?\link{paste0}\cr
+Help files\tab ?\link{gsubfn}, ?\link{strapply}, ?\link{cat0}, ?\link{paste0}\cr
 More Help files\tab ?\link{as.function.formula}, ?\link{match.funfn}, ?\link{fn}\cr
 Home page\tab \url{http://code.google.com/p/gsubfn/}\cr
 Vignette\tab vignette("gsubfn")\cr
@@ -75,9 +78,6 @@ pcumsum <- proto(pre = function(this) this$sum <- 0,
    fun = function(this, x) { sum <<- sum + as.numeric(x) }
 )
 gsubfn("[0-9]+", pcumsum, "10 abc 5 1")
-
-# perl-style string interpolation
-cati("pi = $pi, e = `exp(1)`\\n")
 
 # split out numbers
 strapply("12abc34 55", "[0-9]+")
