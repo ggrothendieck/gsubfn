@@ -2,6 +2,11 @@ Changes in 0.3-2
 
 	o revised gsubfn-packages.Rd
 
+	o fn$ now performs quasi-perl style interpolation on any character
+	  argument beginning with \1
+
+	o cati, cati0 removed since fn$cat and fn$cat0 can be used.
+
 Changes in 0.3-1
 
 	o fixed initialization bug in strapply
