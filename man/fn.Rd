@@ -39,7 +39,7 @@
    # use of formula to specify a function.
    # Note that LETTERS, letters and pi are automatically excluded from args
    fn$lapply(list(1:4, 1:3), ~ LETTERS[x])
-   fn$sapply(1:3, ~ sin((n-1):n * pi/180))
+   fn$sapply(1:3, ~ sin((n-1) * pi/180))
 
    # use of simplify = rbind instead of do.call(rbind, by(...)).
    # args to anonymous function are automatically determined.
@@ -51,16 +51,19 @@
    # mid range of conc and uptake by Plant
    fn$aggregate(CO2[,4:5], CO2[1], ~ mean(range(x)))
 
+   # string interpolation
+   j <- fn$cat("pi = $pi, exp = `exp(1)`\n")
+
 \dontrun{
 
    # same but use cast/melt from reshape package
    library(reshape)
-   fn$cast(Plant ~ variable, data = melt(CO2, id = 1:3), ~ mean(range(x)))
+   fn$cast(Plant ~ variable, data = melt(CO2, id = 1:3), ~~ mean(range(x)))
 
    # same
    # uncomment when new version of doBy comes out (expected shortly)
    # library(doBy)
-   # fn$summaryBy(.~Plant,CO2[-(2:3)],FUN=~mean(range(x)), pref='midrange')
+   # fn$summaryBy(.~Plant,CO2[-(2:3)],FUN= ~~mean(range(x)), pref='midrange')
 }
 
    # generalized matrix product
