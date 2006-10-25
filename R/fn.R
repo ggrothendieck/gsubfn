@@ -46,39 +46,55 @@ fn <- structure(NA, class = "fn")
 			}
 		}
 
-		# arg1.idx is the location of argument 1 in mcList
 		# is.fo is a logical vector indicating whether
-		# each list element is or is not a formula
-		# is.funfo is true for formulas to be translated
-
+		#    each list element is or is not a formula
+		# is.fo2 is a logical vector indicating whether each
+		#    list element has or does not have a ~~ (double ~)
 
 		is.fo <- sapply(mcListE, function(x) is(x, "formula"))
-		is.char <- sapply(mcListE, function(x) 
-			is.character(x) && substring(x, 1, 1) == "\1")
-		arg1.idx <- 0
-		if (is(args[[1]], "formula"))
+		any.fo <- any(is.fo)
+		is.fo2 <- sapply(mcListE, function(x) is(x, "formula") &&
+			length(x[[length(x)]]) > 1 &&
+			identical(x[[length(x)]][[1]], as.name("~")))
+		# change ~~ to ~
+		any.fo2 <- any(is.fo2)
+		if (any.fo2)
 		   for(i in seq(along = mcListE))
-		      if (is.fo[i] && format(mcList[[i]]) == format(args[[1]]))
-		         arg1.idx <- i
-		num.fo <- sum(is.fo)
-		is.funfo <- is.fo & (num.fo == 1 | 
-			seq(along = mcList) != arg1.idx | 
-			nm == "FUN")
-	
-		#for(i in seq(along = args)) {
-		#   if (is.fo[i] && (num.fo == 1 || i > 1 || nm[[i]] == "FUN"))
-		#         mcList[[i]] <- as.function(args[[i]])
-		for(i in seq(along = mcList)) {
-		   if (is.funfo[i]) {
-		         # mcList[[i]] <- as.function(args[[i]])
-			 mcList[[i]] <- as.function(mcListE[[i]])
-		   }
-		   if (is.char[i]) {
-			mcList[[i]] <- gsubfn(x = substring(mcList[[1]], 2))
+			if (is.fo2[i]) {
+			   len <- length(mcListE[[i]])
+			   mcListE[[i]][[len]] <- mcListE[[i]][[len]][[2]]
+			   mcListE[[i]] <- as.function(mcListE[[i]])
+			} 
+					
+		is.char <- sapply(mcListE, is.character)
+		any.char <- any(is.char)
+		is.chara <- sapply(mcListE, function(x) 
+			is.character(x) && substring(x, 1, 1) == "\1")
+		# remove leading \1 on character strings
+		any.chara <- any(is.chara)
+		if (any.chara)
+		   for(i in seq(along = mcListE))
+		      if (is.chara[i])
+			mcListE[[i]] <- gsubfn(x = substring(mcListE[[i]], 2))
+
+		# if no ~~ formulas and no \1 strings use default strategy
+		# of converting all formulas to functions and if no formulas
+		# performing perl-style interpolation on all strings
+		if (!any.fo2 && !any.chara) {
+		   if (any.fo) {
+		      for(i in seq(along = mcListE))
+		         if (is.fo[i])
+			    mcListE[[i]] <- as.function(mcListE[[i]])
+		   } else {
+		      if (any.char)
+		         for(i in seq(along = mcListE))
+		            if (is.char[i])
+			       mcListE[[i]] <- gsubfn(x = mcListE[[i]])
 		   }
 		}
+			
 		# out <- do.call(FUN, args)
-		out <- do.call(FUN, mcList, env = parent.frame())
+		out <- do.call(FUN, mcListE, env = parent.frame())
 		if (!is.null(simplify)) {
 			if(!is.list(out)) out <- list(out) 
 			out <- do.call(simplify, out)
@@ -93,5 +109,7 @@ fn <- structure(NA, class = "fn")
 
 cat0 <- function(..., sep = "") cat(..., sep = sep)
 paste0 <- function(..., sep = "") paste(..., sep = sep)
+
+
 
 
