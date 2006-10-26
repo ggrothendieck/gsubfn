@@ -1,3 +1,10 @@
+eval.with.vis <- function (expr) {
+     expr <- substitute(expr)
+     pf <- parent.frame()
+     tmp <- .Internal(eval.with.vis(expr, pf,
+         baseenv()))
+     tmp
+}
 
 as.function.formula <- function(x, ...) {
 	vars <- setdiff(all.vars(x[[2]]), c("letters", "LETTERS", "pi"))
@@ -94,12 +101,17 @@ fn <- structure(NA, class = "fn")
 		}
 			
 		# out <- do.call(FUN, args)
-		out <- do.call(FUN, mcListE, env = parent.frame())
+		# thanks Duncan for eval.with.vis !!!
+		out <- eval.with.vis(do.call(FUN, mcListE, env=parent.frame()))
+		vis <- out$visible
+		out <- out $value
 		if (!is.null(simplify)) {
 			if(!is.list(out)) out <- list(out) 
-			out <- do.call(simplify, out)
+			out <- eval.with.vis(do.call(simplify, out))
+			vis <- out$visible
+			out <- out$value
 		}
-		out
+		if (vis) out else invisible(out)
 	}
 }
 		

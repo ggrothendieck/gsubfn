@@ -15,6 +15,9 @@ Changes in 0.3-2
  	     or, if not, then all character strings are interpolated
           In most cases rule #3 is used.
 
+	o fn$f now returns invisibly if f does (thanks to Duncan Murdoch
+	  for eval.with.vis)
+
 Changes in 0.3-1
 
 	o fixed initialization bug in strapply
