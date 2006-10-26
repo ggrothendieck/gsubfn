@@ -757,7 +757,7 @@ fn$sapply( 1:10, ~ if (x%%2==0) x^2, simplify = c)
 
 Here is an example of string interpolation:
 <<gsubfn-fn-cat>>=
-fn$cat("pi = $pi, exp = `exp(1)`\n"}
+fn$cat("pi = $pi, exp = `exp(1)`\n")
 @
 
 \section[match.funfn and as.function.formula]{\code{match.funfn} and 
