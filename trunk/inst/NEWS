@@ -1,3 +1,7 @@
+Changes in 0.3-3
+
+	o changed quantreg example to reflect change in engel data set
+
 Changes in 0.3-2
 
 	o revised gsubfn-packages.Rd
