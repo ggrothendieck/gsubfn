@@ -397,7 +397,7 @@ string, the initial digits and the rest as three separate fields we can write th
 In this example we calculate the midpoint of each interval.
 <<gsubfn-strapply-midpoint>>=
 rn <- c("[-11.9,-10.6]", "(NA,9.3]", "(9.3,8e01]", "(8.01,Inf]")
-colMeans(strapply(rn, "[^\][(),]+", as.numeric, simplify = TRUE))
+colMeans(strapply(rn, "[^][(),]+", as.numeric, simplify = TRUE))
 @
 
 \code{combine}. The
@@ -482,7 +482,7 @@ is intercepted.
 In 
 that case if \code{result} is the result of running the function without 
 the \code{simplify} argument then it returns
-\code{do.call(simplify, result)}.
+\code{do.call(simplify, result)}.}
 \end{enumerate}
 The rules for determining which formulas to translate and which character
 strings to apply quasi-perl style string interpolation are as follows:
@@ -492,10 +492,10 @@ that has been specified with a double \code{\~{}}, i.e.
 \code{\~{}\~{}}, is converted to a function after removing the double
 \code{\~{}} and replacing it with a single \code{\~{}}.}
 \item{any character string argument that has been specified with a first
-character of \code{\backslash{}1} has string interpolation applied to it
-after the \code{\backslash{}1} is removed.}
+character of \code{\textbackslash{}1} has string interpolation applied to it
+after the \code{\textbackslash{}1} is removed.}
 \item{if there are no formulas with double \code{\~{}} and no
-character strings beginning with \code{\backslash{}1} then all formulas
+character strings beginning with \code{\textbackslash{}1} then all formulas
 are converted to functions and if there are no formulas then all
 character strings have string interpolation done.}
 \end{enumerate}
@@ -655,13 +655,13 @@ function of \code{tau} is specified using a formula.
 <<gsubfn-fn-quantreg-load,echo=FALSE,results=hide>>=
 library(quantreg)
 data(engel)
-plot(engel$x, engel$y, xlab = 'income', ylab = 'food expenditure')
-junk <- fn$lapply(1:9/10, tau ~ abline(coef(rq(y ~ x, tau, engel))))
+plot(engel$income, engel$foodexp, xlab = 'income', ylab = 'food expenditure')
+junk <- fn$lapply(1:9/10, tau ~ abline(coef(rq(foodexp ~ income, tau, engel))))
 @
 
 <<gsubfn-fn-quantreg,eval=FALSE>>=
-plot(engel$x, engel$y, xlab = 'income', ylab = 'food expenditure')
-junk <- fn$lapply(1:9/10, tau ~ abline(coef(rq(y ~ x, tau, engel))))
+plot(engel$income, engel$foodexp, xlab = 'income', ylab = 'food expenditure')
+junk <- fn$lapply(1:9/10, tau ~ abline(coef(rq(foodexp ~ income, tau, engel))))
 @
 
 
