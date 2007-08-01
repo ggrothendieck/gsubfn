@@ -18,3 +18,4 @@ o extend fn$ to proto objects
 o can current rules of determining which formulas to convert to functions
   and which strings to perform interpolation on be improved?
 
+o remember to change eval.with.vis to withVisible for R 2.5.0

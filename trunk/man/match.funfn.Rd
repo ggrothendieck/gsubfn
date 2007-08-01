@@ -29,7 +29,10 @@ match.funfn(x, ...)
 \code{\link{as.function.formula}}.}
 \examples{
 # return first argument evaluated at second argument squared.
-sq <- function(f, x) f(x^2)
+sq <- function(f, x) {
+   f <- match.funfn(f)
+   f(x^2)
+}
 
 # call sq using different forms for function
 sq(function(x) exp(x)/x, pi)

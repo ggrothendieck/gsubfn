@@ -1,3 +1,7 @@
+Changes in 0.3-4
+
+	o fixed typo in sqldf.Rd
+
 Changes in 0.3-3
 
 	o changed quantreg example to reflect change in engel data set
