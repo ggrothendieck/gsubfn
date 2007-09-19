@@ -38,7 +38,7 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
    }
 
    e <- NULL
-   if (!is(replacement, "formula") && !is.function(replacement)) {
+   if (!inherits(replacement, "formula") && !is.function(replacement)) {
 	e <- replacement
 	e$pattern <- pattern
 	e$x <- x
