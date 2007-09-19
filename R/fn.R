@@ -58,9 +58,9 @@ fn <- structure(NA, class = "fn")
 		# is.fo2 is a logical vector indicating whether each
 		#    list element has or does not have a ~~ (double ~)
 
-		is.fo <- sapply(mcListE, function(x) is(x, "formula"))
+		is.fo <- sapply(mcListE, function(x) inherits(x, "formula"))
 		any.fo <- any(is.fo)
-		is.fo2 <- sapply(mcListE, function(x) is(x, "formula") &&
+		is.fo2 <- sapply(mcListE, function(x) inherits(x, "formula") &&
 			length(x[[length(x)]]) > 1 &&
 			identical(x[[length(x)]][[1]], as.name("~")))
 		# change ~~ to ~

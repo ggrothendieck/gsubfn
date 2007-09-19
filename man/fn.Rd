@@ -25,7 +25,7 @@
   name or \code{R} code within backticks are both evaluated.
 }
 \usage{
-"$.fn"(x, FUN) 
+\method{$}{fn}(x, FUN) 
 }
 \arguments{
   \item{x}{ \code{fn}.}
