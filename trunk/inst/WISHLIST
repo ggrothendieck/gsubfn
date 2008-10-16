@@ -1,21 +1,16 @@
 
 WISHLIST
 
-o assign("mywarn", NULL, .GlobalEnv)
-  fn$tryCatch( warning("a warning"), 
-    warning = w ~ mywarn <<- conditionMessage(w))
-  print(mywarn)
-does not work.
-
 o xml features
 
 o better simplification
-
-o handle invisible output
 
 o extend fn$ to proto objects
 
 o can current rules of determining which formulas to convert to functions
   and which strings to perform interpolation on be improved?
 
-o remember to change eval.with.vis to withVisible for R 2.5.0
+o check number of function args in addition to the number of ( to improve
+  backref heuristic
+
+o add named character vectors as replacement argument objects

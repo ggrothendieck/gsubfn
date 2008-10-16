@@ -16,8 +16,8 @@ strapply(X, pattern, FUN = function(x, ...) x, ...,
           character string for \code{"'fixed = TRUE')"} to be matched in the
           given character vector.
 }
-  \item{FUN}{ a function, formula or proto object to be applied to each 
-          element of 
+  \item{FUN}{ a function, formula, character string, list or proto object 
+          to be applied to each element of 
           \code{"'X'"}.  See discussion in \code{\link{gsubfn}}. }
   \item{\dots}{ optional arguments to \code{"'gsubfn'"}. }
   \item{simplify}{  logical or function.  If logical, should the result be 
@@ -53,7 +53,7 @@ A list of character strings.
 strapply("12;34:56,89,,12", "[0-9]+")
 
 # separate leading digits from rest of string
-# creating a 3 column matrix: original string, digits, rest
+# creating a 2 column matrix: digits, rest
 s <- c("123abc", "12cd34", "1e23")
 t(strapply(s, "^([[:digit:]]+)(.*)", c, simplify = TRUE)) 
 
@@ -61,6 +61,8 @@ t(strapply(s, "^([[:digit:]]+)(.*)", c, simplify = TRUE))
 strapply(s, "^([[:digit:]]+)(.*)", c, simplify = rbind)[[1]]
 
 # running window of 5 characters using 0-lookahead perl regexp
+# Note that the three ( in the regexp will fool it into thinking there
+# are three backreferences so specify backref explicitly.
 x <- "abcdefghijkl"
 strapply(x, "(.)(?=(....))",  paste0, backref = -2, perl = TRUE)[[1]]
 
@@ -89,8 +91,7 @@ strapply(c("the brown fox", "the eager beaver"), "\\\\w+", p)
 # convert to chron
 library(chron)
 x <- c("01/15/2005 23:32:45", "02/27/2005 01:22:30")
-x.chron <- strapply(x, "(../../....) (..:..:..)",  chron, backref = -2, 
-   simplify = c)
+x.chron <- strapply(x, "(../../....) (..:..:..)",  chron, simplify = c)
 }
 }
 \keyword{character}

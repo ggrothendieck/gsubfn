@@ -5,7 +5,7 @@
 
 \title{ Pattern Matching and Replacement }
 \description{
-  Like \code{\link{gsub}} except instead of a replacement string one
+  Like \code{\link[base]{gsub}} except instead of a replacement string one
   uses a function which accepts the matched text as input and emits
   replacement text for it.
 }
@@ -13,18 +13,26 @@
 gsubfn(pattern, replacement, x, backref, USE.NAMES = FALSE, env = parent.frame(), ...)
 }
 \arguments{
-  \item{pattern}{ Same as \code{pattern} in \code{\link{gsub}} }
-  \item{replacement}{ A character string, function, formula or proto object.  See Details. }
-  \item{x}{ Same as \code{x} in \code{\link{gsub}} }
+  \item{pattern}{ Same as \code{pattern} in \code{\link[base]{gsub}} }
+  \item{replacement}{ A character string, function, list, formula or proto object.  See Details. }
+  \item{x}{ Same as \code{x} in \code{\link[base]{gsub}} }
   \item{backref}{ Number of backreferences to be passed to function.
-If omitted it will be determined automatically in which case the function
-must be defined to accept them all.  If a negative
-number is used then its absolute value will be the number of backreferences
-to pass and the matched string itself will not be an argument.}
+If zero or positive the match is passed as the first argument to the replacement
+function followed by the indicated number of backreferences as subsequent 
+arguments. If negative then
+only the that number of backreferences are passed but the match itself is not.
+If omitted it will be determined automatically, i.e. it will be 0 if there
+are no backreferences and otherwise it will equal negative the number of
+backrefenrences.  When automatically determining the number of backreferneces
+it just counts left parentheses in the regular expression so if there are 
+parentheses not representing back references it will be necessary to specify
+\code{backref} explicily.
+
+}
   \item{USE.NAMES}{ Same as \code{USE.NAMES} in \code{sapply}. }
   \item{env}{ Environment in which to evaluation the replacement function.
 Normally this is left at its default value.}
-  \item{\dots}{ Other \code{\link{gsub}} arguments. }
+  \item{\dots}{ Other \code{\link[base]{gsub}} arguments. }
 }
 \details{
  If \code{replacement} is a string then it acts like \code{gsub}.
@@ -34,6 +42,17 @@ Normally this is left at its default value.}
  function replaces the matched string in the result.  The first
  argument to the replacement function is the matched string
  and subsequent arguments are the backreferences, if any.
+
+ If \code{replacement} is a list then it \code{unlist}ed 
+ to create a \code{character} vector and each match is
+ matched against the names of that vector and the value
+ corresponding to the first match is returned.  If there are
+ no names matching then the first unnamed component is returned
+ and if there are no matches and no unnamed components then \code{NA}
+ is returned.  If \code{backref} is not specified or is specified and is
+ positive then the entire match is used to lookup the value in the list
+ whereas if \code{backref} is negative then the identified backreference is 
+ used.
 
  If \code{replacement} is a formula instead of a function then
  a one line function is created whose body is the right hand side
@@ -58,14 +77,14 @@ Normally this is left at its default value.}
  the object.
 
  Two utility functions \code{cat0} and \code{paste0}, which are like
- \code{\link{cat}} and \code{\link{paste}} except that their default
+ \code{\link[base]{cat}} and \code{\link[base]{paste}} except that their default
  code{sep} value is \code{""}, are included.
 }
 \value{
-  As in \code{\link{gsub}}.
+  As in \code{\link[base]{gsub}}.
 }
-\seealso{ \code{\link{gsub}}, \code{\link{strapply}}, \code{\link{cat}},
-\code{\link{paste}} }
+\seealso{ \code{\link[base]{gsub}}, \code{\link{strapply}}, \code{\link[base]{cat}},
+\code{\link[base]{paste}} }
 
 \examples{
 
@@ -77,10 +96,7 @@ gsubfn("[[:digit:]]+", ~ as.numeric(x)+1, "(10 20)(100 30)")
 
 # replaces pairs m:n with their sum
 s <- "abc 10:20 def 30:40 50"
-gsubfn("([0-9]+):([0-9]+)", z + x + y ~ as.numeric(x) + as.numeric(y), s)
-
-# same - can reduce args in function to two using backref = -2
-gsubfn("([0-9]+):([0-9]+)", ~ as.numeric(x) + as.numeric(y), s, backref = -2)
+gsubfn("([0-9]+):([0-9]+)", ~ as.numeric(x) + as.numeric(y), s)
 
 # default pattern for gsubfn does quasi-perl-style string interpolation
 gsubfn( , , "pi = \\$pi, 2pi = `2*pi`") 
@@ -99,6 +115,9 @@ gsubfn("\\\\B.", tolower, "I LIKE A BANANA SPLIT", perl = TRUE)
 
 # replaces numbers with that many Xs
 gsubfn("[[:digit:]]+", ~ paste(rep("X", n), collapse = ""), "5.2")
+
+# replaces numbers units with scale factor
+gsubfn(".m", list(cm = "e1", km = "e6"), "33cm 45km")
 
 # place <...> around first two occurrences
 p <- proto(fun = function(this, x) if (count <= 2) paste0("<", x, ">") else x)

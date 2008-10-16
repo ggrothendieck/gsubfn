@@ -10,7 +10,8 @@ Generalized \code{"'gsub'"} and associated functions.
 \details{
 gsubfn is an R package used for string matching, substitution and parsing. A
 seemingly small generalization of gsub, namely allow the replacement string to
-be a replacement function, formula or proto object, can result in significantly
+be a replacement function, list, 
+formula or proto object, can result in significantly
 increased power and applicability.  The resulting function, gsubfn is the
 namesake of this package.  
 In the case of a replacement formula the formula is interpreted

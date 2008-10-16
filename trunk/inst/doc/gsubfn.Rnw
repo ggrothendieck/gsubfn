@@ -96,9 +96,14 @@ In the case that a
 function is passed to \code{gsubfn}, for each
 match of the regular expression in the source string, the replacement 
 function
-is called with input arguments being the match followed by one argument
-per back reference (unless instructed otherwise 
-by the \code{backref} argument). The output of the replacement function is 
+is called with one argument per backreference or if no backreferences
+with the match (unless instructed otherwise 
+by the \code{backref} argument). Note that it determines the number of
+backreferences by counting the number of occurrences of \code{(} in the 
+regular expression so if there are parentheses that are not
+back references it may be important to specify their number explicitly with
+\code{backref}.
+The output of the replacement function is 
 substituted back into the string replacing the match.
 In those cases where persistance
 is needed between invocations of the function a \code{proto} object
@@ -233,20 +238,16 @@ the performance can be sped up somewhat by specifying \code{backref}
 even if all back references are to be passed.
 
 \textit{Example}. This example below replaces \code{x:y} pairs in \code{s} with their sum.
-\code{backref = -2} tells \code{gsubfn} to only pass the 2 back references 
-and not the match itself to the replacement function.  
 The formula in this example is equivalent to specifying the
 function \code{function(x, y) as.numeric(x) + as.numeric(y)} :
 
+This example replaces the scale letter with an appropriate scale factor.
+For example, \code{"G"} means giga and corresponds to \code{"e9"}.
 
 <<gsubfn-xypair>>=
    s <- 'abc 10:20 def 30:40 50'
-   gsubfn('([0-9]+):([0-9]+)', ~ as.numeric(x) + as.numeric(y), s, backref = -2)
+   gsubfn('([0-9]+):([0-9]+)', ~ as.numeric(x) + as.numeric(y), s)
 @
-
-\textit{Example}. 
-This example replaces the scale letter with an appropriate scale factor.
-For example, \code{"G"} means giga and corresponds to \code{"e9"}.
 
 <<gsubfn-si>>=
    dat <- c('3.5G', '88P', '19') # test data
@@ -255,6 +256,22 @@ For example, \code{"G"} means giga and corresponds to \code{"e9"}.
 
 A variation of the last example is available via the command
 \code{demo("gsubfn-si")}.
+
+\section[gsubfn with lists]{\code{gsubfn} with \code{list} objects}
+\label{sec:gsubfn with list objects}
+
+\textit{Example}. 
+If the replacement object is a list then the match is matched against the
+names of the list and the corresponding value is returned. If no name
+matches then the first unnamed list component is returned.  If there is
+still no match then \code{NA} is returned.
+
+Here is the last example redone with a list:
+
+<<gsubfn-si>>=
+   dat <- c('3.5G', '88P', '19') # test data
+   gsubfn('[MGP]$', list(M = 'e6', G = 'e9', P = 'e12'), dat) 
+@
 
 \section[gsubfn with proto objects]{\code{gsubfn} with \pkg{proto} objects}
 \label{sec:gsubfn with proto objects}
@@ -293,7 +310,7 @@ Finally we run \code{gsubfn} using the regular expression
 \code{\textbackslash\textbackslash{}w+}
 and the \pkg{proto} object \code{p}.  \code{gsubfn} looks for 
 a component called \code{fun} in \code{p} and uses that as the replacement
-method/functin.
+method/function.
 The arguments to \code{fun} are always the object itself,
 often represented by the formal argument \code{this}, \code{self} 
 or just \code{.},
@@ -386,18 +403,20 @@ output of \code{strapply} is passed as \code{output} to it via
 \code{do.call(simplify, output)}.
 
 \textit{Example}.
-To separate out the initial digits from the rest returning the whole 
-string, the initial digits and the rest as three separate fields we can write this:
+To separate out the initial digits from the rest returning the 
+the initial digits and the rest as two separate fields we can write this:
 
 <<gsubfn-strapply-initdigits>>=
    s <- c('123abc', '12cd34', '1e23')
    strapply(s, '^([[:digit:]]+)(.*)', c, simplify = rbind)
 @
 
-In this example we calculate the midpoint of each interval.
+In this example we calculate the midpoint of each interval.  The \code{()}
+will fool it into thinking there is a back reference so specify \code{backref}
+explicitly telling it to pass the match.
 <<gsubfn-strapply-midpoint>>=
 rn <- c("[-11.9,-10.6]", "(NA,9.3]", "(9.3,8e01]", "(8.01,Inf]")
-colMeans(strapply(rn, "[^][(),]+", as.numeric, simplify = TRUE))
+colMeans(strapply(rn, "[^][(),]+", as.numeric, backref = 0, simplify = TRUE))
 @
 
 \code{combine}. The
@@ -446,7 +465,12 @@ function are like \code{cat} and \code{paste} they have
 a default \code{sep} of \code{""}.
 
 Here is an example of using paste0.  This example
-retrieves overlapping segments consisting of a letter, space and letter.
+retrieves overlapping segments consisting of a space, letter, space, letter
+and space.  Only the final space, letter, space is returned.
+Because we did not specify \code{backref} it will think there are two
+back references (since it will interpret the lookahead expression as
+an extra back reference); however, the second is empty so it does no harm in
+passing it to \code{paste0}.
 It uses the zero-lookahead perl style pattern matching expression.
 
 <<gsubfn-paste0>>=
