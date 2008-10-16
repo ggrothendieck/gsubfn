@@ -1,6 +1,37 @@
+Changes in 0.3-6
+
+    o bug fixes: fn$force("$x") failed if variable name was x as shown here
+
+	o bug fixes: f <- function() { aaa <- "X"; fn$cat("abc$aaa def\n") }; f()
+	  failed.
+
+	o internals: eval.with.vis() replaced in $.fn.  Now using withVisible().
+      This change requires R 2.5 or later.
+
+	o the replacement object in gsubfn can be a list as well
+
+	o the replacement object in strapply can be a character string or list
+      as well
+
+    o if backref= is omitted on gsubfn or strapply it passes the backreferences
+      if any (but not the entire match) or if there are no back references
+      it passes the entire match.  Thus the default has changed in the case
+      that (1) there are one or more backreferences in the regular expression 
+      and (2) backref was not specified.  This should eliminate the need to 
+      specify backref in most circumstances.  Note that if there are no 
+      backreferences in your regular expression or if backref= had been
+      specified there is no change thus in most cases there will be no change.
+
+Changes in 0.3-5
+
+	o fixed bug in demo index
+
+	o eliminated dependence on methods package (previously only
+	  dependence was use of 'is')
+
 Changes in 0.3-4
 
-	o fixed typo in sqldf.Rd
+	o fixed typo
 
 Changes in 0.3-3
 

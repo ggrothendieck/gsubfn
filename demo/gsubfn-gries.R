@@ -15,7 +15,7 @@ Lines2 <- scan(fn2, what = "char", sep = "\n")
 tagged.corpus.sentences <- grep("^<s n=", Lines2, value = TRUE)
 # just to see what it looks like
 tagged.corpus.sentences[c(3, 8)]
-words <- unlist(strapply(tagged.corpus.sentences, ">([^<]*)", backref = -1))
+words <- unlist(strapply(tagged.corpus.sentences, ">([^<]*)")
 words <- gsub(" $", "", words)
 tail(words, 25)
 
