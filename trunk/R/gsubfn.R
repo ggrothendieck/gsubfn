@@ -112,19 +112,21 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
 
 strapply <- 
 function (X, pattern, FUN = function(x, ...) x, ...,
-    simplify = FALSE, USE.NAMES = FALSE, combine = c) 
-{
+    simplify = FALSE, USE.NAMES = FALSE, combine = c) {
+	here <- environment()
 	if (is.character(FUN)) {
 		FUN.orig <- FUN
 		FUN <- function(...) FUN.orig
 	} else if (is.list(FUN)) {
-		FUN.orig <- FUN
-		FUN <- function(...) {
-			FUN.orig[[match(..1, names(FUN.orig), 
-				nomatch = match("", names(FUN.orig)))]]
+		values.replacement <- FUN
+		names.replacement <- names(FUN)
+		here$FUN <- function(...) {
+			idx <- match(..1, names.replacement, 
+				nomatch = match("", names.replacement, nomatch = 0))
+			if (idx > 0) values.replacement[[idx]] else ..1
 		}
-	}
-		
+    }
+   
     p <- if (is.proto(FUN)) {
 		FUN$X <- X
 		FUN$pattern <- pattern
@@ -170,8 +172,8 @@ function (X, pattern, FUN = function(x, ...) x, ...,
     ff <- function(x) { gsubfn(pattern, p, x, ...); p$v }
     result <- sapply(X, ff, 
 	simplify = is.logical(simplify) && simplify, USE.NAMES = USE.NAMES)
-    if (is.logical(simplify)) 
-        result
-    else do.call(match.funfn(simplify), result)
+    if (is.logical(simplify)) result else {
+		do.call(match.funfn(simplify), result)
+	}
 }
 
