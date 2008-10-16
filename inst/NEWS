@@ -1,3 +1,10 @@
+Changes in 0.3-7
+
+	o R CMD CHECK fixes
+
+	o if replacement object is a list and match not found in that list then
+	  no replacement is done
+
 Changes in 0.3-6
 
     o bug fixes: fn$force("$x") failed if variable name was x as shown here

@@ -43,13 +43,14 @@ Normally this is left at its default value.}
  argument to the replacement function is the matched string
  and subsequent arguments are the backreferences, if any.
 
- If \code{replacement} is a list then it \code{unlist}ed 
- to create a \code{character} vector and each match is
- matched against the names of that vector and the value
- corresponding to the first match is returned.  If there are
+ If \code{replacement} is a list then 
+ regular expression match is in turn
+ matched against the names of that list and the value
+ corresponding to the first name in the list that is match is returned.  
+ If there are
  no names matching then the first unnamed component is returned
- and if there are no matches and no unnamed components then \code{NA}
- is returned.  If \code{backref} is not specified or is specified and is
+ and if there are no matches then the string to matched is returned.
+ If \code{backref} is not specified or is specified and is
  positive then the entire match is used to lookup the value in the list
  whereas if \code{backref} is negative then the identified backreference is 
  used.
@@ -99,7 +100,7 @@ s <- "abc 10:20 def 30:40 50"
 gsubfn("([0-9]+):([0-9]+)", ~ as.numeric(x) + as.numeric(y), s)
 
 # default pattern for gsubfn does quasi-perl-style string interpolation
-gsubfn( , , "pi = \\$pi, 2pi = `2*pi`") 
+gsubfn( , , "pi = $pi, 2pi = `2*pi`") 
 
 # Extracts numbers from string and places them into numeric vector v.
 # Normally this would be done in strapply instead.

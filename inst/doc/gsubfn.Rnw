@@ -264,7 +264,8 @@ A variation of the last example is available via the command
 If the replacement object is a list then the match is matched against the
 names of the list and the corresponding value is returned. If no name
 matches then the first unnamed list component is returned.  If there is
-still no match then \code{NA} is returned.
+still no match then the string to be matched is returned so that effectively
+the lookup is ignored.
 
 Here is the last example redone with a list:
 
