@@ -23,19 +23,25 @@
 gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE, 
   env = parent.frame(), ...) 
 {
-   if (missing(replacement)) replacement <- function(b1,b2) 
-	eval(parse(text = paste(b1,b2,sep="")), env) 
+
+   here <- environment()
+
+   if (missing(replacement)) here$replacement <- function(...) 
+	eval(parse(text = paste(..., sep = "")), env) 
 
    if (is.character(replacement)) 
 	return(base::gsub(pattern, replacement, x, ...))
 
    if (is.list(replacement)) {
-		replacement.orig <- replacement
-		replacement <- function(...) {
-			replacement.orig[[match(..1, names(replacement.orig), nomatch = 
-				match("", names(replacement.orig)))]]
-		}
-	}
+			values.replacement <- replacement
+			names.replacement <- names(replacement)
+			here$replacement <- function(...) {
+				idx <- match(..1, names.replacement, 
+					nomatch = match("", names.replacement, nomatch = 0))
+				if (idx > 0) values.replacement[[idx]]
+				else ..1
+			}
+    }
    # if (inherits(replacement, "formula")) replacement <- as.function(replacement)
    if (missing(pattern)) pattern <- "[$]([[:alpha:]][[:alnum:].]*)|`([^`]+)`"
    if (missing(backref)) {
@@ -65,9 +71,9 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
 		this$match <- c(...)
 		this$fun(...)
 	}
-	replacement <- e$replacement
+	here$replacement <- e$replacement
    }
-   replacement <- match.funfn(replacement)
+   here$replacement <- match.funfn(replacement)
    stopifnot(is.character(pattern), is.character(x), is.function(replacement))
    force(env)
    gsub.function <- function(x) {

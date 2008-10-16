@@ -72,7 +72,7 @@ gsubfn("[[:digit:]]+", ~ as.numeric(x)+1, "(10 20)(100 30)")
 
 # place {1} after first word, {2} after second word
 p <- proto(fun = function(this, x) paste0(x, "{", count, "}" ))
-gsubfn("\\w+", p, "hello world")
+gsubfn("\\\\w+", p, "hello world")
 
 # replace each number with its cumulative sum
 pcumsum <- proto(pre = function(this) this$sum <- 0,
