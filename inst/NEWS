@@ -1,3 +1,9 @@
+Changes in 0.3-8
+
+	o heuristic to detect the number of backreferences (used when backref
+      is not specified) has been improved.  It is no longer fooled by
+      parens that are escaped.
+
 Changes in 0.3-7
 
 	o R CMD CHECK fixes

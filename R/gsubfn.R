@@ -45,7 +45,9 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
    # if (inherits(replacement, "formula")) replacement <- as.function(replacement)
    if (missing(pattern)) pattern <- "[$]([[:alpha:]][[:alnum:].]*)|`([^`]+)`"
    if (missing(backref)) {
-	j <- nchar(base::gsub("[^(]","",pattern))+1
+    noparen <- base::gsub("\\\\.", "", pattern)
+    noparen <- base::gsub("\\[[^\\]]*\\]", "", noparen)
+	j <- nchar(base::gsub("[^(]","", noparen))+1
     i <- 1
 	i <- min(2, j)
    } else {
