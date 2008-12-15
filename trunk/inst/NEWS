@@ -1,8 +1,13 @@
 Changes in 0.3-8
 
-	o heuristic to detect the number of backreferences (used when backref
-      is not specified) has been improved.  It is no longer fooled by
-      parens that are escaped.
+	o minor improvements in gsubfn-package.Rd
+
+	o fixed bug in match.funfn
+
+	o heuristic to detect the number of back references (used when backref
+      is not specified) now uses -k where k is the number of non-escaped
+      left parens (whereas previously it used -k where k was the number of 
+      left parens whether escaped or not).
 
 Changes in 0.3-7
 

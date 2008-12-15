@@ -23,14 +23,10 @@ arguments. If negative then
 only the that number of backreferences are passed but the match itself is not.
 If omitted it will be determined automatically, i.e. it will be 0 if there
 are no backreferences and otherwise it will equal negative the number of
-backrefenrences.  When automatically determining the number of backreferneces
-it just counts left parentheses in the regular expression so if there are 
-parentheses not representing back references it will be necessary to specify
-\code{backref} explicily.
-
-}
-  \item{USE.NAMES}{ Same as \code{USE.NAMES} in \code{sapply}. }
-  \item{env}{ Environment in which to evaluation the replacement function.
+back refenrences.  It determines this by counting the number of non-escaped
+left parentheses in the pattern.}
+  \item{USE.NAMES}{ See \code{USE.NAMES} in \code{\link[base]{sapply}}. }
+  \item{env}{ Environment in which to evaluate the replacement function.
 Normally this is left at its default value.}
   \item{\dots}{ Other \code{\link[base]{gsub}} arguments. }
 }
@@ -43,13 +39,13 @@ Normally this is left at its default value.}
  argument to the replacement function is the matched string
  and subsequent arguments are the backreferences, if any.
 
- If \code{replacement} is a list then 
- regular expression match is in turn
+ If \code{replacement} is a list then the result of the 
+ regular expression match is, in turn,
  matched against the names of that list and the value
  corresponding to the first name in the list that is match is returned.  
  If there are
  no names matching then the first unnamed component is returned
- and if there are no matches then the string to matched is returned.
+ and if there are no matches then the string to be matched is returned.
  If \code{backref} is not specified or is specified and is
  positive then the entire match is used to lookup the value in the list
  whereas if \code{backref} is negative then the identified backreference is 
@@ -77,14 +73,15 @@ Normally this is left at its default value.}
  end of each string (not each match).  They each take one argument,
  the object.
 
- Two utility functions \code{cat0} and \code{paste0}, which are like
+ Two utility functions \code{cat0} and \code{paste0} are available.
+ They are like
  \code{\link[base]{cat}} and \code{\link[base]{paste}} except that their default
- code{sep} value is \code{""}, are included.
+ code{sep} value is \code{""}.
 }
 \value{
   As in \code{\link[base]{gsub}}.
 }
-\seealso{ \code{\link[base]{gsub}}, \code{\link{strapply}}, \code{\link[base]{cat}},
+\seealso{ \code{\link[base]{gsub}}, \code{\link[base]{strapply}}, \code{\link[base]{cat}},
 \code{\link[base]{paste}} }
 
 \examples{
@@ -117,7 +114,7 @@ gsubfn("\\\\B.", tolower, "I LIKE A BANANA SPLIT", perl = TRUE)
 # replaces numbers with that many Xs
 gsubfn("[[:digit:]]+", ~ paste(rep("X", n), collapse = ""), "5.2")
 
-# replaces numbers units with scale factor
+# replaces units with scale factor
 gsubfn(".m", list(cm = "e1", km = "e6"), "33cm 45km")
 
 # place <...> around first two occurrences
