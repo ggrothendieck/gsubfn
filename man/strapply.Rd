@@ -14,8 +14,7 @@ strapply(X, pattern, FUN = function(x, ...) x, ...,
   \item{X}{ list or (atomic) vector of character strings to be used. }
   \item{pattern}{ character string containing a regular expression (or
           character string for \code{"'fixed = TRUE')"} to be matched in the
-          given character vector.
-}
+          given character vector.}
   \item{FUN}{ a function, formula, character string, list or proto object 
           to be applied to each element of 
           \code{"'X'"}.  See discussion in \code{\link{gsubfn}}. }
@@ -42,12 +41,11 @@ back references, if any, are passed to
 the function \code{"FUN"} and the output of \code{FUN} is returned as a list.
 If \code{FUN} is a formula or proto object then it is interpreted 
 to the way discussed in \code{\link{gsubfn}}.
-
 }
 \value{
 A list of character strings.  
 }
-\seealso{ See Also as \code{\link{gsubfn}}, \code{\link{sapply}}}
+\seealso{ See Also as \code{\link{gsubfn}}, \code{\link[base]{sapply}}}
 \examples{
 
 strapply("12;34:56,89,,12", "[0-9]+")

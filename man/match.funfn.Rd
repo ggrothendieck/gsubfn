@@ -1,20 +1,16 @@
 \name{match.funfn}
 \alias{match.funfn}
-\alias{match.funfn.formula}
-\alias{match.funfn.default}
 \title{ Generic extended version of R match.fun }
 \description{
   A generic \code{match.fun}.
 }
 \usage{
-match.funfn(x, ...)
-\method{match.funfn}{formula}(x, ...)
-\method{match.funfn}{default}(x, ...)
+match.funfn(FUN, descend = TRUE)
 }
 \arguments{
-  \item{x}{ Function, character name of function or formula describing 
+  \item{FUN}{ Function, character name of function or formula describing 
   function. }
-  \item{\dots}{ Not used. }
+  \item{descend}{logical; control whether to search past non-function objects.}
 }
 \details{
   The default method is the same as \code{match.fun} and the \code{formula}

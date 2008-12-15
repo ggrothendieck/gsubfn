@@ -46,10 +46,11 @@ prefix need not be used.
 The 
 following are sources of information on \code{"gsubfn"}:
 \tabular{ll}{
-News\tab file.show(system.file("NEWS", package = "gsubfn"))\cr
-Wish List\tab file.show(system.file("WISHLIST", package = "gsubfn"))\cr
-Thanks file\tab file.show(system.file("THANKS", package = "gsubfn"))\cr
-License\tab file.show(system.file("COPYING", package = "gsubfn"))\cr
+News\tab RShowDoc("NEWS",, "gsubfn")\cr
+Wish List\tab RShowDoc("WISHLIST", package = "gsubfn")\cr
+Thanks file\tab RShowDoc("THANKS", package = "gsubfn")\cr
+License\tab RShowDoc("COPYING", package = "gsubfn")\cr
+Citation\tab citation(package = "gsubfn")\cr
 Demo\tab demo("gsubfn-chron")\cr
 Demo\tab demo("gsubfn-cut")\cr
 Demo\tab demo("gsubfn-gries")\cr

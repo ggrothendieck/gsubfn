@@ -1,23 +1,20 @@
 Package: gsubfn
-Version: 0.3-7
-Date: 2007-10-17
+Version: 0.3-8
+Date: 2007-12-14
 Title: Utilities for strings and function arguments.
 Author: G. Grothendieck
 Maintainer: G. Grothendieck <ggrothendieck@gmail.com>
 Description: gsubfn is like gsub but can take a replacement function
-   or proto object rather than a replacement string.  Matches and 
-   back references are input to the function and replaced by the 
-   function output.  In the case of a proto object the object is
-   used for sharing information from one match to the next.
-   gsubfn can be used to split strings based on content rather than
-   delimiters and for quasi-perl-style string interpolation. The 
-   package also has facilities for translating formulas to functions 
-   and allowing such formulas in function calls instead of functions.  
-   This can reduce code size and improve clarity when using apply, 
-   lapply, optim, integrate, xyplot and any other function that 
-   expects another function as an input argument.  gsubfn also
-   provides for quasi-perl string interpolation in arguments
-   of any existing R function.
+   or certain other objects instead of the replacement string.
+   Matches and back references are input to the replacement function and 
+   replaced by the function output.   gsubfn can be used to split strings 
+   based on content rather than delimiters and for quasi-perl-style string 
+   interpolation. The package also has facilities for translating formulas 
+   to functions and allowing such formulas in function calls instead of 
+   functions.  This can be used with R functions such as apply, sapply,
+   lapply, optim, integrate, xyplot, Filter and any other function that 
+   expects another function as an input argument or functions like cat
+   or sql calls that may involve strings where substitution is desirable.
 Depends: R (>= 2.5.0), proto
 Suggests: boot, chron, doBy, grid, lattice, quantreg, reshape, zoo
 License: GPL (Version 2 or later)
