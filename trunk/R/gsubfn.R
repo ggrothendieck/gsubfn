@@ -44,13 +44,12 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
     }
    # if (inherits(replacement, "formula")) replacement <- as.function(replacement)
    if (missing(pattern)) pattern <- "[$]([[:alpha:]][[:alnum:].]*)|`([^`]+)`"
-   # i is 1 if there are no backreferences and 2 otherwise
+   # i is 1 if the entire match is passed and 2 otherwise.
    # j is 1 plus the number of backreferences
    if (missing(backref)) {
     noparen <- base::gsub("\\\\.", "", pattern)
     noparen <- base::gsub("\\[[^\\]]*\\]", "", noparen)
 	j <- nchar(base::gsub("[^(]","", noparen))+1
-    i <- 1
 	i <- min(2, j)
    } else {
 	i <- as.numeric(backref < 0) + 1
