@@ -76,7 +76,7 @@ Normally this is left at its default value.}
  Two utility functions \code{cat0} and \code{paste0} are available.
  They are like
  \code{\link[base]{cat}} and \code{\link[base]{paste}} except that their default
- code{sep} value is \code{""}.
+ \code{sep} value is \code{""}.
 }
 \value{
   As in \code{\link[base]{gsub}}.
