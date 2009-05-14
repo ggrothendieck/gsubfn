@@ -1,3 +1,7 @@
+Changes in 0.4-0
+
+    o faster strapply based on tcl interface
+
 Changes in 0.3-9
 
 	o removed some dead code.  Thanks to Wacek Kusnierczyk.
