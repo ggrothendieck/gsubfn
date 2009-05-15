@@ -188,42 +188,54 @@ function (X, pattern, FUN = function(x, ...) x, ...,
 }
 }
 
-strapply1 <- function(x, e) {
-	tcl("set", "e", e)
-	tcl("set", "x", x)
-	.Tcl('set r [regexp -all -inline -- $e $x]')
-	n <- as.numeric(tclvalue(.Tcl("llength $r")))
-	out <- sapply(seq(0, length = n), 
-		function(i) tclvalue(.Tcl(paste("lindex $r", i))))
-	if (length(out) > 1) out[-1] else out
+
+strapply <-
+function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
+    simplify = FALSE, USE.NAMES = FALSE, combine = c) {
+                if (is.proto(FUN)) {
+                        # TODO
+                } else if (is.character(FUN)) {
+                        FUN.orig <- FUN
+                        FUN <- function(...) FUN.orig
+                } else if (is.list(FUN)) {
+                        values.replacement <- FUN
+                        names.replacement <- names(FUN)
+                        FUN <- function(...) {
+                                idx <- match(..1, names.replacement, 
+                                        nomatch = match("", names.replacement, nomatch = 0))
+                                if (idx > 0) values.replacement[[idx]] else ..1
+                        }
+                } else {
+                        FUN <- match.funfn(FUN)
+                }
+				ff <- function(x) {
+					s <- strapply1(x, pattern, backref)
+					L <- lapply(seq_len(ncol(s)), function(j) {
+						combine(do.call(FUN, list(s[, j]))) })
+					do.call("c", L)
+				}
+                result <- sapply(X, ff,
+                        simplify = is.logical(simplify) && simplify, 
+                        USE.NAMES = USE.NAMES)
+                if (is.logical(simplify)) result
+                else do.call(match.funfn(simplify), result)
+
 }
 
-strapply <- 
-function (X, pattern, FUN = function(x, ...) x, ...,
-    simplify = FALSE, USE.NAMES = FALSE, combine = c) {
-		if (is.proto(FUN)) {
-			# TODO
-		} else if (is.character(FUN)) {
-			FUN.orig <- FUN
-			FUN <- function(...) FUN.orig
-		} else if (is.list(FUN)) {
-			values.replacement <- FUN
-			names.replacement <- names(FUN)
-			FUN <- function(...) {
-				idx <- match(..1, names.replacement, 
-					nomatch = match("", names.replacement, nomatch = 0))
-				if (idx > 0) values.replacement[[idx]] else ..1
-			}
-		} else {
-			FUN <- match.funfn(FUN)
+strapply1 <- function(x, e, backref) {
+        tcl("set", "e", e)
+        tcl("set", "x", x)
+        .Tcl('set about [regexp -about -- $e]')
+		about <- as.numeric(tclvalue(.Tcl("lindex $about 0"))) + 1
+        .Tcl('set r [regexp -all -inline -- $e $x]')
+        n <- as.numeric(tclvalue(.Tcl("llength $r")))
+        out <- sapply(seq(0, length = n), 
+                function(i) tclvalue(.Tcl(paste("lindex $r", i))))
+		out <- matrix(out, about)
+		if (is.null(backref)) out[-1,, drop = FALSE] else {
+			mn <- 1 + backref > 0
+			mx <- min(abs(backref) + 1, about)
+			out[seq(mn, mx),, drop = FALSE]
 		}
-
-		result <- sapply(X, 
-			function(x) do.call(FUN, as.list(strapply1(x, pattern))),
-			simplify = is.logical(simplify) && simplify, 
-			USE.NAMES = USE.NAMES)
-		if (is.logical(simplify)) result
-		else do.call(match.funfn(simplify), result)
-
 }
 
