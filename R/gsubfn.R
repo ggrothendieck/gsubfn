@@ -232,7 +232,10 @@ strapply1 <- function(x, e, backref) {
         out <- sapply(seq(0, length = n), 
                 function(i) tclvalue(.Tcl(paste("lindex $r", i))))
 		out <- matrix(out, about)
-		if (is.null(backref)) out[-1,, drop = FALSE] else {
+		if (is.null(backref)) {
+			if (about > 1) out[-1,, drop = FALSE] 
+			else out
+		} else {
 			mn <- 1 + backref > 0
 			mx <- min(abs(backref) + 1, about)
 			out[seq(mn, mx),, drop = FALSE]
