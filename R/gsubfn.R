@@ -211,7 +211,8 @@ function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
 				ff <- function(x) {
 					s <- strapply1(x, pattern, backref)
 					L <- lapply(seq_len(ncol(s)), function(j) {
-						combine(do.call(FUN, list(s[, j]))) })
+						combine(do.call(FUN, as.list(s[, j]))) })
+						# combine(do.call(FUN, list(s[, j]))) })
 					do.call("c", L)
 				}
                 result <- sapply(X, ff,
