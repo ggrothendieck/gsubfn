@@ -1,5 +1,7 @@
 \name{strapply}
 \alias{strapply}
+\alias{strapply1}
+\alias{ostrapply}
 \title{  
  Apply a function over a string or strings.
 }
@@ -7,8 +9,9 @@
 Similar to \code{"'gsubfn'"} except instead of performing substitutions
 it returns the output of \code{"'FUN'"}.}
 \usage{
-strapply(X, pattern, FUN = function(x, ...) x, ..., 
-   simplify = FALSE, USE.NAMES = FALSE, combine = c)
+strapply(X, pattern, FUN = function(x, ...) x, backref = NULL, ..., 
+	ignore.case = FALSE, perl = FALSE, engine = c("tcl", "R"), 
+	simplify = FALSE, USE.NAMES = FALSE, combine = c)
 }
 \arguments{
   \item{X}{ list or (atomic) vector of character strings to be used. }
@@ -18,6 +21,16 @@ strapply(X, pattern, FUN = function(x, ...) x, ...,
   \item{FUN}{ a function, formula, character string, list or proto object 
           to be applied to each element of 
           \code{"'X'"}.  See discussion in \code{\link{gsubfn}}. }
+  \item{backref}{See \code{\link{gsubfn}}.}
+  \item{ignore.case}{If \code{TRUE} then case is ignored in the \code{pattern}
+		argument.}
+  \item{perl}{If \code{TRUE} then \code{engine="R"} is used with
+		perl regular expressions.}
+  \item{engine}{Specifies which engine to use.  \code{engine="tcl"}, 
+			the default
+			unless \code{FUN} is a proto object in which case the
+			\code{"R"} engine is used (regardless of the setting of this
+			argument).}
   \item{\dots}{ optional arguments to \code{"'gsubfn'"}. }
   \item{simplify}{  logical or function.  If logical, should the result be 
           simplified to a vector or matrix, as in \code{"sapply"} if possible?
@@ -41,11 +54,29 @@ back references, if any, are passed to
 the function \code{"FUN"} and the output of \code{FUN} is returned as a list.
 If \code{FUN} is a formula or proto object then it is interpreted 
 to the way discussed in \code{\link{gsubfn}}.
+
+If \code{FUN} is a proto object or if \code{perl=TRUE} is specified
+then \code{engine="R"} is used and the \code{engine} argument is ignored.
+
+If \code{backref} is not specified and
+\code{engine="R"} is specified or implied then a heuristic is 
+used to calculate the number of backreferences.  The primary situation
+that can fool it is if there are parentheses in the string that are
+not back references. 
+In those cases the user will have to specify backref.
+If \code{engine="tcl"} then an exact algorithm is used and the problem
+sentence never occurs.
 }
 \value{
 A list of character strings.  
 }
-\seealso{ See Also as \code{\link{gsubfn}}, \code{\link[base]{sapply}}}
+\seealso{ See \code{\link{gsubfn}} and 
+\code{\link[base]{sapply}}.
+For regular expression syntax used in tcl see
+\url{http://www.tcl.tk/man/tcl8.6/TclCmd/re_syntax.htm}
+and for regular expression syntax used in R see
+\code{\link[base]{regex}}.
+}
 \examples{
 
 strapply("12;34:56,89,,12", "[0-9]+")
@@ -55,8 +86,8 @@ strapply("12;34:56,89,,12", "[0-9]+")
 s <- c("123abc", "12cd34", "1e23")
 t(strapply(s, "^([[:digit:]]+)(.*)", c, simplify = TRUE)) 
 
-# same but create data.frame
-strapply(s, "^([[:digit:]]+)(.*)", c, simplify = rbind)[[1]]
+# same but create matrix
+strapply(s, "^([[:digit:]]+)(.*)", c, simplify = rbind)
 
 # running window of 5 characters using 0-lookahead perl regexp
 # Note that the three ( in the regexp will fool it into thinking there

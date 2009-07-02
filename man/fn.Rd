@@ -2,6 +2,7 @@
 \alias{fn}
 \alias{$.fn}
 \alias{eval.with.vis}
+\alias{matrixfn}
 \title{ Transform formula arguments to functions. }
 \description{
   When used in the form \code{fn\$somefunction(...arguments...)}
