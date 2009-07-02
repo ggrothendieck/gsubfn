@@ -46,7 +46,7 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
    if (missing(pattern)) pattern <- "[$]([[:alpha:]][[:alnum:].]*)|`([^`]+)`"
    # i is 1 if the entire match is passed and 2 otherwise.
    # j is 1 plus the number of backreferences
-   if (missing(backref)) {
+   if (missing(backref) || is.null(backref)) {
     noparen <- base::gsub("\\\\.", "", pattern)
     noparen <- base::gsub("\\[[^\\]]*\\]", "", noparen)
 	j <- nchar(base::gsub("[^(]","", noparen))+1
@@ -118,8 +118,7 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
    sapply(x, gsub.function, USE.NAMES = USE.NAMES)
 }
 
-if (FALSE) {
-strapply <- 
+ostrapply <- 
 function (X, pattern, FUN = function(x, ...) x, ...,
     simplify = FALSE, USE.NAMES = FALSE, combine = c) {
 	here <- environment()
@@ -186,12 +185,16 @@ function (X, pattern, FUN = function(x, ...) x, ...,
 		do.call(match.funfn(simplify), result)
 	}
 }
-}
-
 
 strapply <-
 function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
-    simplify = FALSE, USE.NAMES = FALSE, combine = c) {
+	ignore.case = FALSE, perl = FALSE, engine = c("tcl", "R"), 
+	simplify = FALSE, USE.NAMES = FALSE, combine = c) {
+				engine <- match.arg(engine)
+				if (engine == "R" || is.proto(FUN) || perl) return(ostrapply(X = X, 
+						pattern = pattern, FUN = FUN, backref = backref, 
+						..., perl = perl, simplify = simplify, USE.NAMES = USE.NAMES, 
+						combine = combine))
                 if (is.proto(FUN)) {
                         # TODO
                 } else if (is.character(FUN)) {
@@ -209,7 +212,7 @@ function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
                         FUN <- match.funfn(FUN)
                 }
 				ff <- function(x) {
-					s <- strapply1(x, pattern, backref)
+					s <- strapply1(x, pattern, backref, ignore.case)
 					L <- lapply(seq_len(ncol(s)), function(j) {
 						combine(do.call(FUN, as.list(s[, j]))) })
 						# combine(do.call(FUN, list(s[, j]))) })
@@ -223,12 +226,15 @@ function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
 
 }
 
-strapply1 <- function(x, e, backref) {
+strapply1 <- function(x, e, backref, ignore.case = FALSE) {
         tcl("set", "e", e)
         tcl("set", "x", x)
         .Tcl('set about [regexp -about -- $e]')
 		about <- as.numeric(tclvalue(.Tcl("lindex $about 0"))) + 1
-        .Tcl('set r [regexp -all -inline -- $e $x]')
+		s <- if (ignore.case) 'set r [regexp -all -inline -nocase -- $e $x]'
+		else 'set r [regexp -all -inline -- $e $x]'
+        # .Tcl('set r [regexp -all -inline -- $e $x]')
+        .Tcl(s)
         n <- as.numeric(tclvalue(.Tcl("llength $r")))
         out <- sapply(seq(0, length = n), 
                 function(i) tclvalue(.Tcl(paste("lindex $r", i))))

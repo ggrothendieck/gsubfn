@@ -397,6 +397,10 @@ which is an index for \code{apply} and a regular expression for \code{strapply}
 is the second argument.
 The third argument is a function in both cases although in strapply, in analogy
 to \code{gsubfn} it can also be a \pkg{proto} object.
+By default \code{strapply} uses the \code{tcl} regular expression engine but
+if the argument \code{engine="R"} is used or if the function is a proto 
+object then the \code{R} regular expression engine is used instead.  The
+\code{tcl} engine is much faster.
 The \code{simplify} argument is similar to the \code{simplify} argument in
 \code{sapply} and, in fact, is passed to \code{sapply} if it is \code{logical}.
 If \code{simplify} is a function or a formula representing a function then the
@@ -412,12 +416,10 @@ the initial digits and the rest as two separate fields we can write this:
    strapply(s, '^([[:digit:]]+)(.*)', c, simplify = rbind)
 @
 
-In this example we calculate the midpoint of each interval.  The \code{()}
-will fool it into thinking there is a back reference so specify \code{backref}
-explicitly telling it to pass the match.
+In this example we calculate the midpoint of each interval.  
 <<gsubfn-strapply-midpoint>>=
 rn <- c("[-11.9,-10.6]", "(NA,9.3]", "(9.3,8e01]", "(8.01,Inf]")
-colMeans(strapply(rn, "[^][(),]+", as.numeric, backref = 0, simplify = TRUE))
+colMeans(strapply(rn, "[^][(),]+", as.numeric, simplify = TRUE))
 @
 
 \code{combine}. The
