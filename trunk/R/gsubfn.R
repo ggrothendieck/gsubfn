@@ -191,6 +191,7 @@ function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
 	ignore.case = FALSE, perl = FALSE, engine = c("tcl", "R"), 
 	simplify = FALSE, USE.NAMES = FALSE, combine = c) {
 				engine <- match.arg(engine)
+				combine <- match.funfn(combine)
 				if (engine == "R" || is.proto(FUN) || perl) return(ostrapply(X = X, 
 						pattern = pattern, FUN = FUN, backref = backref, 
 						..., perl = perl, simplify = simplify, USE.NAMES = USE.NAMES, 
