@@ -1,4 +1,8 @@
-Changes in 0.4-0
+Changes in 0.5-1
+
+	o fixes to pass R CMD CHECK
+
+Changes in 0.5-0
 
     o faster strapply based on tcl interface.  engine argument can choose
 	  between it and older version of strapply.
