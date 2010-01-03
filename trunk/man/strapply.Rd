@@ -70,12 +70,10 @@ sentence never occurs.
 \value{
 A list of character strings.  
 }
-\seealso{ See \code{\link{gsubfn}} and 
-\code{\link[base]{sapply}}.
+\seealso{ See \code{\link{gsubfn}}.
 For regular expression syntax used in tcl see
 \url{http://www.tcl.tk/man/tcl8.6/TclCmd/re_syntax.htm}
-and for regular expression syntax used in R see
-\code{\link[base]{regex}}.
+and for regular expression syntax used in R see the help page for \code{regex}.
 }
 \examples{
 

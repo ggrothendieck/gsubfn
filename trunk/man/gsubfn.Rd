@@ -5,7 +5,7 @@
 
 \title{ Pattern Matching and Replacement }
 \description{
-  Like \code{\link[base]{gsub}} except instead of a replacement string one
+  Like \code{gsub} except instead of a replacement string one
   uses a function which accepts the matched text as input and emits
   replacement text for it.
 }
@@ -13,9 +13,9 @@
 gsubfn(pattern, replacement, x, backref, USE.NAMES = FALSE, env = parent.frame(), ...)
 }
 \arguments{
-  \item{pattern}{ Same as \code{pattern} in \code{\link[base]{gsub}} }
+  \item{pattern}{ Same as \code{pattern} in \code{gsub} }
   \item{replacement}{ A character string, function, list, formula or proto object.  See Details. }
-  \item{x}{ Same as \code{x} in \code{\link[base]{gsub}} }
+  \item{x}{ Same as \code{x} in \code{gsub} }
   \item{backref}{ Number of backreferences to be passed to function.
 If zero or positive the match is passed as the first argument to the replacement
 function followed by the indicated number of backreferences as subsequent 
@@ -25,10 +25,10 @@ If omitted it will be determined automatically, i.e. it will be 0 if there
 are no backreferences and otherwise it will equal negative the number of
 back refenrences.  It determines this by counting the number of non-escaped
 left parentheses in the pattern.}
-  \item{USE.NAMES}{ See \code{USE.NAMES} in \code{\link[base]{sapply}}. }
+  \item{USE.NAMES}{ See \code{USE.NAMES} in \code{sapply}. }
   \item{env}{ Environment in which to evaluate the replacement function.
 Normally this is left at its default value.}
-  \item{\dots}{ Other \code{\link[base]{gsub}} arguments. }
+  \item{\dots}{ Other \code{gsub} arguments. }
 }
 \details{
  If \code{replacement} is a string then it acts like \code{gsub}.
@@ -79,10 +79,9 @@ Normally this is left at its default value.}
  \code{sep} value is \code{""}.
 }
 \value{
-  As in \code{\link[base]{gsub}}.
+  As in \code{gsub}.
 }
-\seealso{ \code{\link[base]{gsub}}, \code{\link[base]{strapply}}, \code{\link[base]{cat}},
-\code{\link[base]{paste}} }
+\seealso{ \code{\link{strapply}} }
 
 \examples{
 
