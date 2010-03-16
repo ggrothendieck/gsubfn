@@ -628,17 +628,13 @@ calculates a weighted mean of the first column using weights in
 the second column all grouped by columns \code{A} and \code{B}.
 The \code{aggregate} example aggregates over indexes to circumvent
 the restriction of a single input to the aggregation function.
-Since both \code{i} and \code{X} are free variables but we only
+Both \code{i} and \code{X} are free variables but we only
 want \code{i} to be an argument so we must specify it explicitly.
-In the \code{by} example there is only one free variable \code{x}
-so we can rely on the default for argument processing.
-Also note the use of \code{simplify=rbind} in the \code{by} case:
 <<gsubfn-fn-aggregate2>>=
 set.seed(1)
 X <- data.frame(X = rnorm(24), W = runif(24), A = gl(2, 1, 24), B = gl(2, 2, 24))
 fn$aggregate(1:nrow(X), X[3:4], i ~ weighted.mean(X[i,1], X[i,2]))
 
-fn$by(X, X[3:4], ~ data.frame(wmean = weighted.mean(x[1], x[2]), x[1, 3:4]), simplify = rbind)
 @
 
 A number of mathematical functions take functions as arguments. Here we

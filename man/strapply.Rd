@@ -10,7 +10,8 @@ Similar to \code{"'gsubfn'"} except instead of performing substitutions
 it returns the output of \code{"'FUN'"}.}
 \usage{
 strapply(X, pattern, FUN = function(x, ...) x, backref = NULL, ..., 
-	ignore.case = FALSE, perl = FALSE, engine = c("tcl", "R"), 
+	ignore.case = FALSE, perl = FALSE, 
+	engine = if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R", 
 	simplify = FALSE, USE.NAMES = FALSE, combine = c)
 }
 \arguments{
@@ -26,8 +27,8 @@ strapply(X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
 		argument.}
   \item{perl}{If \code{TRUE} then \code{engine="R"} is used with
 		perl regular expressions.}
-  \item{engine}{Specifies which engine to use.  \code{engine="tcl"}, 
-			the default
+  \item{engine}{Specifies which engine to use.  If the R installation
+   			has \code{tcltk} capability then the \code{tcl} engine is used
 			unless \code{FUN} is a proto object in which case the
 			\code{"R"} engine is used (regardless of the setting of this
 			argument).}
