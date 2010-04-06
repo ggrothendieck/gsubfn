@@ -248,7 +248,7 @@ strapply1 <- function(x, e, backref, ignore.case = FALSE) {
 			if (about > 1) out[-1,, drop = FALSE] 
 			else out
 		} else {
-			mn <- 1 + backref > 0
+			mn <- 1 + (backref < 0)
 			mx <- min(abs(backref) + 1, about)
 			out[seq(mn, mx),, drop = FALSE]
 		}
