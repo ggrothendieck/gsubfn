@@ -10,6 +10,7 @@ Similar to \code{"'gsubfn'"} except instead of performing substitutions
 it returns the output of \code{"'FUN'"}.}
 \usage{
 strapply(X, pattern, FUN = function(x, ...) x, backref = NULL, ..., 
+	empty = NULL,
 	ignore.case = FALSE, perl = FALSE, 
 	engine = if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R", 
 	simplify = FALSE, USE.NAMES = FALSE, combine = c)
@@ -23,6 +24,7 @@ strapply(X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
           to be applied to each element of 
           \code{"'X'"}.  See discussion in \code{\link{gsubfn}}. }
   \item{backref}{See \code{\link{gsubfn}}.}
+  \item{empty}{If there is no match to a string return this value.}
   \item{ignore.case}{If \code{TRUE} then case is ignored in the \code{pattern}
 		argument.}
   \item{perl}{If \code{TRUE} then \code{engine="R"} is used with
