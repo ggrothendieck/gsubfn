@@ -120,7 +120,7 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
 }
 
 ostrapply <- 
-function (X, pattern, FUN = function(x, ...) x, ...,
+function (X, pattern, FUN = function(x, ...) x, ..., empty = NULL,
     simplify = FALSE, USE.NAMES = FALSE, combine = c) {
 	here <- environment()
 	combine <- match.funfn(combine)
@@ -189,6 +189,7 @@ function (X, pattern, FUN = function(x, ...) x, ...,
 
 strapply <-
 function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
+	empty = NULL,
 	ignore.case = FALSE, perl = FALSE, 
 	engine = if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R", 
 	simplify = FALSE, USE.NAMES = FALSE, combine = c) {
@@ -197,7 +198,7 @@ function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
 				pattern <- as.character(pattern)
 				if (engine == "R" || is.proto(FUN) || perl) return(ostrapply(X = X, 
 						pattern = pattern, FUN = FUN, backref = backref, 
-						..., perl = perl, simplify = simplify, USE.NAMES = USE.NAMES, 
+						..., empty = empty, perl = perl, simplify = simplify, USE.NAMES = USE.NAMES, 
 						combine = combine))
 				stopifnot(engine == "tcl", require(tcltk))
                 if (is.proto(FUN)) {
@@ -218,6 +219,7 @@ function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
                 }
 				ff <- function(x) {
 					s <- strapply1(x, pattern, backref, ignore.case)
+					if (length(s) == 0 && !is.null(empty)) s <- matrix(empty, 1)
 					L <- lapply(seq_len(ncol(s)), function(j) {
 						combine(do.call(FUN, as.list(s[, j]))) })
 						# combine(do.call(FUN, list(s[, j]))) })
