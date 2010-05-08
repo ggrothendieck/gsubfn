@@ -217,6 +217,7 @@ function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
                 } else {
                         FUN <- match.funfn(FUN)
                 }
+				# ff is called for each component of the vector of strings
 				ff <- function(x) {
 					s <- strapply1(x, pattern, backref, ignore.case)
 					if (length(s) == 0 && !is.null(empty)) s <- matrix(empty, 1)
