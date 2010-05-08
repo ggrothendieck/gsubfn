@@ -43,8 +43,9 @@ strapply(X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
   \item{USE.NAMES}{ logical; if \code{"'TRUE'"} and if \code{"'X'"} is 
 	character, use \code{"'X'"} as
           'names' for the result unless it had names already.}
-  \item{combine}{multiple results from same string are combined
-     using this function.  The default is \code{"c"}. \code{"list"}
+  \item{combine}{combine is a function applied to the components of 
+  	 the result of \code{FUN}.
+     The default is \code{"c"}. \code{"list"}
      is another common choice.  The default may change to be \code{"list"}
      in the future.}
 }
