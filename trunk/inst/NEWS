@@ -2,6 +2,12 @@ Changes in 0.5-3
 
     o new argument, empty, on strapply
 
+	o gsubfn pattern is no longer parenthesized internally if backref > 0
+      (or if backref is NULL or unspecified and the implied backref is > 0);
+ 	  otherwise, it is parenthesized internally as it was before.  This may 
+      be further extended in the future to the backref <= 0 case.  See the 
+	  example of replacing double characters in ?gsubfn .
+
 Changes in 0.5-2
 
     o bug fixes

@@ -73,6 +73,9 @@ Normally this is left at its default value.}
  end of each string (not each match).  They each take one argument,
  the object.
 
+ Note that if backref is zero or negative or if there are no parentheses
+ in the regular expression then internally the pattern will be parenthesized.
+
  Two utility functions \code{cat0} and \code{paste0} are available.
  They are like
  \code{\link[base]{cat}} and \code{\link[base]{paste}} except that their default
@@ -124,6 +127,17 @@ gsubfn("\\\\w+", p, "the cat in the hat is back")
 p2 <- proto(pre = function(this) this$value <- 0,
 	fun = function(this, x) this$value <- value + as.numeric(x))
 gsubfn("[0-9]+", p2, "12 3 11, 25 9")
+
+# These examples all do the same thing, namely add an ! after double
+# characters but in the 3rd and 4th examples we must use 
+# \\2 instead of \\1 because when backref is negative or zero 
+# the pattern is parenthesized internally.  i.e. Internally the
+# pattern in the 3rd and 4th examples is transformed to "((.)\\2)"
+gsubfn("((.)\\1)", x + ... ~ paste0(x, "!"), "abbcddd")
+gsubfn("((.)\\1)", x ~ paste0(x, "!"), "abbcddd", backref = 1)
+gsubfn("(.)\\2", x + ... ~ paste0(x, "!"), "abbcddd", backref = -1)
+gsubfn("(.)\\2", x ~ paste0(x, "!"), "abbcddd", backref = 0)
+
 
 }
 
