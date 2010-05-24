@@ -477,7 +477,7 @@ passing it to \code{paste0}.
 It uses the zero-lookahead perl style pattern matching expression.
 
 <<gsubfn-paste0>>=
-strapply(' a b c d e f ', ' [a-z](?=( [a-z] ))', paste0, perl = TRUE)[[1]]
+strapply(' a b c d e f ', ' [a-z](?=( [a-z] ))', paste0)[[1]]
 @
 
 

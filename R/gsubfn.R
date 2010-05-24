@@ -47,15 +47,17 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
    pattern <- as.character(pattern)
    # i is 1 if the entire match is passed and 2 otherwise.
    # j is 1 plus the number of backreferences
-   if (missing(backref) || is.null(backref)) {
+   # no paren is the number of parentheses excluding escaped parentheses
+   j <- if (missing(backref) || is.null(backref)) {
     noparen <- base::gsub("\\\\.", "", pattern)
     noparen <- base::gsub("\\[[^\\]]*\\]", "", noparen)
-	j <- nchar(base::gsub("[^(]","", noparen))+1
-	i <- min(2, j)
+	backref <- nchar(base::gsub("[^(]","", noparen))
    } else {
-	i <- as.numeric(backref < 0) + 1
-	j <- abs(backref)+1
+	as.numeric(backref <= 0) + abs(backref)
    }
+   # i <- min(1, j)
+   i <- 1
+   j <- max(i, j)
 
    e <- NULL
    if (!inherits(replacement, "formula") && !is.function(replacement)) {
@@ -84,7 +86,9 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
       # x <- base::gsub('"', '\\\\"', x)
       # x <- chartr('"', '\b', x)
       # pattern <- chartr('"', '\b', pattern)
-      pattern <- paste("(", pattern, ")", sep = "")
+	  if (!is.null(backref) && backref <=0) {
+		  pattern <- paste("(", pattern, ")", sep = "")
+      }
       if (!is.null(e)) {
           e$count <- 0
           if ("pre" %in% ls(e)) e$pre()
