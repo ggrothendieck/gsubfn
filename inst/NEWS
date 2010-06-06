@@ -2,11 +2,20 @@ Changes in 0.5-3
 
     o new argument, empty, on strapply
 
-	o gsubfn pattern is no longer parenthesized internally if backref > 0
-      (or if backref is NULL or unspecified and the implied backref is > 0);
- 	  otherwise, it is parenthesized internally as it was before.  This may 
-      be further extended in the future to the backref <= 0 case.  See the 
-	  example of replacing double characters in ?gsubfn .
+    o gsubfn now uses tcl by default (if the R installation has tcltk
+	  capability) and has an engine argument.  This was already the case
+	  with strapply.
+
+	o gsubfn pattern is no longer parenthesized internally if engine = "tcl"
+	  or if backref > 0.  See the example of replacing double characters 
+	  in ?gsubfn .
+
+   o if the function in gsubfn or strapply has an `&` argument then backref
+	 will be taken to be negative and the entire match passed through that arg.
+
+   o in as.function.formula if any of ..1 through ..9 are found as free
+     variables then ... is used as a trailng argument instead. If `&` is a
+	 free variable then it is placed at the beginning.
 
 Changes in 0.5-2
 
