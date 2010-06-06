@@ -9,6 +9,9 @@ eval.with.vis <- function (expr) {
 
 as.function.formula <- function(x, ...) {
 	vars <- setdiff(all.vars(x[[2]]), c("letters", "LETTERS", "pi"))
+	dotdot <- grepl("^[.][.][1-9.]$", vars)
+	if (any(dotdot)) vars <- c(setdiff(vars[!dotdot], "..."), "...")
+	if ("&" %in% vars) vars <- c("&", setdiff(vars, c("...", "&")), "...")
 	if (length(vars) == 0) { 
 		f0 <- function() {}
 		body(f0) <- x[[length(x)]]

@@ -10,7 +10,10 @@
   replacement text for it.
 }
 \usage{
-gsubfn(pattern, replacement, x, backref, USE.NAMES = FALSE, env = parent.frame(), ...)
+gsubfn(pattern, replacement, x, backref, USE.NAMES = FALSE, 
+	ignore.case = FALSE, 
+	engine = if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R", 
+	env = parent.frame(), ...)
 }
 \arguments{
   \item{pattern}{ Same as \code{pattern} in \code{gsub} }
@@ -26,6 +29,13 @@ are no backreferences and otherwise it will equal negative the number of
 back refenrences.  It determines this by counting the number of non-escaped
 left parentheses in the pattern.}
   \item{USE.NAMES}{ See \code{USE.NAMES} in \code{sapply}. }
+  \item{ignore.case}{If \code{TRUE} then case is ignored in the \code{pattern}
+		argument.}
+  \item{engine}{Specifies which engine to use.  If the R installation
+   			has \code{tcltk} capability then the \code{tcl} engine is used
+			unless \code{FUN} is a proto object in which case the
+			\code{"R"} engine is used (regardless of the setting of this
+			argument).}
   \item{env}{ Environment in which to evaluate the replacement function.
 Normally this is left at its default value.}
   \item{\dots}{ Other \code{gsub} arguments. }
@@ -113,8 +123,8 @@ strapply("12;34:56,89,,12", "[0-9]+", simplify = c)
 # makes all letters except first in word lower case
 gsubfn("\\\\B.", tolower, "I LIKE A BANANA SPLIT", perl = TRUE)
 
-# replaces numbers with that many Xs
-gsubfn("[[:digit:]]+", ~ paste(rep("X", n), collapse = ""), "5.2")
+# replaces numbers with that many Xs separated by -
+gsubfn("[[:digit:]]+", ~ paste(rep("X", n), collapse = "-"), "5.2")
 
 # replaces units with scale factor
 gsubfn(".m", list(cm = "e1", km = "e6"), "33cm 45km")
@@ -128,15 +138,18 @@ p2 <- proto(pre = function(this) this$value <- 0,
 	fun = function(this, x) this$value <- value + as.numeric(x))
 gsubfn("[0-9]+", p2, "12 3 11, 25 9")
 
-# These examples all do the same thing, namely add an ! after double
-# characters but in the 3rd and 4th examples we must use 
-# \\2 instead of \\1 because when backref is negative or zero 
-# the pattern is parenthesized internally.  i.e. Internally the
-# pattern in the 3rd and 4th examples is transformed to "((.)\\2)"
-gsubfn("((.)\\1)", x + ... ~ paste0(x, "!"), "abbcddd")
-gsubfn("((.)\\1)", x ~ paste0(x, "!"), "abbcddd", backref = 1)
-gsubfn("(.)\\2", x + ... ~ paste0(x, "!"), "abbcddd", backref = -1)
-gsubfn("(.)\\2", x ~ paste0(x, "!"), "abbcddd", backref = 0)
+# insert an ! after double # characters.  
+gsubfn("((.)\\\\2)", ~ paste0(..1, "!"), "abbcddd")
+
+# this only works if your R installation has tcltk capabilities
+# See following example for corresponding code with R engine
+if (isTRUE(capabilities()[["tcltk"]])) {
+	gsubfn("(.)\\\\1", ~ paste0(`&`, "!"), "abbcddd")
+}
+
+# with R and backref <=0 (implied) the pattern is internally parenthesized
+# so must use \\2 rather than \\1
+gsubfn("(.)\\\\2", ~ paste0(`&`, "!"), "abbcddd", engine = "R")
 
 
 }
