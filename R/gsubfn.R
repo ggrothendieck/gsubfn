@@ -231,7 +231,7 @@ function (X, pattern, FUN = function(x, ...) x, ..., empty = NULL,
 			}
 		)
         }
-    ff <- function(x) { gsubfn(pattern, p, x, ...); p$v }
+    ff <- function(x) { gsubfn(pattern, p, x, engine = "R", ...); p$v }
     result <- sapply(X, ff, 
 	simplify = is.logical(simplify) && simplify, USE.NAMES = USE.NAMES)
     if (is.logical(simplify)) result else {
