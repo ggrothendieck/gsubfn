@@ -21,11 +21,12 @@
 #   makes all letters except first in word lower case
 #
 gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE, 
-  ignore.case = FALSE,
-  engine = if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R", 
+  ignore.case = FALSE, engine = getOption("gsubfn.engine"),
   env = parent.frame(), ...) 
 {
 
+   if (missing(engine) || is.null(engine))
+      engine <- if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R"
    engine <- match.arg(engine, c("tcl", "R"))
    if (engine == "tcl") stopifnot(require(tcltk))
 
@@ -242,12 +243,17 @@ function (X, pattern, FUN = function(x, ...) x, ..., empty = NULL,
 strapply <-
 function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
 	empty = NULL,
-	ignore.case = FALSE, perl = FALSE, 
-	engine = if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R", 
+	ignore.case = FALSE, perl = FALSE, engine = getOption("gsubfn.engine"),
 	simplify = FALSE, USE.NAMES = FALSE, combine = c) {
 				combine <- match.funfn(combine)
 				stopifnot(!missing(pattern))
 				pattern <- as.character(pattern)
+
+   if (missing(engine) || is.null(engine))
+      engine <- if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R"
+   engine <- match.arg(engine, c("tcl", "R"))
+   if (engine == "tcl") stopifnot(require(tcltk))
+
 				if (engine == "R" || is.proto(FUN) || perl) return(ostrapply(X = X, 
 						pattern = pattern, FUN = FUN, backref = backref, 
 						..., empty = empty, perl = perl, simplify = simplify, USE.NAMES = USE.NAMES, 
