@@ -11,8 +11,7 @@
 }
 \usage{
 gsubfn(pattern, replacement, x, backref, USE.NAMES = FALSE, 
-	ignore.case = FALSE, 
-	engine = if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R", 
+	ignore.case = FALSE, engine = getOption("gsubfn.engine"),
 	env = parent.frame(), ...)
 }
 \arguments{

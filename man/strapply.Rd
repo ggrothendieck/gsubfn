@@ -11,8 +11,7 @@ it returns the output of \code{"'FUN'"}.}
 \usage{
 strapply(X, pattern, FUN = function(x, ...) x, backref = NULL, ..., 
 	empty = NULL,
-	ignore.case = FALSE, perl = FALSE, 
-	engine = if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R", 
+	ignore.case = FALSE, perl = FALSE, engine = getOption("gsubfn.engine"),
 	simplify = FALSE, USE.NAMES = FALSE, combine = c)
 }
 \arguments{

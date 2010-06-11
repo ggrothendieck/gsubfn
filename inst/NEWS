@@ -17,6 +17,10 @@ Changes in 0.5-3
      variables then ... is used as a trailng argument instead. If `&` is a
 	 free variable then it is placed at the beginning.
 
+   o new option "gsubfn.engine" which can be "tcl" or "R".  If omitted then
+	 gsubfn and strapply default to the "tcl" regular expression engine if 
+     the current R installation has tcltk capability and "R" otherwise.
+
 Changes in 0.5-2
 
     o bug fixes
