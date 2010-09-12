@@ -139,7 +139,7 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
 	      rs <- paste('\1\2', rs, '\1', sep = "")
           # if backref= is too large, reduce by 1 and try again
 		  if (engine == "R")
-		    tryCatch(base::gsub(pattern, rs, x, ...),
+		    tryCatch(base::gsub(pattern, rs, x, ignore.case = ignore.case, ...),
 				error = function(x) if (j > i) repl(i,j-1) else stop(x))
 		  else {
 		   tcl("set", "pattern", pattern)
@@ -173,7 +173,7 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
 }
 
 ostrapply <- 
-function (X, pattern, FUN = function(x, ...) x, ..., empty = NULL,
+function (X, pattern, FUN = function(x, ...) x, ignore.case = FALSE, ..., empty = NULL,
     simplify = FALSE, USE.NAMES = FALSE, combine = c) {
 	here <- environment()
 	combine <- match.funfn(combine)
@@ -232,8 +232,8 @@ function (X, pattern, FUN = function(x, ...) x, ..., empty = NULL,
 			}
 		)
         }
-    ff <- function(x) { gsubfn(pattern, p, x, engine = "R", ...); p$v }
-    result <- sapply(X, ff, 
+    ff <- function(x, ...) { gsubfn(pattern, p, x, engine = "R", ignore.case = ignore.case, ...); p$v }
+    result <- sapply(X, ff, ...,
 	simplify = is.logical(simplify) && simplify, USE.NAMES = USE.NAMES)
     if (is.logical(simplify)) result else {
 		do.call(match.funfn(simplify), result)
@@ -254,7 +254,8 @@ function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
    engine <- match.arg(engine, c("tcl", "R"))
    if (engine == "tcl") stopifnot(require(tcltk))
 
-				if (engine == "R" || is.proto(FUN) || perl) return(ostrapply(X = X, 
+				if (engine == "R" || is.proto(FUN) || perl) 
+						return(ostrapply(X = X, ignore.case = ignore.case,
 						pattern = pattern, FUN = FUN, backref = backref, 
 						..., empty = empty, perl = perl, simplify = simplify, USE.NAMES = USE.NAMES, 
 						combine = combine))
