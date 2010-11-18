@@ -1,6 +1,6 @@
 Package: gsubfn
-Version: 0.5-3
-Date: 2010-06-12
+Version: 0.5-5
+Date: 2010-11-15
 Title: Utilities for strings and function arguments.
 Author: G. Grothendieck
 Maintainer: G. Grothendieck <ggrothendieck@gmail.com>
