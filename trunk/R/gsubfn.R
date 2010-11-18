@@ -25,7 +25,7 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
   env = parent.frame(), ...) 
 {
 
-   if (missing(engine) || is.null(engine))
+   if (is.null(engine))
       engine <- if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R"
    engine <- match.arg(engine, c("tcl", "R"))
    if (engine == "tcl") stopifnot(require(tcltk))

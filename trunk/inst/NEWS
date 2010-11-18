@@ -1,25 +1,35 @@
+Changes in 0.5-5
+
+    o bug fix - engine option was not being intrepreted correctly.  
+
+Changes in 0.5-4
+
+    o strapply with engine = "tcl" (the default) now runs much faster on long 
+      strings
+
 Changes in 0.5-3
 
     o new argument, empty, on strapply
 
-    o gsubfn now uses tcl by default (if the R installation has tcltk
-	  capability) and has an engine argument.  This was already the case
-	  with strapply.
+    o gsubfn now has an engine argument.  This was already the case
+      with strapply.
 
-	o gsubfn pattern is no longer parenthesized internally if engine = "tcl"
-	  or if backref > 0.  See the example of replacing double characters 
-	  in ?gsubfn .
+    o new global option "gsubfn.engine" whose value can be "tcl" or "R". It is
+      used as the default value for the gsubfn and strappy engine argument.  If
+      the option is not set then gsubfn and strapply default to the "tcl" 
+      regular expression engine if the current R installation has tcltk 
+      capability and "R" otherwise.
 
-   o if the function in gsubfn or strapply has an `&` argument then backref
-	 will be taken to be negative and the entire match passed through that arg.
+    o gsubfn pattern is no longer parenthesized internally if (1) engine = "tcl"
+      or if (2) engine = "R" and backref > 0.  See the example of replacing 
+      double characters in ?gsubfn .
 
-   o in as.function.formula if any of ..1 through ..9 are found as free
-     variables then ... is used as a trailng argument instead. If `&` is a
-	 free variable then it is placed at the beginning.
+    o if the function in gsubfn or strapply has an `&` argument then backref
+      will be taken to be negative and the entire match passed through that arg.
 
-   o new option "gsubfn.engine" which can be "tcl" or "R".  If omitted then
-	 gsubfn and strapply default to the "tcl" regular expression engine if 
-     the current R installation has tcltk capability and "R" otherwise.
+    o in as.function.formula if any of ..1 through ..9 are found as free
+      variables then ... is used as a trailng argument instead. If `&` is a
+      free variable then it is placed at the beginning of the argument list.
 
 Changes in 0.5-2
 
@@ -36,43 +46,43 @@ Changes in 0.5-1
 Changes in 0.5-0
 
     o faster strapply based on tcl interface.  engine argument can choose
-	  between it and older version of strapply.
+      between it and older version of strapply.
 
 Changes in 0.3-9
 
-	o removed some dead code.  Thanks to Wacek Kusnierczyk.
+    o removed some dead code.  Thanks to Wacek Kusnierczyk.
 
 Changes in 0.3-8
 
-	o minor improvements in gsubfn-package.Rd
+    o minor improvements in gsubfn-package.Rd
 
-	o fixed bug in match.funfn
+    o fixed bug in match.funfn
 
-	o heuristic to detect the number of back references (used when backref
+    o heuristic to detect the number of back references (used when backref
       is not specified) now uses -k where k is the number of non-escaped
       left parens (whereas previously it used -k where k was the number of 
       left parens whether escaped or not).
 
 Changes in 0.3-7
 
-	o R CMD CHECK fixes
+    o R CMD CHECK fixes
 
-	o if replacement object is a list and match not found in that list then
-	  no replacement is done
+    o if replacement object is a list and match not found in that list then
+      no replacement is done
 
 Changes in 0.3-6
 
     o bug fixes: fn$force("$x") failed if variable name was x as shown here
 
-	o bug fixes: f <- function() { aaa <- "X"; fn$cat("abc$aaa def\n") }; f()
-	  failed.
+    o bug fixes: f <- function() { aaa <- "X"; fn$cat("abc$aaa def\n") }; f()
+      failed.
 
-	o internals: eval.with.vis() replaced in $.fn.  Now using withVisible().
+    o internals: eval.with.vis() replaced in $.fn.  Now using withVisible().
       This change requires R 2.5 or later.
 
-	o the replacement object in gsubfn can be a list as well
+    o the replacement object in gsubfn can be a list as well
 
-	o the replacement object in strapply can be a character string or list
+    o the replacement object in strapply can be a character string or list
       as well
 
     o if backref= is omitted on gsubfn or strapply it passes the backreferences
@@ -86,157 +96,157 @@ Changes in 0.3-6
 
 Changes in 0.3-5
 
-	o fixed bug in demo index
+    o fixed bug in demo index
 
-	o eliminated dependence on methods package (previously only
-	  dependence was use of 'is')
+    o eliminated dependence on methods package (previously only
+      dependence was use of 'is')
 
 Changes in 0.3-4
 
-	o fixed typo
+    o fixed typo
 
 Changes in 0.3-3
 
-	o changed quantreg example to reflect change in engel data set
+    o changed quantreg example to reflect change in engel data set
 
 Changes in 0.3-2
 
-	o revised gsubfn-packages.Rd
+    o revised gsubfn-packages.Rd
 
-	o fn$ now performs quasi-perl style interpolation 
+    o fn$ now performs quasi-perl style interpolation 
 
-	o cati, cati0 removed since fn$cat and fn$cat0 can be used.
+    o cati, cati0 removed since fn$cat and fn$cat0 can be used.
 
-	o rules for which formulas are translated and which character 
-	  strings are interpolated have been changed and simplified:
-	  1. formulas specified with ~~ (double ~) are translated to functions
-	  2. character strings beginning with \1 are translated to functions
-	  3. if the above rules result in no translation/interpolation
-	     then all formulas are translated if there are any formulas
- 	     or, if not, then all character strings are interpolated
+    o rules for which formulas are translated and which character 
+      strings are interpolated have been changed and simplified:
+      1. formulas specified with ~~ (double ~) are translated to functions
+      2. character strings beginning with \1 are translated to functions
+      3. if the above rules result in no translation/interpolation
+         then all formulas are translated if there are any formulas
+          or, if not, then all character strings are interpolated
           In most cases rule #3 is used.
 
-	o fn$f now returns invisibly if f does (thanks to Duncan Murdoch
-	  for eval.with.vis)
+    o fn$f now returns invisibly if f does (thanks to Duncan Murdoch
+      for eval.with.vis)
 
 Changes in 0.3-1
 
-	o fixed initialization bug in strapply
+    o fixed initialization bug in strapply
 
-	o added proto examples to ?gsubfn and ?strapply
+    o added proto examples to ?gsubfn and ?strapply
 
 Changes in 0.3-0
 
-	o gsubfn and strapply now can take proto arguments in addition
-	  to character strings, functions and formulas
+    o gsubfn and strapply now can take proto arguments in addition
+      to character strings, functions and formulas
 
-	o vignette added
+    o vignette added
 
-	o home page abbreviated since most info already in vignette
+    o home page abbreviated since most info already in vignette
 
 
 Changes in 0.2-3
 
-	o increased string lengths accepted by gsubfn by eliminating
-	  use of the R parse() command. [Thanks to Stefan Th. Gries
- 	  for reporting problem.]
+    o increased string lengths accepted by gsubfn by eliminating
+      use of the R parse() command. [Thanks to Stefan Th. Gries
+       for reporting problem.]
 
-	o fixed bug in one of the examples in example(gsubfn)
+    o fixed bug in one of the examples in example(gsubfn)
 
-	o strapply fixes
+    o strapply fixes
 
 Changes in 0.2-2
 
-	o added combine= argument to strapply
+    o added combine= argument to strapply
 
-	o fixed bug associated with using double quotes in gsub (which
-	  also could affect strapply and cati).  [Thanks to Stefan Th.
-	  Gries for reporting problem.]
+    o fixed bug associated with using double quotes in gsub (which
+      also could affect strapply and cati).  [Thanks to Stefan Th.
+      Gries for reporting problem.]
 
 Changes in 0.2-1 
 
-	o added "note difference" example in strapply
+    o added "note difference" example in strapply
 
-	o letters, LETTERS and pi excluded from args so 
-	  x ~ sin(x*pi/180) can be shortened to ~ sin(x*pi/180)
-	  and 
- 	  x ~ LETTERS[x] can be reduced to ~ LETTERS[x]
-  	  (previously it would have added pi and LETTERS to arg
-	  lists in these two examples)
+    o letters, LETTERS and pi excluded from args so 
+      x ~ sin(x*pi/180) can be shortened to ~ sin(x*pi/180)
+      and 
+       x ~ LETTERS[x] can be reduced to ~ LETTERS[x]
+        (previously it would have added pi and LETTERS to arg
+      lists in these two examples)
 
-	o improved as.function.formula.Rd
+    o improved as.function.formula.Rd
 
-	o fixes to eliminate R CMD CHECK warnings under R 2.5.0
+    o fixes to eliminate R CMD CHECK warnings under R 2.5.0
  
-	o bug fix in $.fn.  If args and match.call order was different
-	  it could fail previously.
+    o bug fix in $.fn.  If args and match.call order was different
+      it could fail previously.
 
-	o new demos: gsubfn-gries.R, gsubfn-chron.R, gsubfn-si.R
+    o new demos: gsubfn-gries.R, gsubfn-chron.R, gsubfn-si.R
 
-	o THANKS file
+    o THANKS file
 
 Changes in 0.2-0 
 
-	o match.funfn
+    o match.funfn
 
-	o as.function.formula improvements
+    o as.function.formula improvements
 
-	o $.fn
+    o $.fn
 
-	o added numerous examples of $.fn to home page
+    o added numerous examples of $.fn to home page
 
 Changes in 0.1-5
 
-	o reference to cat0 missing from gsubfn-package.Rd
+    o reference to cat0 missing from gsubfn-package.Rd
 
-	o added digit separation example to strapply.Rd
+    o added digit separation example to strapply.Rd
 
-	o added config file example to strapply.Rd
+    o added config file example to strapply.Rd
 
-	o in strapply simplify= can be a function
+    o in strapply simplify= can be a function
 
-	o replacement= in gsubfn and strapply can be a formula
+    o replacement= in gsubfn and strapply can be a formula
 
-	o new internal function as.function.formula
+    o new internal function as.function.formula
 
-	o new home page and svn repository (URL in DESCRIPTION file)
+    o new home page and svn repository (URL in DESCRIPTION file)
 
 Changes in 0.1-4
 
-	o added cati, cati0, cat0 and paste0
+    o added cati, cati0, cat0 and paste0
 
-	o added USE.NAMES argument to gsubfn
+    o added USE.NAMES argument to gsubfn
 
-	o added gsubfn-cut demo
+    o added gsubfn-cut demo
 
-	o added repx example to gsubfn.Rd
+    o added repx example to gsubfn.Rd
 
-	o added SI scale example to gsubfn.Rd
+    o added SI scale example to gsubfn.Rd
 
-	o perl=, etc. args were not being passed to gsub
+    o perl=, etc. args were not being passed to gsub
 
-	o added moving window example to strapply.Rd
+    o added moving window example to strapply.Rd
 
 Changes in 0.1-3
 
-	o enhanced gsubfn backref= argument
+    o enhanced gsubfn backref= argument
 
-	o fixed bug in strapply
+    o fixed bug in strapply
 
 Changes in 0.1-2
 
-	o cati added
+    o cati added
 
-	o updated DESCRIPTION and gsubfn-package.Rd
+    o updated DESCRIPTION and gsubfn-package.Rd
 
 Changes in 0.1-1 
 
-	o strapply added
+    o strapply added
 
-	o gsubfn-package.Rd added
+    o gsubfn-package.Rd added
 
 Changes in 0.1-0
 
-	o initial release
+    o initial release
 
 
