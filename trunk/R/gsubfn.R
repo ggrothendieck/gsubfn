@@ -94,23 +94,26 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
    if (missing(backref) || is.null(backref)) {
       noparen <- base::gsub("\\\\.", "", pattern)
       noparen <- base::gsub("\\[[^\\]]*\\]", "", noparen)
-	  backref <- nchar(base::gsub("[^(]","", noparen))
+	  backref <- - nchar(base::gsub("[^(]","", noparen))
    }
 
-   # if `&` is an argument then force backref to be 0 or negative
+   # if `&` is an argument then force backref to be 0 or positive
    if (names(formals(here$replacement))[[1]] == "&") {
-	   backref <- - abs(backref)
+	   backref <- abs(backref)
 	   if (!is.null(e)) e$backref <- backref
    }
 
-   # i is 1 if the entire match is passed and 2 otherwise.
-   # an extra set of parens are inserted if engine is R and backref <= 0
+   # cat("backref:", backref, "\n")
+   # Note. an extra set of parens are inserted if engine is R and backref <= 0
    # no paren is the number of parentheses excluding escaped parentheses
-   j <- (engine == "R" && !is.null(backref) && backref <= 0) + abs(backref)
-   # i <- min(1, j)
-   i <- if (engine == "tcl" && backref <= 0) 0 else 1
+   # if engine=="R" then i=1 and j=no of backrefs + 1 for match if backref>=0
+   # if engine=="tcl" then i=0 if backref<0 and i=1 otherwise.  j=abs(backref)
+   j <- (engine == "R" && !is.null(backref) && backref >= 0) + abs(backref)
+   i <- if (engine == "tcl" && backref >= 0) 0 else 1
    # check if this next line is actually needed
    j <- max(i, j)
+
+   # cat("i:", i, "j:", j, "\n")
 
    stopifnot(is.character(pattern), is.character(x), is.function(replacement))
    force(env)
@@ -118,7 +121,7 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
       # x <- base::gsub('"', '\\\\"', x)
       # x <- chartr('"', '\b', x)
       # pattern <- chartr('"', '\b', pattern)
-	  if (engine == "R" && !is.null(backref) && backref <=0) {
+	  if (engine == "R" && !is.null(backref) && backref >=0) {
 		  pattern <- paste("(", pattern, ")", sep = "")
       }
       if (!is.null(e)) {

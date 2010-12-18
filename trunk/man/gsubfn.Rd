@@ -25,14 +25,17 @@ arguments. If negative then
 only the that number of backreferences are passed but the match itself is not.
 If omitted it will be determined automatically, i.e. it will be 0 if there
 are no backreferences and otherwise it will equal negative the number of
-back refenrences.  It determines this by counting the number of non-escaped
-left parentheses in the pattern.}
+back references.  It determines this by counting the number of non-escaped
+left parentheses in the pattern. Also if the function contains an ampersand
+as an argument then \code{backref} will be taken as non-negative and the
+ampersand argument will get the full match.}
   \item{USE.NAMES}{ See \code{USE.NAMES} in \code{sapply}. }
   \item{ignore.case}{If \code{TRUE} then case is ignored in the \code{pattern}
 		argument.}
   \item{engine}{Specifies which engine to use.  If the R installation
    			has \code{tcltk} capability then the \code{tcl} engine is used
-			unless \code{FUN} is a proto object in which case the
+			unless \code{FUN} is a proto object or \code{perl=TRUE} in which 
+			case the
 			\code{"R"} engine is used (regardless of the setting of this
 			argument).}
   \item{env}{ Environment in which to evaluate the replacement function.
@@ -82,8 +85,8 @@ Normally this is left at its default value.}
  end of each string (not each match).  They each take one argument,
  the object.
 
- Note that if backref is zero or negative or if there are no parentheses
- in the regular expression then internally the pattern will be parenthesized.
+ Note that if the \code{"R"} engine is used and if backref is non-negative 
+ then internally the pattern will be parenthesized.
 
  Two utility functions \code{cat0} and \code{paste0} are available.
  They are like
@@ -137,16 +140,13 @@ p2 <- proto(pre = function(this) this$value <- 0,
 	fun = function(this, x) this$value <- value + as.numeric(x))
 gsubfn("[0-9]+", p2, "12 3 11, 25 9")
 
-# insert an ! after double # characters.  
-gsubfn("((.)\\\\2)", ~ paste0(..1, "!"), "abbcddd")
-
 # this only works if your R installation has tcltk capabilities
 # See following example for corresponding code with R engine
 if (isTRUE(capabilities()[["tcltk"]])) {
 	gsubfn("(.)\\\\1", ~ paste0(`&`, "!"), "abbcddd")
 }
 
-# with R and backref <=0 (implied) the pattern is internally parenthesized
+# with R and backref >=0 (implied) the pattern is internally parenthesized
 # so must use \\2 rather than \\1
 gsubfn("(.)\\\\2", ~ paste0(`&`, "!"), "abbcddd", engine = "R")
 

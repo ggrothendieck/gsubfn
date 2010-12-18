@@ -1,6 +1,10 @@
+Changes in 0.5-6
+
+    o bug fix. backref argument was being interpreted incorrectly in "R" engine.
+
 Changes in 0.5-5
 
-    o bug fix - engine option was not being intrepreted correctly.  
+    o bug fix - engine option was not being interpreted correctly.  
 
 Changes in 0.5-4
 
