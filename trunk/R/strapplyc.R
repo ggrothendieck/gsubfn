@@ -1,3 +1,5 @@
+library(tcltk)
+
 # x is name of a tcl variable holding list of character vectors
 tclList2R <- function(x, convert = as.character) {
 	len <- as.integer(.Tcl(sprintf("llength $%s", x)))
