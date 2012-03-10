@@ -16,6 +16,6 @@ Description: gsubfn is like gsub but can take a replacement function
    expects another function as an input argument or functions like cat
    or sql calls that may involve strings where substitution is desirable.
 Depends: R (>= 2.5.0), proto
-Suggests: boot, chron, doBy, grid, lattice, quantreg, reshape, tcltk, zoo
+Suggests: boot, chron, doBy, grid, lattice, quantreg, reshape, svUnit, tcltk, zoo
 License: GPL (Version 2 or later)
 URL: http://gsubfn.googlecode.com
