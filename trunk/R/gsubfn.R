@@ -24,6 +24,7 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
   ignore.case = FALSE, engine = getOption("gsubfn.engine"),
   env = parent.frame(), ...) 
 {
+   if (isTRUE(list(...)$perl)) engine <- "R"
 
    if (is.null(engine))
       engine <- if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R"
@@ -237,7 +238,7 @@ function (X, pattern, FUN = function(x, ...) x, ignore.case = FALSE, ..., empty 
         }
     ff <- function(x, ...) { gsubfn(pattern, p, x, engine = "R", ignore.case = ignore.case, ...); p$v }
     result <- sapply(X, ff, ...,
-	simplify = is.logical(simplify) && simplify, USE.NAMES = USE.NAMES)
+		simplify = isTRUE(simplify), USE.NAMES = USE.NAMES)
     if (is.logical(simplify)) result else {
 		do.call(match.funfn(simplify), result)
 	}
@@ -252,7 +253,7 @@ function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
 				stopifnot(!missing(pattern))
 				pattern <- as.character(pattern)
 
-   if (missing(engine) || is.null(engine))
+   if (is.null(engine) || is.na(engine) || engine == "" )
       engine <- if (isTRUE(capabilities()[["tcltk"]])) "tcl" else "R"
    engine <- match.arg(engine, c("tcl", "R"))
    if (engine == "tcl") stopifnot(require(tcltk))

@@ -2,3 +2,4 @@ gsubfn-chron		read in zoo data with chron datetimes.
 gsubfn-cut		Use strapply to extract endpoints from cut labels.
 gsubfn-gries		Stefan Gries' Linguistics code.
 gsubfn-si		Replace SI scale letter with number.
+gsubfn-unitTests	Run gsubfn unit test suite.

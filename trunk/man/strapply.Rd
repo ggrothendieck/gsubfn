@@ -2,6 +2,8 @@
 \alias{strapply}
 \alias{strapply1}
 \alias{ostrapply}
+\alias{strapplyc}
+\alias{tclList2R}
 \title{  
  Apply a function over a string or strings.
 }
@@ -13,6 +15,7 @@ strapply(X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
 	empty = NULL,
 	ignore.case = FALSE, perl = FALSE, engine = getOption("gsubfn.engine"),
 	simplify = FALSE, USE.NAMES = FALSE, combine = c)
+strapplyc(X, pattern, backref, ignore.case = FALSE, simplify = FALSE, USE.NAMES = FALSE)
 }
 \arguments{
   \item{X}{ list or (atomic) vector of character strings to be used. }
@@ -69,6 +72,9 @@ not back references.
 In those cases the user will have to specify backref.
 If \code{engine="tcl"} then an exact algorithm is used and the problem
 sentence never occurs.
+
+\code{strapplyc} is like \code{strapply} but specialized to \code{FUN=c} for
+speed.  \code{strapplyc} can only be used with the \code{"tcl"} engine.
 }
 \value{
 A list of character strings.  
@@ -122,6 +128,13 @@ strapply(c("the brown fox", "the eager beaver"), "\\\\w+", p)
 library(chron)
 x <- c("01/15/2005 23:32:45", "02/27/2005 01:22:30")
 x.chron <- strapply(x, "(../../....) (..:..:..)",  chron, simplify = c)
+
+# time parsing of all 275,546 words from James Joyce's Ulysses
+joyce <- readLines("http://www.gutenberg.org/files/4300/4300-8.txt") 
+joycec <- paste(joyce, collapse = " ") 
+system.time(s <- strapplyc(joycec, "\\w+")[[1]]) 
+length(s) # 275546 
 }
+
 }
 \keyword{character}
