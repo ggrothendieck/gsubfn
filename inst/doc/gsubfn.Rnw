@@ -603,7 +603,7 @@ Note that in two of the examples there are two formulas each and
 one is to be regarded as a function and the other not so we must
 use double \code{~{}} to distinguish the cases.
 <<gsubfn-fn-aggregate-0,echo=FALSE,results=hide>>=
-fn$aggregate(CO2[4:5], CO2[3], ~ mean(range(x)))
+fn$aggregate(iris[-5], iris[5], ~ mean(range(x)))
 
 library(reshape)
 fn$cast(Type ~ variable, data = melt(CO2, id = 1:3), ~~ mean(range(x)))
@@ -613,7 +613,9 @@ fn$summaryBy(. ~ Treatment, CO2[3:5], FUN = ~~ c(midrange = mean(range(x))))
 @
 
 <<gsubfn-fn-aggregate>>=
-fn$aggregate(CO2[4:5], CO2[3], ~ mean(range(x)))
+fn$aggregate(iris[-5], iris[5], ~ mean(range(x)))
+@
+<<gsubfn-fn-aggregate-a>>=
 
 library(reshape)
 fn$cast(Treatment ~ variable, data = melt(CO2, id = 1:3), ~~ mean(range(x)))

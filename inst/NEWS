@@ -1,3 +1,13 @@
+Changes in 0.6
+
+    o strapplyc added, a fast tcl-only version of strapply specialized to FUN=c.
+
+    o bug fix.  perl was ignored when engine = "tcl".
+
+	o unit test suite added.  demo("gsubfn-unitTests") will run it.
+
+    o added NAMESPACE
+
 Changes in 0.5-6
 
     o bug fix. backref argument was being interpreted incorrectly in "R" engine.
