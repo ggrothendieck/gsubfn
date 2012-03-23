@@ -25,6 +25,8 @@ Built on top of gsubfn is strapply which is similar
 to gsubfn except that it returns the output of the function rather than
 substituting it back into the source string. 
 
+A fast version of strapply specialized to the function \code{c} is provided.
+
 The ability to have formula arguments that represent functions can be used not
 only in the functions of the gsubfn package but can also be used with any R
 function that itself passes functions without modifying its source. 
@@ -43,10 +45,10 @@ functionality into their own functions so that even the \code{fn\$}
 prefix need not be used.
 
 
-The 
-following are sources of information on \code{"gsubfn"}:
+The home page plus the following are sources of information on \code{"gsubfn"}:
 \tabular{ll}{
-News\tab RShowDoc("NEWS",, "gsubfn")\cr
+Home Page (see URL: line)\tab RShowDoc("DESCRIPTION", package = "gsubfn")\cr
+News\tab RShowDoc("NEWS", package = "gsubfn")\cr
 Wish List\tab RShowDoc("WISHLIST", package = "gsubfn")\cr
 Thanks file\tab RShowDoc("THANKS", package = "gsubfn")\cr
 License\tab RShowDoc("COPYING", package = "gsubfn")\cr
@@ -55,6 +57,7 @@ Demo\tab demo("gsubfn-chron")\cr
 Demo\tab demo("gsubfn-cut")\cr
 Demo\tab demo("gsubfn-gries")\cr
 Demo\tab demo("gsubfn-si")\cr
+Unit tests\tab demo("gsubfn-unitTests")\cr
 This File\tab package?gsubfn\cr
 Help files\tab ?\link{gsubfn}, ?\link{strapply}, ?\link{cat0}, ?\link{paste0}\cr
 More Help files\tab ?\link{as.function.formula}, ?\link{match.funfn}, ?\link{fn}\cr

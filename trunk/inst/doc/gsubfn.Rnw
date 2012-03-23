@@ -1,4 +1,4 @@
-\documentclass{Z}
+\documentclass[nojss]{jss}
 \DeclareGraphicsExtensions{.pdf,.eps}
 
 %% need no \usepackage{Sweave}
@@ -51,6 +51,12 @@ is provided to allow developers to readily
 build this functionality
 into their own functions so that even the \code{fn\$} 
 prefix need not be used.
+}
+
+\Address{
+ Gabor Grothendieck\\
+ GKX Associates Inc.\\
+ E-mail: \email{ggrothendieck@gmail.com}
 }
 
 \begin{document}
@@ -241,21 +247,10 @@ even if all back references are to be passed.
 The formula in this example is equivalent to specifying the
 function \code{function(x, y) as.numeric(x) + as.numeric(y)} :
 
-This example replaces the scale letter with an appropriate scale factor.
-For example, \code{"G"} means giga and corresponds to \code{"e9"}.
-
 <<gsubfn-xypair>>=
    s <- 'abc 10:20 def 30:40 50'
    gsubfn('([0-9]+):([0-9]+)', ~ as.numeric(x) + as.numeric(y), s)
 @
-
-<<gsubfn-si>>=
-   dat <- c('3.5G', '88P', '19') # test data
-   gsubfn('[MGP]$', ~ c(M = 'e6', G = 'e9', P = 'e12')[[x]], dat) 
-@
-
-A variation of the last example is available via the command
-\code{demo("gsubfn-si")}.
 
 \section[gsubfn with lists]{\code{gsubfn} with \code{list} objects}
 \label{sec:gsubfn with list objects}
@@ -267,7 +262,7 @@ matches then the first unnamed list component is returned.  If there is
 still no match then the string to be matched is returned so that effectively
 the lookup is ignored.
 
-Here is the last example redone with a list:
+For example:
 
 <<gsubfn-si>>=
    dat <- c('3.5G', '88P', '19') # test data
@@ -417,9 +412,13 @@ the initial digits and the rest as two separate fields we can write this:
 @
 
 In this example we calculate the midpoint of each interval.  
+(Note to myself.  The following code works if we enter it into R but not in
+the vignette.  Figure out what is wrong.  In the meantime we only show the
+source and but don't run it.)
 <<gsubfn-strapply-midpoint>>=
+as.num <- function(x) if (x == "NA") NA else as.numeric(x)
 rn <- c("[-11.9,-10.6]", "(NA,9.3]", "(9.3,8e01]", "(8.01,Inf]")
-colMeans(strapply(rn, "[^][(),]+", as.numeric, simplify = TRUE))
+colMeans(strapply(rn, "[^][(),]+", as.num, simplify = TRUE))
 @
 
 \code{combine}. The
@@ -445,7 +444,10 @@ as \code{gsubfn}.  For example, suppose we wish to extract the words from a stri
 their ordinal occurrence number.   Previously we did this with \code{gsubfn} and
 inserted the
 number back into the string.  This time we want to extract it. 
-
+(Note to myself.  The following code works if we enter it into R and even
+works as part of the vignette if we use R CMD Sweave but if we use R CMD build
+then it does not work.  Figure out what is wrong.  In the meantime we only 
+show the source and but don't run it.)
 <<gsubfn-strapply-words>>=
 pwords2 <- proto(
 	pre = function(this) { this$words <- list() },

@@ -1,3 +1,19 @@
+Changes in 0.6-1
+
+    o package is now byte compiled
+
+    o if tcltk can be loaded it is loaded at startup.  If not, the gsubfn.engine
+	  option is set to "R", a message is given and subsequent calls will use 
+	  slower R code instead of tcltk.  Previously this check was done at run
+	  time in the individual functions.
+
+	o strapplyc now calls strapply if gsubfn.engine = "R"
+
+	o now uses withVisible instead of internal function eval.with.vis.  This
+	  internal change was made to satisfy R 2.15.0 and should not affect users.
+
+	o added more unit tests
+
 Changes in 0.6
 
     o strapplyc added, a fast tcl-only version of strapply specialized to FUN=c.

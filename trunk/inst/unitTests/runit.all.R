@@ -94,4 +94,27 @@ test.all <- function() {
 		list(9, c(11, 12), c(13, 14, 15))
 	)
 
+	checkIdentical(
+		gsubfn("\\B.", tolower, "I LIKE A BANANA SPLIT", perl = TRUE),
+		"I Like A Banana Split"
+	)
+
+	pwords2 <- proto(
+		pre = function(this) { this$words <- list() },
+		fun = function(this, x) {
+			if (is.null(words[[x]])) this$words[[x]] <- 0
+			this$words[[x]] <- words[[x]] + 1
+			list(x, words[[x]])
+		}
+	)
+
+	checkIdentical(
+			strapply("the dog and the cat are in the house", "\\w+", pwords2, 
+				combine = list, simplify = x ~ do.call(rbind, x) ),
+		structure(list("the", "dog", "and", "the", "cat", "are", "in", 
+			"the", "house", 1, 1, 1, 2, 1, 1, 1, 3, 1), .Dim = c(9L, 2L))
+	)
+
+
+
 }

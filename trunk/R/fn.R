@@ -1,12 +1,3 @@
-# eval.with.vis is no longer used - withVisible is used instead
-eval.with.vis <- function (expr) {
-     expr <- substitute(expr)
-     pf <- parent.frame()
-     tmp <- .Internal(eval.with.vis(expr, pf,
-         baseenv()))
-     tmp
-}
-
 as.function.formula <- function(x, ...) {
 	vars <- setdiff(all.vars(x[[2]]), c("letters", "LETTERS", "pi"))
 	dotdot <- grepl("^[.][.][1-9.]$", vars)
@@ -107,7 +98,7 @@ fn <- structure(NA, class = "fn")
 		if (any.chara)
 		   for(i in seq(along = mcListE))
 		      if (is.chara[i])
-			mcListE[[i]] <- gsubfn(x = substring(mcListE[[i]], 2), env = p)
+			mcListE[[i]] <- gsubfn(x = substring(mcListE[[i]], 2), envir = p)
 
 		# if no ~~ formulas and no \1 strings use default strategy
 		# of converting all formulas to functions and if no formulas
@@ -121,19 +112,18 @@ fn <- structure(NA, class = "fn")
 		      if (any.char)
 		         for(i in seq(along = mcListE))
 		            if (is.char[i])
-			       mcListE[[i]] <- gsubfn(x = mcListE[[i]], env = p)
+			       mcListE[[i]] <- gsubfn(x = mcListE[[i]], envir = p)
 		   }
 		}
 			
 		# out <- do.call(FUN, args)
-		# thanks Duncan for eval.with.vis !!!
-		# out <- eval.with.vis(do.call(FUN, mcListE, env=p))
-		out <- withVisible(do.call(FUN, mcListE, env=p))
+		# out <- withVisible(FUN, mcListE, env=p))
+		out <- withVisible(do.call(FUN, mcListE, envir=p))
 		vis <- out$visible
 		out <- out $value
 		if (!is.null(simplify)) {
 			if(!is.list(out)) out <- list(out) 
-			out <- eval.with.vis(do.call(simplify, out))
+			out <- withVisible(do.call(simplify, out))
 			vis <- out$visible
 			out <- out$value
 		}
