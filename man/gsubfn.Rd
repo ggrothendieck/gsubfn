@@ -122,9 +122,6 @@ v
 # same
 strapply("12;34:56,89,,12", "[0-9]+", simplify = c)
 
-# makes all letters except first in word lower case
-gsubfn("\\\\B.", tolower, "I LIKE A BANANA SPLIT", perl = TRUE)
-
 # replaces numbers with that many Xs separated by -
 gsubfn("[[:digit:]]+", ~ paste(rep("X", n), collapse = "-"), "5.2")
 

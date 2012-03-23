@@ -15,7 +15,7 @@ strapply(X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
 	empty = NULL,
 	ignore.case = FALSE, perl = FALSE, engine = getOption("gsubfn.engine"),
 	simplify = FALSE, USE.NAMES = FALSE, combine = c)
-strapplyc(X, pattern, backref, ignore.case = FALSE, simplify = FALSE, USE.NAMES = FALSE)
+strapplyc(X, pattern, backref, ignore.case = FALSE, simplify = FALSE, USE.NAMES = FALSE, engine = getOption("gsubfn.engine"))
 }
 \arguments{
   \item{X}{ list or (atomic) vector of character strings to be used. }
@@ -74,7 +74,8 @@ If \code{engine="tcl"} then an exact algorithm is used and the problem
 sentence never occurs.
 
 \code{strapplyc} is like \code{strapply} but specialized to \code{FUN=c} for
-speed.  \code{strapplyc} can only be used with the \code{"tcl"} engine.
+speed.  If the \code{"tcl"} engine is not available then it calls 
+\code{strapply} and there will be no speed advantage.
 }
 \value{
 A list of character strings.  
@@ -132,7 +133,7 @@ x.chron <- strapply(x, "(../../....) (..:..:..)",  chron, simplify = c)
 # time parsing of all 275,546 words from James Joyce's Ulysses
 joyce <- readLines("http://www.gutenberg.org/files/4300/4300-8.txt") 
 joycec <- paste(joyce, collapse = " ") 
-system.time(s <- strapplyc(joycec, "\\w+")[[1]]) 
+system.time(s <- strapplyc(joycec, "\\\\w+")[[1]]) 
 length(s) # 275546 
 }
 
