@@ -1,6 +1,6 @@
-Changes in 0.6-1
+Changes in 0.6-2
 
-    o package is now byte compiled
+    o package is now byte compiled hence depends on 2.14.0 or higher
 
     o if tcltk can be loaded it is loaded at startup.  If not, the gsubfn.engine
 	  option is set to "R", a message is given and subsequent calls will use 
