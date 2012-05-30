@@ -1,6 +1,6 @@
 Package: gsubfn
-Version: 0.6-2
-Date: 2012-03-23
+Version: 0.6-4
+Date: 2012-05-30
 Title: Utilities for strings and function arguments.
 Author: G. Grothendieck
 Maintainer: G. Grothendieck <ggrothendieck@gmail.com>
@@ -16,7 +16,7 @@ Description: gsubfn is like gsub but can take a replacement function
    expects another function as an input argument or functions like cat
    or sql calls that may involve strings where substitution is desirable.
 ByteCompile: true
-Depends: R (>= 2.14.0), proto
-Suggests: boot, chron, doBy, grid, lattice, quantreg, reshape, svUnit, tcltk, zoo
+Depends: R (>= 2.15.0), proto
+Suggests: boot, chron, doBy, grid, lattice, quantreg, reshape, svUnit, tcltk, Zelig, zoo
 License: GPL (>= 2)
 URL: http://gsubfn.googlecode.com

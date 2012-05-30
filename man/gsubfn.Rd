@@ -1,7 +1,6 @@
 \name{gsubfn}
 \alias{gsubfn}
 \alias{cat0}
-\alias{paste0}
 
 \title{ Pattern Matching and Replacement }
 \description{
@@ -88,7 +87,7 @@ Normally this is left at its default value.}
  Note that if the \code{"R"} engine is used and if backref is non-negative 
  then internally the pattern will be parenthesized.
 
- Two utility functions \code{cat0} and \code{paste0} are available.
+ A utility function \code{cat0} is available.
  They are like
  \code{\link[base]{cat}} and \code{\link[base]{paste}} except that their default
  \code{sep} value is \code{""}.

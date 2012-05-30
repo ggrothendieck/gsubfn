@@ -59,7 +59,7 @@ Demo\tab demo("gsubfn-gries")\cr
 Demo\tab demo("gsubfn-si")\cr
 Unit tests\tab demo("gsubfn-unitTests")\cr
 This File\tab package?gsubfn\cr
-Help files\tab ?\link{gsubfn}, ?\link{strapply}, ?\link{cat0}, ?\link{paste0}\cr
+Help files\tab ?\link{gsubfn}, ?\link{strapply}, ?\link{cat0}\cr
 More Help files\tab ?\link{as.function.formula}, ?\link{match.funfn}, ?\link{fn}\cr
 Home page\tab \url{http://code.google.com/p/gsubfn/}\cr
 Vignette\tab vignette("gsubfn")\cr

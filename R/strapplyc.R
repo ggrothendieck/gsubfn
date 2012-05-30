@@ -2,6 +2,7 @@ library(tcltk)
 
 # x is name of a tcl variable holding list of character vectors
 tclList2R <- function(x, convert = as.character) {
+	.Tcl <- tcltk::.Tcl
 	len <- as.integer(.Tcl(sprintf("llength $%s", x)))
 	f <- function(i) convert(.Tcl(sprintf("lindex $%s %d", x, i)))
 	lapply(seq(0, len-1), f)
@@ -14,7 +15,9 @@ strapplyc <- function(X, pattern, backref, ignore.case = FALSE, simplify = FALSE
 			ignore.case = ignore.case, simplify = simplify, 
 			USE.NAMES = USE.NAMES, engine = engine)
 	)
-	tcl("set", "X", as.tclObj(X))
+	.Tcl <- tcltk::.Tcl
+	tcl <- tcltk::tcl
+	tcl("set", "X", tcltk::as.tclObj(X))
 	tcl("set", "pattern", pattern)
 	tcl("set", "nocase", if (ignore.case) "-nocase" else "")
 	if (missing(backref) || is.null(backref) || is.na(backref))  backref <- 999
@@ -58,7 +61,4 @@ strapplyc <- function(X, pattern, backref, ignore.case = FALSE, simplify = FALSE
     if (is.logical(simplify)) result else {
 		do.call(match.funfn(simplify), result)
 	}
-
-
 }
-
