@@ -115,6 +115,8 @@ test.all <- function() {
 			"the", "house", 1, 1, 1, 2, 1, 1, 1, 3, 1), .Dim = c(9L, 2L))
 	)
 
-
-
+	checkIdentical(
+		strapplyc("a:b c:d", "(.):(.)")[[1]],
+		letters[1:4]
+	)
 }

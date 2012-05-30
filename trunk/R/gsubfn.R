@@ -24,10 +24,16 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
   ignore.case = FALSE, engine = getOption("gsubfn.engine"),
   env = parent.frame(), ...) 
 {
-   if (isTRUE(list(...)$perl)) engine <- "R"
-   R.engine <- identical(engine, "R")
+    here <- environment()
 
-   here <- environment()
+    if (isTRUE(list(...)$perl)) engine <- "R"
+    R.engine <- identical(engine, "R")
+
+	if (!R.engine) {
+		.Tcl <- tcltk::.Tcl
+		tcl <- tcltk::tcl
+		tclvalue <- tcltk::tclvalue
+	}
 
    if (missing(replacement)) here$replacement <- function(...) 
 	eval(parse(text = paste(..., sep = "")), env) 
@@ -290,6 +296,9 @@ function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
 }
 
 strapply1 <- function(x, e, backref, ignore.case = FALSE) {
+		.Tcl <- tcltk::.Tcl
+		tcl <- tcltk::tcl
+		tclvalue <- tcltk::tclvalue
         tcl("set", "e", e)
         tcl("set", "x", x)
         .Tcl('set about [regexp -about -- $e]')

@@ -147,7 +147,7 @@ matrixfn <- function (data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = N
 # fn$mapply(~ x + y, 1:10, 21:30)
 
 cat0 <- function(..., sep = "") cat(..., sep = sep)
-paste0 <- function(..., sep = "") paste(..., sep = sep)
+# paste0 <- function(..., sep = "") paste(..., sep = sep)
 
 
 
