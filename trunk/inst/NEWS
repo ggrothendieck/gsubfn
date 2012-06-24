@@ -3,6 +3,8 @@ Changes in 0.6-4
 	o in interactive Windows sessions under Rgui a Vignettes menu is created
       (or added to if present) provided the Zelig package is available
 
+    o a scoping bug in fn$ was fixed
+
 Changes in 0.6-3
 
 	o strapplyc could not find tcltk.  Fixed.

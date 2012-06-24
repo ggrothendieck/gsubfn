@@ -3,6 +3,7 @@
 
 	if (.Platform$OS.type == "windows" && 
 		interactive() && 
+		!isTRUE(getOption("gsubfn.noVignetteMenu")) && 
 		file.exists(system.file(package = "Zelig")) &&
 		file.exists(system.file("Meta", "vignette.rds", package = pkgname))) {
 		  Zelig:::addVigs2WinMenu(pkgname)
@@ -15,7 +16,7 @@
 						requireNamespace("tcltk", quietly = TRUE)
 		if ( ! tcltk.ok ) {
 			options(gsubfn.engine = "R")
-			cat('NOTE: Could not load tcltk.  Will use slower R code instead.\n')
+			packageStartupMessage('Could not load tcltk.  Will use slower R code instead.')
 		}
 	}
 
