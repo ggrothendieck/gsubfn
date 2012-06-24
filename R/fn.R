@@ -98,7 +98,7 @@ fn <- structure(NA, class = "fn")
 		if (any.chara)
 		   for(i in seq(along = mcListE))
 		      if (is.chara[i])
-			mcListE[[i]] <- gsubfn(x = substring(mcListE[[i]], 2), envir = p)
+			mcListE[[i]] <- gsubfn(x = substring(mcListE[[i]], 2), env = p)
 
 		# if no ~~ formulas and no \1 strings use default strategy
 		# of converting all formulas to functions and if no formulas
