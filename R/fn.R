@@ -112,7 +112,7 @@ fn <- structure(NA, class = "fn")
 		      if (any.char)
 		         for(i in seq(along = mcListE))
 		            if (is.char[i])
-			       mcListE[[i]] <- gsubfn(x = mcListE[[i]], envir = p)
+			       mcListE[[i]] <- gsubfn(x = mcListE[[i]], env = p)
 		   }
 		}
 			
