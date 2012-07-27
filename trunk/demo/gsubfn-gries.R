@@ -3,7 +3,7 @@
 
 # create word frequency list from the gsubfn COPYING file
 
-fn1 <- system.file("COPYING", package = "gsubfn")
+fn1 <- system.file("lipsum.txt", package = "gsubfn")
 Lines1 <- tolower(scan(fn1, what = "char", sep = "\n"))
 tail(sort(table(unlist(strapply(Lines1, "\\w+", perl = TRUE)))))
 

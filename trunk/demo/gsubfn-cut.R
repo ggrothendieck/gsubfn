@@ -20,7 +20,7 @@ groups <- cut(x, breaks = 10)
 ##calculate bias (mean) per group
 max.bias <- tapply(error, groups, mean)
 
-## turn cut intervals into numeric matrix
+## convert cut intervals into numeric matrix
 library(gsubfn)
 interv <- strapply(levels(groups), "[[:digit:].]+", as.numeric, simplify = TRUE)
 

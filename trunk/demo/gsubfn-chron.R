@@ -16,7 +16,5 @@ to.chron <- function(x)
    strapply(format(x), "([0-9-]+) ([0-9:]+)",
 	~ chron(as.numeric(as.Date(dd)), tt), simplify = c)
 
-con <- textConnection(Lines)
-read.zoo(con, sep = ",", FUN = to.chron)
-close(con)
+read.zoo(text = Lines, sep = ",", FUN = to.chron)
 
