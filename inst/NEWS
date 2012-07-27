@@ -5,6 +5,15 @@ Changes in 0.6-4
 
     o a scoping bug in fn$ was fixed
 
+    o gsubfn was attempting to access the tcltk package even if the
+      gsubfn.engine = "R" option was set. Fixed.
+
+    o changes to accommodate R-2.16: (i) a non-ascii character in the
+      gsubfn-si demo was removed (ii) rep on a pairlist is no longer 
+      supported by R but used by fn$ so a workaround was implemented
+
+    o simplified gsubfn-chron demo based on new features in the zoo package
+
 Changes in 0.6-3
 
 	o strapplyc could not find tcltk.  Fixed.

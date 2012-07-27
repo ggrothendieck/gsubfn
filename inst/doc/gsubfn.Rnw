@@ -96,7 +96,8 @@ Associated functions built on top of \code{gsubfn}
 are \code{strapply} which is an \code{apply} style
 function that is like \code{gsubfn} except that it returns
 the output of the replacement function rather than substituting
-it back into the string. 
+it back into the string and \code{strapplyc} which is a faster version
+specialized to use \code{c} rather than a general function.
 
 In the case that a
 function is passed to \code{gsubfn}, for each
@@ -104,11 +105,7 @@ match of the regular expression in the source string, the replacement
 function
 is called with one argument per backreference or if no backreferences
 with the match (unless instructed otherwise 
-by the \code{backref} argument). Note that it determines the number of
-backreferences by counting the number of occurrences of \code{(} in the 
-regular expression so if there are parentheses that are not
-back references it may be important to specify their number explicitly with
-\code{backref}.
+by the \code{backref} argument). 
 The output of the replacement function is 
 substituted back into the string replacing the match.
 In those cases where persistance
@@ -198,8 +195,8 @@ the \pkg{proto} package will be unnecessary for the restricted
 purpose of using
 it here.\footnote{
 More about \pkg{proto} is available
-in the four documents listed under Documentation on the \pkg{proto} home page:
-\url{http://hhbio.wasser.tu-dresden.de/projects/proto/} .}
+in on the \pkg{proto} home page:
+\url{http://r-proto.googlecode.com} .}
 
 \section[The gsubfn Function]{The \code{gsubfn} Function}
 \label{sec:gsubfn with functions}
@@ -227,14 +224,16 @@ the left hand side of the formula are the arguments separated by
 \code{"+"} (or any other valid formula symbol) while the right
 hand side represents the body.  The environment of the formula
 will be used as the environment of the generated funciton.
-If the arguments are omitted then the free variables on the
-right hand side are used in the order encountered.
+If the arguments on the left hand side are omitted then the free 
+variables on the
+right hand side are used as arguments in the order encountered.
 
 \textit{Back References}. 
-If the \code{backref} argument is not specified then the match
-followed all backreferences are passed to the function as separate
+If the \code{backref} argument is not specified then 
+all backreferences are passed to the function as separate
 arguments.  If \code{backref} is \code{0} then no back references
-are passed.  If \code{backref} is a postive integer, $n$, then the
+are passed and the entire match is passed.  
+If \code{backref} is a postive integer, $n$, then the
 match and the first $n$ back references are passed.  If \code{backref}
 is a negative integer then the match is not passed and the absolute
 value of \code{backref} is used as the number of back references to

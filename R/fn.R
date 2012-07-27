@@ -10,7 +10,7 @@ as.function.formula <- function(x, ...) {
 		f0
 	} else {
 		f <- function(x) {}
-		formals(f) <- rep(formals(f), length(vars))
+		formals(f) <- rep(as.list(formals(f)), length(vars))
 		names(formals(f)) <- vars
 		body(f) <- x[[length(x)]]
 		environment(f) <- environment(x)
