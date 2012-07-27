@@ -12,7 +12,9 @@ Changes in 0.6-4
       gsubfn-si demo was removed (ii) rep on a pairlist is no longer 
       supported by R but used by fn$ so a workaround was implemented
 
-    o simplified gsubfn-chron demo based on new features in the zoo package
+    o modified demos: (i) gsubfn-chron demo simplified based on new in 
+      read.zoo, (ii) modified gsubfn-gries to use lipsum.txt (which was
+      added), (iii) mu in gsubfn-si changed to u so its all ASCII.
 
 Changes in 0.6-3
 
