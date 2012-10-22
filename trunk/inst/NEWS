@@ -1,20 +1,24 @@
+Changes in 0.6-5
+
+	o the Vignettes menu has been removed removing any dependence on Zelig.
+
 Changes in 0.6-4
 
 	o in interactive Windows sessions under Rgui a Vignettes menu is created
-      (or added to if present) provided the Zelig package is available
+	  (or added to if present) provided the Zelig package is available
 
-    o a scoping bug in fn$ was fixed
+	o a scoping bug in fn$ was fixed
 
-    o gsubfn was attempting to access the tcltk package even if the
-      gsubfn.engine = "R" option was set. Fixed.
+	o gsubfn was attempting to access the tcltk package even if the
+	  gsubfn.engine = "R" option was set. Fixed.
 
-    o changes to accommodate R-2.16: (i) a non-ascii character in the
-      gsubfn-si demo was removed (ii) rep on a pairlist is no longer 
-      supported by R but used by fn$ so a workaround was implemented
+	o changes to accommodate R-2.16: (i) a non-ascii character in the
+	  gsubfn-si demo was removed (ii) rep on a pairlist is no longer 
+	  supported by R but used by fn$ so a workaround was implemented
 
-    o modified demos: (i) gsubfn-chron demo simplified based on new in 
-      read.zoo, (ii) modified gsubfn-gries to use lipsum.txt (which was
-      added), (iii) mu in gsubfn-si changed to u so its all ASCII.
+	o modified demos: (i) gsubfn-chron demo simplified based on latest
+	  read.zoo, (ii) modified gsubfn-gries to use lipsum.txt (which was
+	  added), (iii) mu in gsubfn-si changed to u so its all ASCII.
 
 Changes in 0.6-3
 
