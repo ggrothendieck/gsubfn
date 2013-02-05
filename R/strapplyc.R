@@ -1,4 +1,3 @@
-library(tcltk)
 
 # x is name of a tcl variable holding list of character vectors
 tclList2R <- function(x, convert = as.character) {
