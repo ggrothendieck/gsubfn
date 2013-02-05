@@ -1,3 +1,7 @@
+Changes in 0.6-6
+
+	o bug fix. strapplyc failed with "R" engine.
+
 Changes in 0.6-5
 
 	o the Vignettes menu has been removed removing any dependence on Zelig.
