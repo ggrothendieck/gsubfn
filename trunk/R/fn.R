@@ -135,10 +135,10 @@ fn <- structure(NA, class = "fn")
 matrixfn <- function (data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL) {
 	if (!is.function(data) & !inherits(data, "formula")) return(matrix(data = data, nrow = nrow, ncol = ncol, byrow = byrow, dimnames = dimnames))
 
-	data <- match.funfn(data)
+	data. <- match.funfn(data)
 
 	out <- matrix(nrow = nrow, ncol = ncol, dimnames = dimnames)
-	for(i in seq_len(nrow)) for(j in seq_len(ncol)) out[i, j] <- data(i, j)
+	for(i in seq_len(nrow)) for(j in seq_len(ncol)) out[i, j] <- data.(i, j)
 	out
 }
 

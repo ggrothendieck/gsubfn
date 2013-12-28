@@ -8,7 +8,9 @@ tclList2R <- function(x, convert = as.character) {
 }
 
 # high performance strapply with hard coded FUN=c.  Guts in tcl.
-strapplyc <- function(X, pattern, backref = NULL, ignore.case = FALSE, simplify = FALSE, USE.NAMES = FALSE, engine = getOption("gsubfn.engine")) {
+strapplyc <- function(X, pattern, backref = NULL, ignore.case = FALSE, simplify = FALSE, USE.NAMES, engine) {
+    if (missing(engine)) engine <- getOption("gsubfn.engine")
+    if (missing(USE.NAMES)) USE.NAMES <- FALSE
     if (identical(engine, "R")) return(
 		strapply(X = X, pattern = pattern, FUN = c, backref = backref, 
 			ignore.case = ignore.case, simplify = simplify, 
