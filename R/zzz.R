@@ -1,5 +1,5 @@
 
-.onLoad <- function(libname, pkgname) {
+.onAttach <- function(libname, pkgname) {
 
 	gsubfn.engine <- getOption("gsubfn.engine")
 	# if gsubfn.engine was not set to "R" then check if tcltk can be used
@@ -14,4 +14,3 @@
 
 }
 
-# .onUnload <- function(libpath) {}

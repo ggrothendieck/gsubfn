@@ -26,6 +26,7 @@ gsubfn <- function(pattern, replacement, x, backref, USE.NAMES = FALSE,
 {
     here <- environment()
 
+
     if (isTRUE(list(...)$perl)) engine <- "R"
     R.engine <- identical(engine, "R")
 
@@ -247,10 +248,14 @@ function (X, pattern, FUN = function(x, ...) x, ignore.case = FALSE, ..., empty 
 }
 
 strapply <-
-function (X, pattern, FUN = function(x, ...) x, backref = NULL, ...,
-	empty = NULL,
-	ignore.case = FALSE, perl = FALSE, engine = getOption("gsubfn.engine"),
-	simplify = FALSE, USE.NAMES = FALSE, combine = c) {
+function (X, pattern, FUN = function(x, ...) x, backref, ...,
+	empty,
+	ignore.case = FALSE, perl = FALSE, engine,
+	simplify = FALSE, USE.NAMES, combine = c) {
+				if (missing(backref)) backref <- NULL
+				if (missing(empty)) empty <- NULL
+				if (missing(USE.NAMES)) USE.NAMES <- FALSE
+				if (missing(engine)) engine <- getOption("gsubfn.engine")
 				combine <- match.funfn(combine)
 				stopifnot(!missing(pattern))
 				pattern <- as.character(pattern)

@@ -11,11 +11,10 @@
 Similar to \code{"'gsubfn'"} except instead of performing substitutions
 it returns the output of \code{"'FUN'"}.}
 \usage{
-strapply(X, pattern, FUN = function(x, ...) x, backref = NULL, ..., 
-	empty = NULL,
-	ignore.case = FALSE, perl = FALSE, engine = getOption("gsubfn.engine"),
-	simplify = FALSE, USE.NAMES = FALSE, combine = c)
-strapplyc(X, pattern, backref, ignore.case = FALSE, simplify = FALSE, USE.NAMES = FALSE, engine = getOption("gsubfn.engine"))
+strapply(X, pattern, FUN = function(x, ...) x, backref, ..., empty,
+	ignore.case = FALSE, perl = FALSE, engine,
+	simplify = FALSE, USE.NAMES, combine = c)
+strapplyc(X, pattern, backref, ignore.case = FALSE, simplify = FALSE, USE.NAMES, engine)
 }
 \arguments{
   \item{X}{ list or (atomic) vector of character strings to be used. }
@@ -31,11 +30,12 @@ strapplyc(X, pattern, backref, ignore.case = FALSE, simplify = FALSE, USE.NAMES 
 		argument.}
   \item{perl}{If \code{TRUE} then \code{engine="R"} is used with
 		perl regular expressions.}
-  \item{engine}{Specifies which engine to use.  If the R installation
-   			has \code{tcltk} capability then the \code{tcl} engine is used
-			unless \code{FUN} is a proto object in which case the
-			\code{"R"} engine is used (regardless of the setting of this
-			argument).}
+  \item{engine}{This argument defaults to \code{getOption("gsubfn.engine")}.
+If that option has not been set \code{engine}
+defaults to the \code{"R"} engine if (1) \code{FUN}
+is a proto object or if (2) the R installation does not have \code{tcltk}
+capability.  If the \code{"R"} default does not apply then it defaults to the
+\code{"tcl"} engine.}
   \item{\dots}{ optional arguments to \code{"'gsubfn'"}. }
   \item{simplify}{  logical or function.  If logical, should the result be 
           simplified to a vector or matrix, as in \code{"sapply"} if possible?
@@ -44,7 +44,8 @@ strapplyc(X, pattern, backref, ignore.case = FALSE, simplify = FALSE, USE.NAMES 
           if the form is used it will typically be specified as rbind.}
   \item{USE.NAMES}{ logical; if \code{"'TRUE'"} and if \code{"'X'"} is 
 	character, use \code{"'X'"} as
-          'names' for the result unless it had names already.}
+          'names' for the result unless it had names already. Default is 
+\code{FALSE}.}
   \item{combine}{combine is a function applied to the components of 
   	 the result of \code{FUN}.
      The default is \code{"c"}. \code{"list"}
