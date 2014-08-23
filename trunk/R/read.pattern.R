@@ -1,5 +1,5 @@
 
-read.pattern <- function(file, pattern, perl = FALSE, text, sep = "\01", fileEncoding = "", ...) {
+read.pattern <- function(file, pattern = "[^[:space:]]+", perl = FALSE, text, sep = "\01", fileEncoding = "", ...) {
 
     if (missing(file) && !missing(text)) {
         file <- textConnection(text)

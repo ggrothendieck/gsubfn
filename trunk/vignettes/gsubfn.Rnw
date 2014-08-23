@@ -394,7 +394,10 @@ to \code{gsubfn} it can also be a \pkg{proto} object.
 By default \code{strapply} uses the \code{tcl} regular expression engine but
 if the argument \code{engine="R"} is used or if the function is a proto 
 object then the \code{R} regular expression engine is used instead.  The
-\code{tcl} engine is much faster.
+\code{tcl} engine is much faster.  (\code{tcl} regular expressions are largely
+identical to regular expressions in R.  See 
+this link \url{https://www.tcl.tk/man/tcl8.5/TclCmd/re_syntax.htm} for 
+details.)
 The \code{simplify} argument is similar to the \code{simplify} argument in
 \code{sapply} and, in fact, is passed to \code{sapply} if it is \code{logical}.
 If \code{simplify} is a function or a formula representing a function then the
