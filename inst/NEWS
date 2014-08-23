@@ -4,6 +4,8 @@ Changes in 0.6-6
 
 	o new read.pattern function
 
+	o vignettes have been moved to vignette directory to satisfy R 3.1,0
+
 Changes in 0.6-5
 
 	o the Vignettes menu has been removed removing any dependence on Zelig.
