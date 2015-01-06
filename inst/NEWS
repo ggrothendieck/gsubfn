@@ -1,3 +1,7 @@
+Changes in 0.6-7
+
+	o list[...] <- added for enabling multiple return values
+     
 Changes in 0.6-6
 
 	o bug fix. strapplyc failed with "R" engine.
