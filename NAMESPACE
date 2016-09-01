@@ -1,6 +1,9 @@
 # Export all names
 exportPattern(".")
 
+export("list")
+S3method("[<-", "result")
+
 import(
   proto
 )
