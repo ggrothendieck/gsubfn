@@ -597,45 +597,15 @@ is \code{x} here:
 fn$lapply(list(1:4, 1:3), ~ LETTERS[x])
 @
 
-
-The next example uses \code{aggregate} to calculate the midrange 
-of each of \code{conc} and \code{uptake} for each \code{Type}. 
-The calculation is repeated using \code{cast} from the \pkg{reshape}
-package and again using \code{summaryBy} from the \pkg{doBy}
-package.
-Note that in two of the examples there are two formulas each and
-one is to be regarded as a function and the other not so we must
-use double \code{~{}} to distinguish the cases.
-<<gsubfn-fn-aggregate-0,echo=FALSE,results=hide>>=
-fn$aggregate(iris[-5], iris[5], ~ mean(range(x)))
-
-library(reshape)
-fn$cast(Type ~ variable, data = melt(CO2, id = 1:3), ~~ mean(range(x)))
-
-library(doBy) # need version 0.9 or later
-fn$summaryBy(. ~ Treatment, CO2[3:5], FUN = ~~ c(midrange = mean(range(x))))
-@
-
-<<gsubfn-fn-aggregate>>=
-fn$aggregate(iris[-5], iris[5], ~ mean(range(x)))
-@
-<<gsubfn-fn-aggregate-a>>=
-
-library(reshape)
-fn$cast(Treatment ~ variable, data = melt(CO2, id = 1:3), ~~ mean(range(x)))
-
-library(doBy) # need version 0.9 or later
-fn$summaryBy(. ~ Treatment, CO2[3:5], FUN = ~~ c(midrange = mean(range(x))))
-@
-
-
-Here is another common use of \code{aggregate} or \code{by}.  This
+Here is a common use of \code{aggregate} or \code{by}.  This
 calculates a weighted mean of the first column using weights in
 the second column all grouped by columns \code{A} and \code{B}.
 The \code{aggregate} example aggregates over indexes to circumvent
 the restriction of a single input to the aggregation function.
-Both \code{i} and \code{X} are free variables but we only
-want \code{i} to be an argument so we must specify it explicitly.
+\code{X} is a free variable and we only
+want \code{i} to be an argument so we must specify it explicitly
+(otherwise it will assume all free variables in the right hand side
+are to be arguments).
 <<gsubfn-fn-aggregate2>>=
 set.seed(1)
 X <- data.frame(X = rnorm(24), W = runif(24), A = gl(2, 1, 24), B = gl(2, 2, 24))
@@ -833,14 +803,12 @@ processing.
 The results in this paper were obtained using \proglang{R}
 \Sexpr{paste(R.Version()[6:7], collapse = ".")} with the packages
 \pkg{boot} \Sexpr{gsub("-", "--", packageDescription("boot")$Version)},
-\pkg{doBy} \Sexpr{gsub("-", "--", packageDescription("doBy")$Version)},
 \pkg{grid} \Sexpr{gsub("-", "--", packageDescription("grid")$Version)},
 \pkg{gsubfn} \Sexpr{gsub("-", "--", packageDescription("gsubfn")$Version)},
 \pkg{lattice} \Sexpr{gsub("-", "--", packageDescription("lattice")$Version)},
 \pkg{proto} \Sexpr{gsub("-", "--", packageDescription("proto")$Version)},
 \pkg{quantreg} \Sexpr{gsub("-", "--", packageDescription("quantreg")$Version)}
 and
-\pkg{reshape} \Sexpr{gsub("-", "--", packageDescription("reshape")$Version)}.
 
 \proglang{R} itself and all packages used are available from
 CRAN at \url{http://CRAN.R-project.org/}.

@@ -1,3 +1,7 @@
+Changes in 0.7-0
+
+	o transform2 added
+
 Changes in 0.6-7
 
 	o list[...] <- added for enabling multiple return values
